@@ -1,0 +1,13 @@
+{% extends 'book/view.html.twig' %}
+
+{% block title %}{{ books.0.isbn(true) }}{% endblock %}
+
+{% block body %}
+    <div class="rd-hidden-md sticky-h1">ISBN: {{ block('title') }}</div>
+    <h1 class="rd-visible-md">ISBN: {{ block('title') }}</h1>
+    {% for book in books %}
+        <div class="app-row">
+        {% include 'book/part/book.html.twig' with {'type': 'multiple', 'book': book} %}
+        </div>
+    {% endfor %}
+{% endblock %}

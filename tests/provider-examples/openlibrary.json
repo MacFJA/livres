@@ -1,0 +1,312 @@
+{
+  "ISBN:0451526538": {
+    "publishers": [
+      {
+        "name": "Signet Classic"
+      }
+    ],
+    "pagination": "xxi, 216 p. ;",
+    "identifiers": {
+      "lccn": [
+        "96072233"
+      ],
+      "openlibrary": [
+        "OL1017798M"
+      ],
+      "isbn_10": [
+        "0451526538"
+      ],
+      "oclc": [
+        "36792831"
+      ],
+      "librarything": [
+        "2236"
+      ],
+      "project_gutenberg": [
+        "74"
+      ],
+      "goodreads": [
+        "1929684"
+      ]
+    },
+    "classifications": {
+      "dewey_decimal_class": [
+        "813/.4"
+      ],
+      "lc_classifications": [
+        "PS1306 .A1 1997"
+      ]
+    },
+    "title": "The adventures of Tom Sawyer",
+    "url": "https://openlibrary.org/books/OL1017798M/The_adventures_of_Tom_Sawyer",
+    "notes": "Includes bibliographical references (p. 213-216).",
+    "number_of_pages": 216,
+    "cover": {
+      "small": "https://covers.openlibrary.org/b/id/295577-S.jpg",
+      "large": "https://covers.openlibrary.org/b/id/295577-L.jpg",
+      "medium": "https://covers.openlibrary.org/b/id/295577-M.jpg"
+    },
+    "subject_places": [
+      {
+        "url": "https://openlibrary.org/subjects/place:missouri",
+        "name": "Missouri"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:mississippi_river",
+        "name": "Mississippi River"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:mississippi_river_valley",
+        "name": "Mississippi River Valley"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:misuri",
+        "name": "Misuri"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:southern_states",
+        "name": "Southern States"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:mississippi",
+        "name": "Mississippi"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:misisip\u00ed_(r\u00edo)",
+        "name": "Misisip\u00ed (R\u00edo)"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:united_states",
+        "name": "United States"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/place:r\u00edo_misisipi",
+        "name": "R\u00edo Misisipi"
+      }
+    ],
+    "subjects": [
+      {
+        "url": "https://openlibrary.org/subjects/huckleberry_finn_(fictitious_character)",
+        "name": "Huckleberry Finn (Fictitious character)"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/in_library",
+        "name": "In library"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/male_friendship",
+        "name": "Male friendship"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/adventure_and_adventures",
+        "name": "Adventure and adventures"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/spanish_language_books",
+        "name": "Spanish language books"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/readers",
+        "name": "Readers"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/runaway_children",
+        "name": "Runaway children"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/fiction",
+        "name": "Fiction"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/child_witnesses",
+        "name": "Child witnesses"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/relatos_de_aventura",
+        "name": "Relatos de aventura"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/juvenile_literature",
+        "name": "Juvenile literature"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/lending_library",
+        "name": "Lending library"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/adventure_stories",
+        "name": "Adventure stories"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/race_relations",
+        "name": "Race relations"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/american_adventure_stories",
+        "name": "American Adventure stories"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/specimens",
+        "name": "Specimens"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/facsimiles",
+        "name": "Facsimiles"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/boys",
+        "name": "Boys"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/tom_sawyer_(fictitious_character)",
+        "name": "Tom Sawyer (Fictitious character)"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/historical_fiction",
+        "name": "Historical fiction"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/dummies_(bookselling)",
+        "name": "Dummies (Bookselling)"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/large_type_books",
+        "name": "Large type books"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/manuscripts",
+        "name": "Manuscripts"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/accessible_book",
+        "name": "Accessible book"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/readers_for_new_literates",
+        "name": "Readers for new literates"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/mississippi_river",
+        "name": "Mississippi River"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/children's_stories,_american",
+        "name": "Children's stories, American"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/adventure_and_adventurers",
+        "name": "Adventure and adventurers"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/high_interest-low_vocabulary_books",
+        "name": "High interest-low vocabulary books"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/ficci\u00f3n_juvenil",
+        "name": "Ficci\u00f3n juvenil"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/open_syllabus_project",
+        "name": "open_syllabus_project"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/children's_stories",
+        "name": "Children's stories"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/missouri",
+        "name": "Missouri"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/sawyer,_tom_(personaje_literario)",
+        "name": "Sawyer, Tom (Personaje literario)"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/muchachos",
+        "name": "Muchachos"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/cartoons_and_comics",
+        "name": "Cartoons and comics"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/history",
+        "name": "History"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/social_life_and_customs",
+        "name": "Social life and customs"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/ni\u00f1os",
+        "name": "Ni\u00f1os"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/translations_into_russian",
+        "name": "Translations into Russian"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/translations_into_polish",
+        "name": "Translations into Polish"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/juvenile_fiction",
+        "name": "Juvenile fiction"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/history_and_criticism",
+        "name": "History and criticism"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/spanish_language",
+        "name": "Spanish language"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/translations_into_czech",
+        "name": "Translations into Czech"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/fugitive_slaves",
+        "name": "Fugitive slaves"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/protected_daisy",
+        "name": "Protected DAISY"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/american_manuscripts",
+        "name": "American Manuscripts"
+      },
+      {
+        "url": "https://openlibrary.org/subjects/internet_archive_wishlist",
+        "name": "Internet Archive Wishlist"
+      }
+    ],
+    "subject_people": [
+      {
+        "url": "https://openlibrary.org/subjects/person:mark_twain_(1835-1910)",
+        "name": "Mark Twain (1835-1910)"
+      }
+    ],
+    "key": "/books/OL1017798M",
+    "authors": [
+      {
+        "url": "https://openlibrary.org/authors/OL18319A/Mark_Twain",
+        "name": "Mark Twain"
+      }
+    ],
+    "publish_date": "1997",
+    "by_statement": "Mark Twain ; with an introduction by Robert S. Tilton.",
+    "publish_places": [
+      {
+        "name": "New York"
+      }
+    ],
+    "subject_times": [
+      {
+        "url": "https://openlibrary.org/subjects/time:19th_century",
+        "name": "19th century"
+      }
+    ]
+  }
+}

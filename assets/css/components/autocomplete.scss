@@ -1,0 +1,45 @@
+/**
+ * @author  MacFJA
+ * @license MIT
+ */
+@import "variables";
+
+.algolia-autocomplete {
+  vertical-align: middle;
+
+  .aa-input {
+    color: $autocomplete-background-color;
+  }
+
+  input.aa-hint {
+    color: $autocomplete-hint-color;
+  }
+
+  .aa-dropdown-menu {
+    @include tooltipArrow(calc(100% - 1px), 4px);
+    @include tooltipBody(calc(100% + 7px), 4px);
+
+    padding: 4px 0;
+
+    *[class^="aa-dataset"] {
+      max-height: 10em;
+      overflow-y: auto;
+    }
+
+    .aa-suggestion {
+      &.aa-cursor {
+        background-color: lighten($autocomplete-background-color, 20);
+        color: $autocomplete-suggestion-on-color;
+      }
+      color: $autocomplete-suggestion-off-color;
+      padding: 0.5ex 1em;
+      margin: 0;
+
+      strong {
+        padding: 0;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
+  }
+}

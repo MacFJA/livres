@@ -1,0 +1,68 @@
+{% if type == 'multiple' %}
+    {% set main, sub = 'h2', 'h3' %}
+{% else %}
+    {% set main, sub = 'h1', 'h2' %}
+{% endif %}
+{% set date_format = 'date_format'|trans({}, 'book') %}
+{% set loose_date_format = 'loose_date_format'|trans({}, 'book') %}
+{% set array_options = {'1': loose_date_format, '0': true} %}
+
+<a href="{{ url('book-improve', {id: book.id}) }}" class="pure-button" style="float: right">{% trans with {} from 'book' %}Improve...{% endtrans %}</a> <{{ main }}>{{ book.title }}</{{ main }}>
+
+<div class="pure-g">
+    <div class="pure-u-1 pure-u-md-1-3 pure-u-xl-1-5 centered lightly-hspace">
+        <h2 class="rd-visible-md pure-u-md-1">&nbsp;</h2>
+        <img src="{{ book.cover|imagine_filter('view_cover') }}" alt="{{ 'Cover for {isbn}'|trans({"{isbn}": book.isbn(true)}, 'book') }}" class="pure-img centered" />
+        <br />
+        {{ book.ean|isbn(2,60)|raw }}
+    </div>
+    <div class="pure-u-1 pure-u-md-2-3 pure-u-xl-2-5 lightly-hspace">
+        <{{ sub }}>{% trans from 'book' %}Details{% endtrans %}</{{ sub }}>
+        <table class="pure-table pure-table-horizontal xpure-table-vertical-head margin-full-width">
+            <tbody>
+                <tr>
+                    <th>{{ 'isbn'|trans({},'book') }}</th>
+                    <td>{{ book.isbn(true) }}</td>
+                </tr>
+            {% for label,value in book.toArray(['isbn','cover'],array_options) %}
+                <tr>
+                    <th>{{ label|trans({},'book_field') }}</th>
+                    <td>
+                        {% if value starts with 'http' %}
+                            <a href="{{ value }}" target="_blank">{{ 'Visit link'|trans({}, 'book') }}</a>
+                        {% else %}
+                            {{ value|nl2br }}
+                        {% endif %}
+                        {% if label in searchable %}
+                            <a href="{{ path('book-filter', {criteria: searchCriteria(label, value)}) }}" class="app-button-info pure-button fa fa-search fa-pull-right fa-xs"></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pure-u-1 pure-u-md-1 pure-u-xl-2-5 lightly-hspace">
+        <button style="float: right; margin-top: 1em" class="pure-button" onclick="book.addMovement('{{ path('movement-ajax-add', {'book': book.id}) }}')">{% trans from 'movement' %}Add a movement{% endtrans %}</button><{{ sub }}>{% trans from 'movement' %}Movements{% endtrans %}</{{ sub }}>
+        <table class="pure-table margin-full-width">
+            <thead>
+            <tr>
+                <th>{{ 'Date start'|trans({}, 'movement') }}</th>
+                <th>{{ 'Date end'|trans({}, 'movement') }}</th>
+                <th>{{ 'Type'|trans({}, 'movement') }}</th>
+                <th>{{ 'Person'|trans({}, 'movement') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for movement in book.movements %}
+                <tr{% if movement.current %} class="pure-table-odd"{% endif %}>
+                    <td>{{ movement.startAt|date(date_format) }}</td>
+                    <td>{% if movement.current %}<a class="pure-button pure-button-primary" href="{{ path('movement-finish', {'id': movement.id}) }}">End now</a> {% else %}{{ movement.endAt|date(date_format) }}{% endif %}</td>
+                    <td>{% if movement.isLend %}{% trans from 'movement' %}Lend To{% endtrans %}{% else %}{% trans from 'movement' %}Borrow From{% endtrans %}{% endif %}</td>
+                    <td>{{ movement.person }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

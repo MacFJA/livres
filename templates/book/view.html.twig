@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.isbn(true) }} &mdash; {{ book.title }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/book.js') }}"></script>
+    <script src="{{ asset('build/js/completion.js') }}"></script>
+    <script type="application/javascript">
+        completion.addCompletion('people', {{ people|json_encode|raw }});
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/book.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'book/part/book.html.twig' with {'type': 'single', 'book': book} %}
+{% endblock %}

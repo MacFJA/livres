@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/settings.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/js/settings.js') }}"></script>
+    <script type="application/javascript">
+        settings.init();
+    </script>
+{% endblock %}
+
+{% block title %}{% trans with {} from 'settings' %}Display settings{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{{ block('title') }}</h1>
+    {{ form_start(form, {'attr': {'class': 'pure-form pure-form-aligned' }}) }}
+        <fieldset>
+            {% for key,value in form.children %}
+                    <div class="pure-control-group">
+                        {{ form_label(form[key]) }}
+                        {{ form_widget(form[key], {'attr': {'class': 'pure-input'}}) }}
+                        {{ form_errors(form[key], {'attr': {'class': 'pure-form-inline-message'}}) }}
+                    </div>
+            {% endfor %}
+
+            {{ form_rest(form) }}
+
+        </fieldset>
+    <div class="centered">
+        <button type="submit" class="pure-button pure-button-primary">{{ 'Validate'|trans({}, 'settings') }}</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

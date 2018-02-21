@@ -1,0 +1,27 @@
+{
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.17.0"
+    },
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production"
+    },
+    "dependencies": {
+        "@fdaciuk/ajax": "^2.3.0",
+        "@fortawesome/fontawesome-free-webfonts": "^1.0.3",
+        "array.merge": "^0.0.2",
+        "autocomplete.js": "^0.29.0",
+        "md-gum-polyfill": "^1.0.0",
+        "msg-modal": "^9.0.2",
+        "node-sass": "^4.7.2",
+        "pure": "^2.85.0",
+        "purecss": "^1.0.0",
+        "quagga": "^0.12.1",
+        "sass-font-awesome": "^1.0.2",
+        "sass-loader": "^6.0.6"
+    }
+}

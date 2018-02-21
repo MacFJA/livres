@@ -1,0 +1,490 @@
+<response stat="ok">
+    <ltml xmlns="http://www.librarything.com/" version="1.1">
+        <item id="1060" type="work">
+            <author id="216" authorcode="clarkesusanna">Susanna Clarke</author>
+            <title><![CDATA[Jonathan Strange & Mr. Norrell: A Novel]]></title>
+            <rating>7.9</rating>
+            <url>http://www.librarything.com/work/1060</url>
+            <commonknowledge>
+                <fieldList>
+                    <field type="4" name="awards" displayName="Awards and honors">
+                        <versionList>
+                            <version id="10213335" archived="0" lang="eng">
+                                <date timestamp="1494981750">Tue, 16 May 2017 20:42:30 -0400</date>
+                                <person id="388956">
+                                    <name>amanda4242</name>
+                                    <url>http://www.librarything.com/profile/amanda4242</url>
+                                </person>
+                                <factList>
+                                    <fact>World Fantasy Award (Novel, 2005)</fact>
+                                    <fact>Hugo (Novel, 2005)</fact>
+                                    <fact>
+                                        British Fantasy Award Nominee (August Derleth Fantasy Award, 2005)
+                                    </fact>
+                                    <fact>
+                                        British Science Fiction Association Award Shortlist (2004.1|Novel, 2004)
+                                    </fact>
+                                    <fact>Nebula Nominee (2005.1|Novel, 2005)</fact>
+                                    <fact>SF Site Editor's Choice (#1, 2004)</fact>
+                                    <fact>
+                                        Book Sense Book of the Year (2005.8 | Adult Fiction Winner, 2005)
+                                    </fact>
+                                    <fact>Whitbread Shortlist (First Novel, 2004)</fact>
+                                    <fact>SF Site Reader's Choice (#1, 2004)</fact>
+                                    <fact><![CDATA[Guardian 1000 (Science Fiction & Fantasy)]]></fact>
+                                    <fact>
+                                        Time Magazine's Best Books of the Year (2004.10|Fiction (1), 2004)
+                                    </fact>
+                                    <fact>Salon Book Award (2004)</fact>
+                                    <fact>Booker Prize Longlist (2004)</fact>
+                                    <fact>Guardian First Book Award Shortlist (2004)</fact>
+                                    <fact>Locus (2005.4|First Novel, 2005)</fact>
+                                    <fact>Mythopoeic Fantasy Award (Adult Literature, 2005)</fact>
+                                    <fact>British Book Award (Newcomer of the Year, 2005)</fact>
+                                    <fact>Geffen Award (Best Translated Fantasy Book, 2007)</fact>
+                                    <fact>
+                                        thisrecording.com 100 Greatest Science Fiction or Fantasy Novels of All Time (95)
+                                    </fact>
+                                    <fact>
+                                        The Morning News Tournament of Books (Quarterfinalist, 2005)
+                                    </fact>
+                                    <fact>Village Voice 25 Favorite Books (2004)</fact>
+                                    <fact>Amazon.com Best Books (2004)</fact>
+                                    <fact>Virgin Books Newcomer of the Year Award (2004)</fact>
+                                    <fact>JoMA Mythic Fiction Reading List</fact>
+                                    <fact>
+                                        San Francisco Chronicle Best Book of the Year (2004)
+                                    </fact>
+                                    <fact>
+                                        100 лучших романов XXI века по версии журнала "Афиша"
+                                    </fact>
+                                    <fact>Locus Award Finalist (2005.4|First Novel, 2005)</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="16" name="originalpublicationdate" displayName="Original publication date">
+                        <versionList>
+                            <version id="9287189" archived="0" lang="eng">
+                                <date timestamp="1465242503">Mon, 06 Jun 2016 15:48:23 -0400</date>
+                                <person id="312995">
+                                    <name>Smiler69</name>
+                                    <url>http://www.librarything.com/profile/Smiler69</url>
+                                </person>
+                                <factList>
+                                    <fact>2004</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="2" name="placesmentioned" displayName="Important places">
+                        <versionList>
+                            <version id="9244653" archived="0" lang="eng">
+                                <date timestamp="1463891252">Sun, 22 May 2016 00:27:32 -0400</date>
+                                <person id="1505463">
+                                    <name>Wolfman08</name>
+                                    <url>http://www.librarything.com/profile/Wolfman08</url>
+                                </person>
+                                <factList>
+                                    <fact>London, England, UK</fact>
+                                    <fact>York, Yorkshire, England, UK</fact>
+                                    <fact>Faerie</fact>
+                                    <fact>France</fact>
+                                    <fact>Portugal</fact>
+                                    <fact>Venice, Veneto, Italy</fact>
+                                    <fact>York Cathedral, York, Yorkshire, England, UK</fact>
+                                    <fact>Shropshire, England, UK</fact>
+                                    <fact>Lost-Hope, Faerie</fact>
+                                    <fact>Padua, Veneto, Italy</fact>
+                                    <fact>Eternal Night</fact>
+                                    <fact>Hurtfew Abbey, York, Yorkshire, England, UK</fact>
+                                    <fact>Yorkshire, England, UK</fact>
+                                    <fact>England, UK</fact>
+                                    <fact>Brighton, East Sussex, England, UK</fact>
+                                    <fact>East Sussex, England, UK</fact>
+                                    <fact>Paris, France</fact>
+                                    <fact>Wiltshire, England, UK</fact>
+                                    <fact>Brest, France</fact>
+                                    <fact>Edinburgh, Scotland, UK</fact>
+                                    <fact>Scotland, UK</fact>
+                                    <fact>Gloucestershire, England, UK</fact>
+                                    <fact>Lisbon, Portugal</fact>
+                                    <fact>Lousão, Portugal</fact>
+                                    <fact>Alba de Tormes, Spain</fact>
+                                    <fact>Flores de Avila, Spain</fact>
+                                    <fact>Pamplona, Spain</fact>
+                                    <fact>St. Jean de Luz, France</fact>
+                                    <fact>Brussels, Belgium</fact>
+                                    <fact>Belgium</fact>
+                                    <fact>Ath, Belgium</fact>
+                                    <fact>Waterloo, Belgium</fact>
+                                    <fact>Spain</fact>
+                                    <fact>Italy</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="3" name="characternames" displayName="People/Characters">
+                        <versionList>
+                            <version id="9244633" archived="0" lang="eng">
+                                <date timestamp="1463890804">Sun, 22 May 2016 00:20:04 -0400</date>
+                                <person id="1505463">
+                                    <name>Wolfman08</name>
+                                    <url>http://www.librarything.com/profile/Wolfman08</url>
+                                </person>
+                                <factList>
+                                    <fact>Jonathan Strange</fact>
+                                    <fact>Gilbert Norrell</fact>
+                                    <fact>The Gentleman With Thistle-down Hair</fact>
+                                    <fact>Stephen Black</fact>
+                                    <fact>Lady Emma Pole (Wintertowne)</fact>
+                                    <fact>John Childermass</fact>
+                                    <fact>Mr. Christopher Drawlight</fact>
+                                    <fact>John Segundus</fact>
+                                    <fact>Mr. Honeyfoot</fact>
+                                    <fact>Dr. Foxcastle</fact>
+                                    <fact>Mrs. Hettie Pleasance</fact>
+                                    <fact>Mr. Thorpe</fact>
+                                    <fact>Mrs. Godesdone</fact>
+                                    <fact>Mr. Henry Lascelles</fact>
+                                    <fact>Vinculus</fact>
+                                    <fact>John Uskglass (The Raven King)</fact>
+                                    <fact>Arabella Strange (Woodhope)</fact>
+                                    <fact>Sir Walter Pole</fact>
+                                    <fact>Mrs. Wintertowne</fact>
+                                    <fact>Napoleon Buonaparte</fact>
+                                    <fact>Arthur Wellesley, 1st Duke of Wellington</fact>
+                                    <fact>George III, King of the United Kingdom</fact>
+                                    <fact>Flora Greysteel</fact>
+                                    <fact>Signor Tosetti</fact>
+                                    <fact>The old lady of Cannaregio</fact>
+                                    <fact>Lord Portishead (John Waterbury)</fact>
+                                    <fact>Dr. Lancelot Greysteel</fact>
+                                    <fact>Aunt Louisa Greysteel</fact>
+                                    <fact>Admiral Desmoulins</fact>
+                                    <fact>Admiral Paycocke</fact>
+                                    <fact>Alfred</fact>
+                                    <fact>Bonifazia</fact>
+                                    <fact>Captain Gilbey</fact>
+                                    <fact>Captain Harcourt-Bruce</fact>
+                                    <fact>Captain John Ayrton</fact>
+                                    <fact>Captain Jumeau</fact>
+                                    <fact>Captain Whyte</fact>
+                                    <fact>Colonel De Lancey</fact>
+                                    <fact>Colonel George Murray (Quartermaster-General)</fact>
+                                    <fact>Colonel Manningham</fact>
+                                    <fact>Colonel Wenzel von Ottenfeld</fact>
+                                    <fact>Dalziel</fact>
+                                    <fact>Davey</fact>
+                                    <fact>Dr. John Willis</fact>
+                                    <fact>Dr. Robert Darling Willis</fact>
+                                    <fact>Duke of Cambridge</fact>
+                                    <fact>Duke of Clarence</fact>
+                                    <fact>Duke of Devonshire</fact>
+                                    <fact>Duke of Kent</fact>
+                                    <fact>Duke of Sussex</fact>
+                                    <fact>Duke of York</fact>
+                                    <fact>Fitzroy Somerset</fact>
+                                    <fact>Frederick Marston</fact>
+                                    <fact>General Alava</fact>
+                                    <fact>General Charles Stewart (Adjutant-General)</fact>
+                                    <fact>General Perponcher</fact>
+                                    <fact>General Rebecq</fact>
+                                    <fact>Geoffrey</fact>
+                                    <fact>Georgiana Erquistoune</fact>
+                                    <fact>Henry Purfois</fact>
+                                    <fact>Henry Woodhope</fact>
+                                    <fact>Janet Hughes</fact>
+                                    <fact>Jeremy Johns</fact>
+                                    <fact>Jeronimo Saornil</fact>
+                                    <fact>John Hyde</fact>
+                                    <fact>John Longridge</fact>
+                                    <fact>John Murray</fact>
+                                    <fact>John Upchurch</fact>
+                                    <fact>Johnson</fact>
+                                    <fact>Lady Wellington</fact>
+                                    <fact>Lady Winsell</fact>
+                                    <fact>Laurence Strange</fact>
+                                    <fact>Lord Byron</fact>
+                                    <fact>Lord Castlereagh</fact>
+                                    <fact>Lord Chatham</fact>
+                                    <fact>
+                                        Lord Hawkesbury (Robert Banks Jenkinson, also, Lord Liverpool)
+                                    </fact>
+                                    <fact>Lord Mulgrave</fact>
+                                    <fact>Lord Sidmouth</fact>
+                                    <fact>Lucas</fact>
+                                    <fact>Colquhoun Grant</fact>
+                                    <fact>Major Norcott</fact>
+                                    <fact>Margaret Erquistoune</fact>
+                                    <fact>Maria Bullworth</fact>
+                                    <fact>Maria Erquistoune</fact>
+                                    <fact>Marianna Segati</fact>
+                                    <fact>Minichello</fact>
+                                    <fact>Miss Redruth</fact>
+                                    <fact>Monsieur Forcalquier</fact>
+                                    <fact>Monsieur Minervois</fact>
+                                    <fact>Mr. Baillie</fact>
+                                    <fact>Mr. Briscall (Chaplain)</fact>
+                                    <fact>Mr. Bullbridge</fact>
+                                    <fact>Mr. Canning</fact>
+                                    <fact>Mr. Erquistoune</fact>
+                                    <fact>Mr. Gatcombe</fact>
+                                    <fact>Mr. Green</fact>
+                                    <fact>Mr. Hart (Hunt)</fact>
+                                    <fact>Mr. Holland</fact>
+                                    <fact>Mr. Horrocks</fact>
+                                    <fact>Mr. Lister</fact>
+                                    <fact>Mr. Moorcock</fact>
+                                    <fact>Mr. Newton</fact>
+                                    <fact>Mr. Perceval</fact>
+                                    <fact>Mr. Prideaux</fact>
+                                    <fact>Mr. Redmond</fact>
+                                    <fact>Mr. Redruth</fact>
+                                    <fact>Mr. Robinson</fact>
+                                    <fact>Mr. Shackleton</fact>
+                                    <fact>Mr. Tantony</fact>
+                                    <fact>Mr. Taylor</fact>
+                                    <fact>Mrs. Ayrton</fact>
+                                    <fact>Mrs. Blake</fact>
+                                    <fact>Mrs. Brandy</fact>
+                                    <fact>Mrs. Delgado</fact>
+                                    <fact>Mrs. Erquistoune</fact>
+                                    <fact>Mrs. Lennox</fact>
+                                    <fact>Mrs. Littleworth</fact>
+                                    <fact>Mrs. Redmond</fact>
+                                    <fact>Mrs. Strange (Miss Erquistoune)</fact>
+                                    <fact>Ned</fact>
+                                    <fact>Owen Bullbridge</fact>
+                                    <fact>Perroquet</fact>
+                                    <fact>Prince Blücher</fact>
+                                    <fact>Robert Edwards</fact>
+                                    <fact>Robert</fact>
+                                    <fact>Sir Charles Alten</fact>
+                                    <fact>Sir Henry Clinton</fact>
+                                    <fact>Toby Smith</fact>
+                                    <fact>Tom Levy</fact>
+                                    <fact>William Hadley-Bright</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="58" name="originallanguage" displayName="Original language">
+                        <versionList>
+                            <version id="8557485" archived="0" lang="eng">
+                                <date timestamp="1443353334">Sun, 27 Sep 2015 07:28:54 -0400</date>
+                                <person id="1432548">
+                                    <name>hf22</name>
+                                    <url>http://www.librarything.com/profile/hf22</url>
+                                </person>
+                                <factList>
+                                    <fact>English</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="37" name="movies" displayName="Related movies">
+                        <versionList>
+                            <version id="8392200" archived="0" lang="eng">
+                                <date timestamp="1440162851">Fri, 21 Aug 2015 09:14:11 -0400</date>
+                                <person id="677371">
+                                    <name>miriamw13</name>
+                                    <url>http://www.librarything.com/profile/miriamw13</url>
+                                </person>
+                                <factList>
+                                    <fact><![CDATA[Jonathan Strange & Mr. Norrell (2015)]]></fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="57" name="haikusummary" displayName="Book haiku">
+                        <versionList>
+                            <version id="8246749" archived="0" lang="eng">
+                                <date timestamp="1436448877">Thu, 09 Jul 2015 09:34:37 -0400</date>
+                                <person id="325198">
+                                    <name>Taphophile13</name>
+                                    <url>http://www.librarything.com/profile/Taphophile13</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                        <![CDATA[ Two odd magicians <br> restore magic to England <br> and go kind of nuts. (marcusbrutus) ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="41" name="originaltitle" displayName="Original title">
+                        <versionList>
+                            <version id="7127581" archived="0" lang="eng">
+                                <date timestamp="1399122896">Sat, 03 May 2014 09:14:56 -0400</date>
+                                <person id="1486712">
+                                    <name>Luisali</name>
+                                    <url>http://www.librarything.com/profile/Luisali</url>
+                                </person>
+                                <factList>
+                                    <fact>[<![CDATA[Jonathan Strange & Mr. Norrell]]></fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="28" name="epigraph" displayName="Epigraph">
+                        <versionList>
+                            <version id="5381639" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="684944">
+                                    <name>fig2</name>
+                                    <url>http://www.librarything.com/profile/fig2</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                       <![CDATA[ He hardly ever spoke of magic, and when he did it was like a history lesson and no one could bear to listen to him. ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="27" name="quotations" displayName="Quotations">
+                        <versionList>
+                            <version id="5381638" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="1364429">
+                                    <name>johnny_7713</name>
+                                    <url>http://www.librarything.com/profile/johnny_7713</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                        <![CDATA[ At sixteen she spoke -- not only French, Italian & German -- which are part of any lady's commonplace accomplishments -- but all the languages of the civilized (and uncivilized) world. She spoke the language of the Scottish Highlands (which is like singing). She spoke Basque, which is a language which rarely makes any impression upon the brains of any other race, so that a man may hear it as often and as long as he likes, but never afterwards be able to recall a single syllable of it. She even learnt the language of a strange country which, Signor Tosetti had been told, some people believed still existed, although no one in the world could say where it was. (The name of the country was Wales.) ]]>
+                                    </fact>
+                                    <fact>
+                                        <![CDATA[ It is also true that that his hair had a reddish tinge and, as everybody knows, no one with red hair can ever truly be said to be handsome. ]]>
+                                    </fact>
+                                    <fact>
+                                        <![CDATA[ "Soldiers, I am sorry to say, steal everything." He thought for a moment and then added, "Or at least ours do." ]]>
+                                    </fact>
+                                    <fact>
+                                        <![CDATA[ "Can a magician kill a man by magic?" Lord Wellington asked Strange. Strange frowned. He seemed to dislike the question. "I suppose a magician might," he admitted "but a gentleman never could." ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="36" name="mediareviews" displayName="Media reviews">
+                        <versionList>
+                            <version id="5381637" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="116044">
+                                    <name>Shortride</name>
+                                    <url>http://www.librarything.com/profile/Shortride</url>
+                                </person>
+                                <factList>
+                                    <fact>129</fact>
+                                    <fact>145</fact>
+                                    <fact>146</fact>
+                                    <fact>276</fact>
+                                    <fact>1029</fact>
+                                    <fact>4977</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="34" name="events" displayName="Important events">
+                        <versionList>
+                            <version id="5381635" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="33087">
+                                    <name>nnicole</name>
+                                    <url>http://www.librarything.com/profile/nnicole</url>
+                                </person>
+                                <factList>
+                                    <fact>Peninsular War (1807|1814)</fact>
+                                    <fact>Napoleonic Wars (1803|1815)</fact>
+                                    <fact>Battle of Waterloo ( [1815])</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="30" name="dedication" displayName="Dedication">
+                        <versionList>
+                            <version id="5381632" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="200103">
+                                    <name>PhaedraB</name>
+                                    <url>http://www.librarything.com/profile/PhaedraB</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                        <![CDATA[ In memory of my brother, Paul Frederick Gunn Clarke, 1961-2000 ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="29" name="blurbers" displayName="Blurbers">
+                        <versionList>
+                            <version id="5381630" archived="0" lang="eng">
+                                <date timestamp="1354046115">Tue, 27 Nov 2012 14:55:15 -0500</date>
+                                <person id="200103">
+                                    <name>PhaedraB</name>
+                                    <url>http://www.librarything.com/profile/PhaedraB</url>
+                                </person>
+                                <factList>
+                                    <fact>Gaiman, Neil</fact>
+                                    <fact>Palliser, Charles</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="26" name="lastwords" displayName="Last words">
+                        <versionList>
+                            <version id="5381628" archived="0" lang="eng">
+                                <date timestamp="1354046114">Tue, 27 Nov 2012 14:55:14 -0500</date>
+                                <person id="23570">
+                                    <name>conceptDawg</name>
+                                    <url>http://www.librarything.com/profile/conceptDawg</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                        <![CDATA[ Then he turned upon his heel and disappeared into the Darkness. ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="25" name="firstwords" displayName="First words">
+                        <versionList>
+                            <version id="5381626" archived="0" lang="eng">
+                                <date timestamp="1354046114">Tue, 27 Nov 2012 14:55:14 -0500</date>
+                                <person id="23570">
+                                    <name>conceptDawg</name>
+                                    <url>http://www.librarything.com/profile/conceptDawg</url>
+                                </person>
+                                <factList>
+                                    <fact>
+                                        <![CDATA[ Some years ago there was in the city of York a society of magicians. ]]>
+                                    </fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                    <field type="1" name="literaryeditors" displayName="Publisher's editor">
+                        <versionList>
+                            <version id="5381617" archived="0" lang="eng">
+                                <date timestamp="1354046113">Tue, 27 Nov 2012 14:55:13 -0500</date>
+                                <person id="61510">
+                                    <name>KingRat</name>
+                                    <url>http://www.librarything.com/profile/KingRat</url>
+                                </person>
+                                <factList>
+                                    <fact>Nielsen Hayden, Patrick</fact>
+                                </factList>
+                            </version>
+                        </versionList>
+                    </field>
+                </fieldList>
+            </commonknowledge>
+        </item>
+        <legal>
+            By using this data you agree to the LibraryThing API terms of service.
+        </legal>
+    </ltml>
+</response>

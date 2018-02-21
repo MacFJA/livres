@@ -1,0 +1,45 @@
+{% extends 'addCompare/ajax.html.twig' %}
+
+{% block search_form %}
+    <div id="templates" hidden>
+        <div class="tpl-modal-found centered">
+            <div>Found the ISBN/EAN <strong></strong></div>
+            <button class="pure-button pure-button-primary" onclick="startSearch(this.getAttribute('data-isbn'))">Search</button>
+            <button class="pure-button" onclick="scanner.modalCancel()">Cancel</button>
+        </div>
+    </div>
+    <div id="search-form" class="pure-u-1 pure-form pure-form-stacked centered">
+        <fieldset class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3">
+            <div class="pure-u-1-2">
+                <button class="pure-button" id="livestart" onclick="scanner.startLive('#livestart', '#livestop', '#streamReturn')">Start</button>
+                <button class="pure-button" id="livestop" onclick="scanner.stopLive('#livestart', '#livestop')" hidden>Stop</button>
+            </div>
+            <legend>{% trans with {'{providers}': providers|length} from 'compare' %}search_in_count_provider{% endtrans %}</legend>
+            <div class="pure-u-1 margin-full-width">
+                <div id="streamReturn"></div>
+            </div>
+            <input type="hidden" id="isbn_to_search">
+            <div id="barcode-fail" class="pure-form-message" hidden>No ISBN/EAN found in the image</div>
+            <div id="barcode-success" hidden>
+                <div id="barcode-success-message" class="app-search-title">Found the ISBN/EAN <strong></strong></div>
+                <button class="pure-button pure-button-primary" onclick="startSearch()">{{ 'Search'|trans({},'compare') }}</button>
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}
+
+{% block html_head %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/md-polyfill.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/scanner.js') }}"></script>
+    <script type="application/javascript">
+        function startSearch(isbn) {
+            scanner.modalSearch(isbn);
+            document.getElementById('search-form').setAttribute('hidden', true)
+        }
+    </script>
+{% endblock %}

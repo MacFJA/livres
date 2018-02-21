@@ -1,0 +1,92 @@
+/**
+ * @author  MacFJA
+ * @license MIT
+ */
+@import "variables";
+
+@mixin tooltipArrow($verticalOffset, $horizontalOffset) {
+  &:before {
+    content: "\a0";
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+
+    border-bottom: 8px solid black;
+    display: block;
+    position: absolute;
+    bottom: $verticalOffset;
+    left: calc(#{$horizontalOffset} + 1ex + #{$global-border-radius});
+    z-index: 2;
+  }
+}
+
+@mixin tooltipBody($verticalOffset, $horizontalOffset) {
+  background: black;
+  display: inline-block;
+  padding: 0.5ex 1ex;
+  color: white;
+  top: calc(100% - #{$verticalOffset});
+  position: absolute;
+  left: $horizontalOffset;
+  border-radius: $global-border-radius;
+  z-index: 1;
+  box-shadow: 0 0 20px 10px white;
+  text-align: center;
+  min-width: 16px;
+}
+
+@mixin attrTooltip($verticalPadding, $horizontalPadding, $attribute) {
+  position: relative;
+
+  &:hover:after {
+    @include tooltipBody($verticalPadding, $horizontalPadding);
+    content: attr(#{$attribute});
+  }
+
+  &:hover {
+    @include tooltipArrow($verticalPadding, $horizontalPadding);
+  }
+}
+
+@mixin verticalAlign {
+  vertical-align: middle;
+
+  &:before {
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+}
+
+@mixin multiple($childSelector) {
+  #{$childSelector} {
+    transition: box-shadow 2s;
+    box-shadow: /* The top layer shadow */
+            0 1px 1px rgba(0, 0, 0, 0.15),
+              /* The second layer */
+            0 0px 0 -5px #eee,
+              /* The second layer shadow */
+            0 0px 0px -4px rgba(0, 0, 0, 0.15),
+              /* The third layer */
+            0 0px 0 -10px #eee,
+              /* The third layer shadow */
+            0 0px 0px -9px rgba(0, 0, 0, 0.15);
+  }
+
+  &.multiple {
+    #{$childSelector} {
+      box-shadow: /* The top layer shadow */
+              0 1px 1px rgba(0, 0, 0, 0.15),
+                /* The second layer */
+              0 16px 0 -8px #eee,
+                /* The second layer shadow */
+              0 16px 1px -7px rgba(0, 0, 0, 0.15),
+                /* The third layer */
+              0 32px 0 -16px #eee,
+                /* The third layer shadow */
+              0 32px 1px -15px rgba(0, 0, 0, 0.15);
+    }
+  }
+}

@@ -1,0 +1,5 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: en
+    php_errors:
+        log: true

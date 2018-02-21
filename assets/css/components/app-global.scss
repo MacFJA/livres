@@ -1,0 +1,54 @@
+/**
+ * @author  MacFJA
+ * @license MIT
+ */
+@import "variables";
+
+.app-small {
+  font-size: 85%;
+}
+
+.app-button-warning {
+  background-color: $warning-color;
+  color: #fff;
+}
+
+.app-button-danger {
+  background-color: $danger-color;
+  color: #fff;
+}
+
+.app-button-info {
+  background-color: $color-light-blue;
+}
+
+.app-label {
+  padding: 2px 0.5ex;
+  background: $color-light-gray;
+  border-radius: $global-border-radius;
+  font-weight: bold;
+  color: white;
+  font-size: 70%;
+  display: inline-block;
+  margin: 0 0.5ex;
+  vertical-align: middle;
+
+  &.app-label-full {
+    font-size: 1rem;
+    padding: 0.25ex 0.5ex;
+    margin: 0.5ex;
+  }
+
+  &.app-label-green {
+    background-color: $color-green;
+  }
+
+  &.app-label-red {
+    background-color: $color-red;
+  }
+
+  &.app-label-blue {
+    background-color: $color-blue;
+  }
+}
+

@@ -1,0 +1,51 @@
+<classify xmlns="http://classify.oclc.org">
+    <response code="4"/>
+    <!--
+    Classify is a product of OCLC Online Computer Library Center: http://classify.oclc.org
+    -->
+    <workCount>35</workCount>
+    <start>0</start>
+    <maxRecs>25</maxRecs>
+    <orderBy>thold desc</orderBy>
+    <input type="author">Weinberger%2C+David</input>
+    <works>
+        <work author="Weinberger, David, 1950-" editions="23" format="Book" holdings="2065" hyr="2013" itemtype="itemtype-book" lyr="2007" owi="198186770" schemes="DDC LCC" title="Everything is miscellaneous : the power of the new digital disorder" wi="122291427"/>
+        <work author="Daṿid, Avraham | Weinberger, Leon J. [Translator; Editor] | Ordan, Dena [Translator] | Daṿid, Avraham [Editor; Other]" editions="13" format="eBook" holdings="1957" hyr="2012" itemtype="itemtype-book-digital" lyr="1993" owi="370507002" schemes="DDC LCC" title="A Hebrew chronicle from Prague, c. 1615" wi="144561184"/>
+        <work author="Weinberger, David, 1950-" editions="26" format="Book" holdings="1386" hyr="2014" itemtype="itemtype-book" lyr="2011" owi="1060583516" schemes="DDC LCC" title="Too big to know : rethinking knowledge now that the facts aren't the facts, experts are everywhere, and the smartest person in the room is the room" wi="5895835288"/>
+        <work author="Weinberger, David, 1950- | Li, Kun | Li, Youliang" editions="16" format="Book" holdings="1109" hyr="2009" itemtype="itemtype-book" lyr="2002" owi="768631776" schemes="DDC LCC" title="Small pieces loosely joined : a unified theory of the Web" wi="302107745"/>
+        <work author="Rioch, Margaret J. | Coulter, Winifred R. [Author] | Weinberger, David M. [Author]" editions="10" format="Book" holdings="428" hyr="1976" itemtype="itemtype-book" lyr="1976" owi="5204241" schemes="DDC LCC NLM" title="Dialogues for therapists" wi="2557261"/>
+        <work author="Weinberger, David, 1950-" editions="2" format="Book" holdings="126" hyr="2008" itemtype="itemtype-book" lyr="2007" owi="479213323" schemes="DDC" title="Das Ende der Schublade : die Macht der neuen digitalen Unordnung" wi="226292008"/>
+        <work author="Weinberger, David, 1950-" editions="4" format="Book" holdings="107" hyr="1987" itemtype="itemtype-book" lyr="1987" owi="9073641" schemes="DDC LCC" title="Nuclear dialogues" wi="15132762"/>
+        <work author="Weinberger, David, 1950-" editions="7" format="Book" holdings="75" hyr="2014" itemtype="itemtype-book" lyr="2013" owi="3902449045" schemes="DDC" title="Too big to know : das Wissen neu denken, denn Fakten sind keine Fakten mehr, die Experten sitzen überall und die schlaueste Person im Raum ist der Raum" wi="828812324"/>
+        <work author="Weinberger, David, 1950-" editions="4" format="Book" holdings="42" hyr="2002" itemtype="itemtype-book" lyr="2002" owi="1881915813" schemes="DDC LCC" title="Small pieces loosely joined : how the web shows us who we really are" wi="248259453"/>
+        <work author="Weinberger, David" editions="3" format="Book" holdings="39" hyr="1990" itemtype="itemtype-book" lyr="1990" owi="23955273" schemes="LCC" title="Yiśraʼel be-ʻitsumah shel milḥemet ḳiyum" wi="22406455"/>
+        <work author="Weinberger, Marc-David" editions="4" format="Book" holdings="33" hyr="2009" itemtype="itemtype-book" lyr="2009" owi="473583173" schemes="DDC LCC" title="Actualités du droit bancaire" wi="401235037"/>
+        <work author="Coon, Adam W. [Translator] | Harrington, Jonathan [Translator] | Rothenberg, Jerome, 1931- [Translator] | Shook, David [Translator] | Sullivan, Clare E., 1967- [Translator] | Surpin, Jacob [Translator] | Terán, Víctor, 1958- [Editor] | Weinberger, Eliot [Translator]" editions="2" format="Book" holdings="32" hyr="2015" itemtype="itemtype-book" lyr="2015" owi="2997632287" schemes="LCC" title="Like a new sun : six contemporary Mexican poets writing in indigenous languages" wi="910572317"/>
+        <work author="Weinberger, David" editions="4" format="Book" holdings="23" hyr="1978" itemtype="itemtype-book" lyr="1978" owi="17845016" schemes="LCC" title="Yiśraʼel bi-meʻarbolet mitḳefet ha-shalom." wi="233229804"/>
+        <work author="Weinberger, David, 1926-" editions="3" format="Book" holdings="23" hyr="1977" itemtype="itemtype-book" lyr="1976" owi="18456107" schemes="LCC" title="ʻOtsmah kalkalit u-viṭahon leʼumi : derakhim le-ʻatsmaʼutah ha-kalkalit shel Yiśraʼel." wi="19160717"/>
+        <work author="Weinberger, David, 1950-" editions="3" format="Book" holdings="11" hyr="2010" itemtype="itemtype-book" lyr="2010" owi="908993533" schemes="DDC" title="Elogio del disordine" wi="730312901"/>
+        <work author="Weinberger, David, 1950-" editions="2" format="Book" holdings="10" hyr="2002" itemtype="itemtype-book" lyr="2002" owi="499689848" schemes="DDC" title="Arcipelago Web" wi="636259504"/>
+        <work author="Weinberger, David, 1950-" editions="4" format="Book" holdings="8" hyr="2014" itemtype="itemtype-book" lyr="2014" owi="3902601838" schemes="DDC LCC" title="Too big to know : wang lu si xiang xian qu wen bo ge chong xin ding yi zhi shi de yi yi yu li liang" wi="879581893"/>
+        <work author="Weinberger, David, 1950-" editions="2" format="Book" holdings="8" hyr="1994" itemtype="itemtype-book" lyr="1994" owi="33793226" schemes="DDC" title="Adventurer's guide to Interleaf Lisp" wi="31440844"/>
+        <work author="Weinberger, David" editions="2" format="Book" holdings="7" hyr="1976" itemtype="itemtype-book" lyr="1976" owi="3769958738" schemes="LCC" title="'Otsmah kalkalit u-vitahon le'uml." wi="43950011"/>
+        <work author="Weinberger, David, 1950-" editions="2" format="Book" holdings="5" hyr="2008" itemtype="itemtype-book" lyr="2008" owi="2865250125" schemes="DDC" title="Xin shu zi zhi xu de ge ming" wi="420970172"/>
+        <work author="Weinberger, David, 1926-" editions="1" format="Book" holdings="5" hyr="1978" itemtype="itemtype-book" lyr="1978" owi="18455570" schemes="LCC" title="Yiśraʼel be-maʻarbolet mitḳefet ha-shalom." wi="19160692"/>
+        <work author="Weinberger, David Bruce, 1947-" editions="4" format="eBook" holdings="5" hyr="1973" itemtype="itemtype-book-digital" lyr="1973" owi="2105138" schemes="LCC" title="Investigations in the theory of blocking pairs of polyhedra." wi="1214717"/>
+        <work author="Weinberger, David" editions="1" format="Book" holdings="4" hyr="2004" itemtype="itemtype-book" lyr="2004" owi="46938349" schemes="LCC" title="Enjoying your children : practicing Biblical parenting" wi="62594719"/>
+        <work author="Weinberger, David, 1950-" editions="1" format="Book" holdings="3" hyr="2005" itemtype="itemtype-book" lyr="2005" owi="20600017" schemes="DDC LCC" title="Taxonomies to tags : from trees to piles of leaves" wi="58396787"/>
+        <work author="Weinberger, David, 1950-" editions="1" format="Book" holdings="3" hyr="1979" itemtype="itemtype-book" lyr="1978" owi="11616051" schemes="" title="Heidegger's ontology of things." wi="15888414"/>
+    </works>
+    <navigation>
+        <pages>
+            <page>
+                <label>1</label>
+            </page>
+            <page>
+                <label>2</label>
+                <link>25</link>
+            </page>
+        </pages>
+        <next>25</next>
+        <last>25</last>
+    </navigation>
+</classify>

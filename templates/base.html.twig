@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=0.7">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        {% block html_head %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav class="pure-menu pure-menu-horizontal pure-menu-scrollable">
+                <a href="{{ url('book-list') }}" class="pure-menu-heading pure-menu-link">{{ 'BOOKS'|trans({}, 'app') }}</a>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item">
+                        <a href="{{ url('book-add-by-isbn') }}" class="pure-menu-link">
+                            <span class="rd-visible-md">{{ 'Add by ISBN'|trans({}, 'app') }}</span>
+                            <span class="rd-hidden-md"><i class="fa fa-barcode">&nbsp;<i class="fa fa-edit"></i></i></span>
+                        </a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url('book-add-by-image') }}" class="pure-menu-link">
+                            <span class="rd-visible-md">{% trans with {} from 'app' %}Add by Barcode (static){% endtrans %}</span>
+                            <span class="rd-hidden-md"><i class="fa fa-barcode"></i>&nbsp;<i class="fa fa-image"></i></span>
+                        </a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url('book-add-by-video') }}" class="pure-menu-link">
+                            <span class="rd-visible-md">{{ 'Add by Barcode (live)'|trans({}, 'app') }}</span>
+                            <span class="rd-hidden-md"><i class="fa fa-barcode"></i>&nbsp;<i class="fa fa-video"></i></span>
+                        </a>
+                    </li>
+                    <li class="pure-menu-separator"></li>
+                    <li class="pure-menu-item">
+                        <a href="{{ url('settings') }}" class="pure-menu-link">
+                            <span class="rd-visible-md">{{ 'Settings'|trans({}, 'app') }}</span>
+                            <span class="rd-hidden-md"><i class="fa fa-cogs"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

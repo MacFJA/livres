@@ -1,0 +1,97 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Entity,Migrations,Tests}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Worker\Export\:
+        resource: '../src/Worker/Export'
+        tags: ['app.exporter']
+
+    App\Worker\Export\ExportInterface:
+        tags: []
+
+    App\Worker\Export\All:
+        tags: ['app.exporter']
+        arguments:
+            $exporters: !tagged app.exporter
+
+    App\Twig\:
+        resource: '../src/Twig'
+        tags: ['twig.extension']
+
+    App\Command\AppExportCommand:
+        arguments:
+            $exporters: !tagged app.exporter
+
+    App\Worker\Export\Sqlite:
+        tags: ['app.exporter']
+        arguments:
+            $databasePath: '%env(resolve:DATABASE_URL)%'
+
+    App\Controller\Settings\ProviderController:
+        arguments:
+            $providers:
+                - App\Worker\Query\Provider\AbeBooks
+                - App\Worker\Query\Provider\Amazon
+                - App\Worker\Query\Provider\AntoineOnline
+                - App\Worker\Query\Provider\ArchiveOrg
+                - App\Worker\Query\Provider\Biblys
+                - App\Worker\Query\Provider\COPAC
+                - App\Worker\Query\Provider\DigitEyes
+                - App\Worker\Query\Provider\Ebay
+                - App\Worker\Query\Provider\EbooksGratuits
+                - App\Worker\Query\Provider\EuroBuch
+                - App\Worker\Query\Provider\FeedBooks
+                - App\Worker\Query\Provider\GoodReads
+                - App\Worker\Query\Provider\GoogleBooks
+                - App\Worker\Query\Provider\ISBNDb
+                - App\Worker\Query\Provider\LaLibrairie
+                - App\Worker\Query\Provider\LibraryThing
+                - App\Worker\Query\Provider\LOC
+                - App\Worker\Query\Provider\OCLC
+                - App\Worker\Query\Provider\OpenLibrary
+                - App\Worker\Query\Provider\RandomHouse
+                - App\Worker\Query\Provider\WorldCatIsbn
+                - App\Worker\Query\Provider\WorldCatIssn
+
+    App\Controller\SettingsController:
+        arguments:
+            $coverDir: "%app.cover_dir%"
+
+    Symfony\Component\Config\FileLocator: '@file_locator'
+    Liip\ImagineBundle\Imagine\Cache\CacheManager: '@liip_imagine.cache.manager'
+
+    App\Worker\Entity\BookInjectionListener:
+        arguments:
+            $coverDir: "%app.cover_dir%"
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    Flintstone\Flintstone:
+        arguments:
+            $database: settings
+            $config:
+                dir: "%app.config_dir%"

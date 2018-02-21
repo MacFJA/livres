@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:opds="http://opds-spec.org/2010/catalog" xmlns:app="http://www.w3.org/2007/app" xmlns:odl="http://opds-spec.org/odl" xmlns:schema="http://schema.org/" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:thr="http://purl.org/syndication/thread/1.0" xmlns:dcterms="http://purl.org/dc/terms/" xml:lang="en">
+    <id>http://www.feedbooks.com/search.atom?query=9781400846702</id>
+    <title>Searching for '9781400846702'</title>
+    <updated>2018-01-27T14:04:25Z</updated>
+    <icon>http://assets3.feedbooks.net/images/favicon.ico?t=1516986276</icon>
+    <author>
+        <name>Feedbooks</name>
+        <uri>http://www.feedbooks.com</uri>
+        <email>support@feedbooks.zendesk.com</email>
+    </author>
+    <link type="application/atom+xml; profile=opds-catalog; kind=acquisition" href="http://www.feedbooks.com/search.atom?query=9781400846702" rel="self" title="All"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=navigation" href="http://www.feedbooks.com/catalog.atom" rel="start" title="Home"/>
+    <link type="application/opensearchdescription+xml" href="http://www.feedbooks.com/opensearch.xml" rel="search" title="Search on Feedbooks"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="https://www.feedbooks.com/user/bookshelf.atom" rel="http://opds-spec.org/shelf" title="Bookshelf"/>
+    <opensearch:totalResults>1</opensearch:totalResults>
+    <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+    <opensearch:startIndex>1</opensearch:startIndex>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="/store/search.atom?query=9781400846702" rel="http://opds-spec.org/featured" title="eBook Store"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" href="/books/search.atom?query=9781400846702" rel="http://opds-spec.org/featured" title="Public Domain"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="1" opds:facetGroup="Categories" href="/search.atom?category=FBSCI000000N&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="Science and Technics"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="1" opds:activeFacet="true" opds:facetGroup="Language" href="/search.atom?lang=en&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="English"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="0" opds:facetGroup="Language" href="/search.atom?lang=fr&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="French"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="0" opds:facetGroup="Language" href="/search.atom?lang=de&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="German"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="0" opds:facetGroup="Language" href="/search.atom?lang=es&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="Spanish"/>
+    <link type="application/atom+xml;profile=opds-catalog;kind=acquisition" thr:count="0" opds:facetGroup="Language" href="/search.atom?lang=it&amp;query=9781400846702" rel="http://opds-spec.org/facet" title="Italian"/>
+    <entry>
+        <title>The Unpredictable Species: What Makes Humans Unique</title>
+        <id>http://www.feedbooks.com/item/491011</id>
+        <dcterms:identifier xsi:type="dcterms:URI">urn:ISBN:9781400846702</dcterms:identifier>
+        <dcterms:source xsi:type="dcterms:URI">urn:ISBN:9780691148588</dcterms:source>
+        <author>
+            <name>Philip Lieberman</name>
+            <uri>http://www.feedbooks.com/search?query=contributor%3A%22Philip+Lieberman%22</uri>
+        </author>
+        <published>2013-05-11T12:54:33Z</published>
+        <updated>2018-01-15T11:16:21Z</updated>
+        <dcterms:language>en</dcterms:language>
+        <dcterms:publisher>Princeton University Press</dcterms:publisher>
+        <dcterms:issued>2013-04-20</dcterms:issued>
+        <summary> The Unpredictable Species argues that the human brain evolved in a way that enhances our cognitive flexibility and capacity for innovation and imitation. In doing so, the book challenges the central claim of evolutionary psychology that we are lo...</summary>
+        <dcterms:extent>272 pages</dcterms:extent>
+        <category scheme="http://www.feedbooks.com/categories" label="Non-Fiction" term="FBNFC000000"/>
+        <category scheme="http://www.feedbooks.com/categories" label="Science and Technics" term="FBSCI000000N"/>
+        <category scheme="http://www.feedbooks.com/categories" label="Science" term="FBSCI000000"/>
+        <category scheme="http://www.feedbooks.com/categories" label="Life Sciences" term="FBSCI086000"/>
+        <category scheme="http://www.feedbooks.com/categories" label="Neuroscience" term="FBSCI089000"/>
+        <category scheme="http://www.feedbooks.com/categories" label="Genetics &amp; Genomics" term="FBSCI029000"/>
+        <link type="text/html" href="http://www.feedbooks.com/item/491011" rel="alternate" title="View on Feedbooks"/>
+        <link type="image/jpeg" href="http://covers.feedbooks.net/item/491011.jpg?size=large&amp;t=1404407169" rel="http://opds-spec.org/image"/>
+        <link type="image/jpeg" href="http://covers.feedbooks.net/item/491011.jpg?t=1404407169" rel="http://opds-spec.org/image/thumbnail"/>
+        <link type="text/html" href="https://www.feedbooks.com/item/491011/buy" rel="http://opds-spec.org/acquisition/buy">
+            <opds:price currencycode="EUR">37.45</opds:price>
+            <opds:indirectAcquisition type="application/vnd.adobe.adept+xml">
+                <opds:indirectAcquisition type="application/epub+zip"/>
+            </opds:indirectAcquisition>
+        </link>
+        <link type="application/atom+xml;type=entry;profile=opds-catalog" href="http://www.feedbooks.com/item/491011.atom" rel="alternate" title="Full entry"/>
+    </entry>
+</feed>

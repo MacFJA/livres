@@ -1,0 +1,31 @@
+{
+  "stat": "ok",
+  "list": [
+    {
+      "url": [
+        "http://www.worldcat.org/oclc/177669176?referer=xid"
+      ],
+      "publisher": "O'Reilly",
+      "form": [
+        "BA"
+      ],
+      "lccn": [
+        "2004273129"
+      ],
+      "lang": "eng",
+      "city": "Sebastopol, CA",
+      "author": "by Mark Lutz and David Ascher.",
+      "ed": "2nd ed.",
+      "year": "2003",
+      "isbn": [
+        "0596002815"
+      ],
+      "title": "Learning Python",
+      "oclcnum": [
+        "177669176",
+        "...",
+        "79871142"
+      ]
+    }
+  ]
+}

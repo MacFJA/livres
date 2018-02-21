@@ -1,0 +1,25 @@
+{
+  "stat": "ok",
+  "group": [
+    {
+      "rel": "this",
+      "list": [
+        {
+          "rssurl": "http://www.sciencemag.org/rss/current.xml",
+          "publisher": "New York, N.Y. : s.n",
+          "form": "JB",
+          "peerreview": "Y",
+          "rawcoverage": "Vol. 1, no. 1 (July 3, 1880)-v. 3, no. 82 (Mar. 4, 1882); [New ser.] Vol. 1, no. 1 (Feb. 9, 1883)-v. 23, no. 581 (Mar. 23, 1894); [2nd ser.] v. 1, no. 1 (Jan. 4, 1895)-",
+          "title": "Science",
+          "issn": "0036-8075",
+          "oclcnum": [
+            "460357554",
+            "...",
+            "320472675"
+          ],
+          "issnl": "0036-8075"
+        }
+      ]
+    }
+  ]
+}

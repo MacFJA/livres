@@ -1,0 +1,9 @@
+Providers: Fournisseur
+Configure: Configurer
+Covers: Couvertures
+'Purge covers cache': 'Vider le cache des couvertures'
+'Delete downloaded covers': 'Supprimer toutes les couvertures téléchargées'
+downloader_removed: 'Toutes les couvertures ont été supprimées<br>Elles seront re-téléchargées lors de leur prochain affichage.'
+'Cache purged!': 'Cache vidé!'
+Validate: Valider
+'Display settings': 'Options d''affichage'

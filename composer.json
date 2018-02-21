@@ -1,0 +1,98 @@
+{
+    "name": "macfja/livres",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MacFJA"
+        }
+    ],
+    "require": {
+        "php": "^7.0.8",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-xml": "*",
+        "biblys/data-client-php": "^0.3.0",
+        "dts/ebay-sdk-php": "^14.0",
+        "egeloen/serializer": "^1.0",
+        "emanueleminotto/humanizer-bundle": "^1.0",
+        "fire015/flintstone": "^2.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "league/csv": "^9.1",
+        "liip/imagine-bundle": "^1.9",
+        "masterminds/html5": "^2.3",
+        "nicebooks/isbn": "dev-master",
+        "njt/good-reads": "^1.0",
+        "picqer/php-barcode-generator": "^0.2.2",
+        "scriptotek/google-books": "^0.2.3",
+        "skyscanner/jsonpath": "^1.0",
+        "symfony/asset": "^3.4",
+        "symfony/console": "^3.4",
+        "symfony/flex": "^1.0",
+        "symfony/form": "^3.4",
+        "symfony/framework-bundle": "^3.4",
+        "symfony/lts": "^3",
+        "symfony/orm-pack": "^1.0",
+        "symfony/translation": "^3.4",
+        "symfony/twig-bundle": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/yaml": "^3.4"
+    },
+    "require-dev": {
+        "edgedesign/phpqa": "^1.18",
+        "jakub-onderka/php-parallel-lint": "^0.9.2",
+        "phpstan/phpstan": "^0.9.2",
+        "sensiolabs/security-checker": "^4.1",
+        "symfony/dotenv": "^3.4",
+        "symfony/expression-language": "^3.4",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/thanks": "^1.0",
+        "symfony/webpack-encore-pack": "^1.0",
+        "vimeo/psalm": "^0.3.93"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "qa": "phpqa --analyzedDirs src --buildDir build/analysed --ignoredDirs build,vendor,public,bin,config --report --tools phploc,phpcpd:0,phpcs:0,pdepend,phpmd:0,phpmetrics,security-checker:0,phpstan:0,psalm:0,parallel-lint:0",
+        "ci": "phpqa --analyzedDirs src --ignoredDirs build,vendor,public,bin,config --output cli --tools phploc,phpcpd:0,phpcs:0,pdepend,phpmd:0,phpmetrics,security-checker:0,phpstan:0,psalm:0,parallel-lint:0"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "id": "01C2HFKHP2N60KJDENXHAXVRV2",
+            "allow-contrib": false
+        }
+    }
+}

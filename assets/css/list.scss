@@ -1,0 +1,21 @@
+/**
+ * @author  MacFJA
+ * @license MIT
+ */
+@import "components/base";
+@import "components/app-global";
+@import "components/autocomplete";
+@import "components/responsive";
+
+@media screen and (min-width: 48em) {
+  table.pure-table .rd-visible-md {
+    display: table-cell;
+  }
+}
+
+#app-cover-th {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 60px;
+}

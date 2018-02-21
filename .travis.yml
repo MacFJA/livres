@@ -1,0 +1,16 @@
+language: php
+php:
+  - '7.0'
+  - '7.1'
+  - '7.2'
+
+install:
+  - composer install --prefer-dist --no-interaction
+
+script:
+  - composer ci -- --ansi
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache

@@ -1,0 +1,54 @@
+title: Title
+isbn: ISBN
+ean: EAN-13
+author: Author(s)
+pages: Pages
+publisher: Publisher
+owner: Owner
+genre: Genre(s)
+format: Format
+addedAt: 'Added at'
+serie: Series
+sortTitle: 'Sorting title'
+dimension: Dimension
+translator: Translator(s)
+illustrator: Illustrator(s)
+edition: Edition
+editor: Editor
+publicationDate: 'Publication date'
+keywords: Keywords
+storage: Storage
+cover: Cover
+list_names: Collection(s)
+language: Language(s)
+summary: Summary
+opds_link: 'Link to OPDS'
+google_id: 'Google Books ID'
+lccn_id: 'Library of Congress ID'
+amazon_id: 'Amazon ID'
+oclc_id: 'Online Computer Library Center ID'
+librarything_id: 'LibraryThing ID'
+project_gutenber_id: 'Project Gutemberg ID'
+goodreads_id: 'GoodReads ID'
+openlibrary_id: 'OpenLibrary ID'
+weight: Weight
+openlibrary_link: 'Link to OpenLibrary'
+randomhouse_link: 'Link to RandomHouse'
+goodreads_link: 'Link to GoodReads'
+amazon_link: 'Link to Amazon'
+author_bio: 'Author bio.'
+randomhouse_id: 'RandomHouse ID'
+subtitle: Sub-title
+description: Description
+books_count: 'Books count'
+average_rating: 'Average rating'
+other_publication_date: 'Publication date (Other)'
+libray_thing_link: 'Link to LibraryThing'
+worldcat_link: 'Link to WorldCat'
+worldcat_rss: 'RSS link to WorldCat'
+issn: ISSN
+coverage: 'Raw identification'
+lalibrairie_link: 'Link to Lalibrairie.com'
+antoineonline_link: 'Link to AntoineOnline'
+googlebooks_link: 'Link to Google Books'
+eurobuch_link: 'Link to EuroBuch.ch'

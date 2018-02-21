@@ -1,0 +1,21 @@
+{% extends 'addCompare/ajax.html.twig' %}
+
+{% block search_form %}{% endblock %}
+
+{% block final_book_title %}{% trans with {} from 'compare' %}Your book{% endtrans %}{% endblock %}
+
+{% block final_book_form %}
+    <div class="centered">
+        <button class="pure-button pure-button-primary" onclick="send()">{% trans with {} from 'compare' %}Update the book{% endtrans %}</button>
+        <form id="add-book-form" action="{{ url("book-update", {'id': id}) }}" method="post">
+            <input type="hidden" name="data" id="add-book-form-data" />
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        search.start('{{ isbn|escape('js') }}')
+    </script>
+{% endblock %}

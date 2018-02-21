@@ -1,0 +1,23 @@
+<classify xmlns="http://classify.oclc.org">
+    <response code="0"/>
+    <!--
+    Classify is a product of OCLC Online Computer Library Center: http://classify.oclc.org
+    -->
+    <work author="Miedema, John" editions="6" eholdings="1131" format="eBook" holdings="176" itemtype="itemtype-book-digital" owi="178517083" title="Slow reading">297222669</work>
+    <authors>
+        <author lc="n2008086258" viaf="14250322">Miedema, John</author>
+    </authors>
+    <orderBy>thold desc</orderBy>
+    <input type="isbn">9780980200447</input>
+    <recommendations>
+        <ddc>
+            <mostPopular holdings="1306" nsfa="028.9" sfa="028.9"/>
+            <mostRecent holdings="1306" sfa="028.9"/>
+            <latestEdition holdings="1306" sf2="22" sfa="028.9"/>
+        </ddc>
+        <lcc>
+            <mostPopular holdings="1306" nsfa="Z1003" sfa="Z1003"/>
+            <mostRecent holdings="1306" sfa="Z1003"/>
+        </lcc>
+    </recommendations>
+</classify>

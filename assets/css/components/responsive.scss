@@ -1,0 +1,22 @@
+/**
+ * @author  MacFJA
+ * @license MIT
+ */
+.rd-visible-md {
+  display: none;
+}
+
+.rd-hidden-md {
+  display: inherit;
+}
+
+// Media query for *-md
+@media screen and (min-width: 48em) {
+  .rd-visible-md {
+    display: inherit;
+  }
+
+  .rd-hidden-md {
+    display: none;
+  }
+}

@@ -1,0 +1,47 @@
+<GoodreadsResponse>
+    <Request>
+        <authentication>true</authentication>
+        <key>
+            <![CDATA[ YourKeyHere ]]>
+        </key>
+        <method>
+            <![CDATA[ search_index ]]>
+        </method>
+    </Request>
+    <search>
+        <query>
+            <![CDATA[ 9782070305452 ]]>
+        </query>
+        <results-start>1</results-start>
+        <results-end>1</results-end>
+        <total-results>1</total-results>
+        <source>Goodreads</source>
+        <query-time-seconds>0.01</query-time-seconds>
+        <results>
+            <work>
+                <id type="integer">13744742</id>
+                <books_count type="integer">3</books_count>
+                <ratings_count type="integer">28</ratings_count>
+                <text_reviews_count type="integer">1</text_reviews_count>
+                <original_publication_year type="integer">1985</original_publication_year>
+                <original_publication_month type="integer">1</original_publication_month>
+                <original_publication_day type="integer">1</original_publication_day>
+                <average_rating>3.43</average_rating>
+                <best_book type="Book">
+                    <id type="integer">1289946</id>
+                    <title>Au prix du papyrus</title>
+                    <author>
+                        <id type="integer">16667</id>
+                        <name>Isaac Asimov</name>
+                    </author>
+                    <image_url>
+                        https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png
+                    </image_url>
+                    <small_image_url>
+                        https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png
+                    </small_image_url>
+                </best_book>
+            </work>
+        </results>
+    </search>
+</GoodreadsResponse>

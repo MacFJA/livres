@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/settings.css') }}">
+{% endblock %}
+
+{% block title %}{% trans with {} from 'settings' %}Providers{% endtrans %}{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/js/settings.js') }}"></script>
+    <script type="application/javascript">
+        settings.init();
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ form_start(confs.0.form, {'attr': {'class': 'pure-form pure-form-aligned pure-g' }}) }}
+    {% for one in confs %}
+        <fieldset style="text-align: left; font-size: 1rem"
+                  class="pure-u-1 pure-u-lg-1-2 lightly-hspace {% if loop.index is odd %}pure-table-odd{% endif %}">
+            <legend>{{ one.label }}</legend>
+            <div class="pure-control-group">
+                {{ form_label(one.form.active, '', {'attr': {'class': 'pure-checkbox'}}) }}
+                {{ form_widget(one.form.active, {'attr': {'class': 'fa xfa-toggle'}}) }}
+                {{ form_errors(one.form.active, {'attr': {'class': 'pure-form-inline-message'}}) }}
+            </div>
+            {% for key,value in one.form.children %}
+                {% if key not in ['active','class'] %}
+                    <div class="pure-control-group">
+                        {{ form_label(one.form[key]) }}
+                        {{ form_widget(one.form[key], {'attr': {'class': 'pure-input'}}) }}
+                        {{ form_errors(one.form[key], {'attr': {'class': 'pure-form-inline-message'}}) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {{ form_rest(one.form) }}
+
+        </fieldset>
+    {% endfor %}
+    <div class="centered pure-u-1">
+        <button type="submit" class="pure-button pure-button-primary">{{ 'Validate'|trans({}, 'settings') }}</button>
+    </div>
+    {{ form_end(confs.0.form) }}
+{% endblock %}

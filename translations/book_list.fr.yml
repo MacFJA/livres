@@ -1,0 +1,16 @@
+ISBN: ISBN
+Cover: Couverture
+Title: Titre
+Situation: Situation
+Actions: Actions
+'At Home': 'A la maison'
+Details: Détails
+'Lend To': 'Prêté à'
+'Borrow From': 'Emprunté à'
+'Your books ({count})': 'Vos livres ({count})'
+Search: Filtrer
+'Remove all': 'Supprimer tout les filtres'
+'Serie: Title': '<u>Série</u> : Titre'
+'{serie}: {title}': '<u>{serie}</u> : {title}'
+'{title}': '{title}'
+'Cover for {isbn}': 'Couverture pour {isbn}'

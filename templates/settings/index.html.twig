@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/css/settings.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/js/settings.js') }}"></script>
+{% endblock %}
+
+{% block title %}{% trans with {} from 'app' %}Settings{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{{ block('title') }}</h1>
+    <div class="pure-form">
+        <fieldset>
+            <legend>{% trans with {} from 'settings' %}Providers{% endtrans %}</legend>
+            <div class="pure-controls">
+                {% for provider in providers %}
+                    <div class="app-label app-label-full {% if provider.active %}app-label-green{% endif %}">{{ provider.providerLabel }}</div>
+                {% endfor %}
+            </div>
+            <div class="pure-control-group">
+                <a href="{{ url('settings-providers') }}" class="pure-button">{{ 'Configure'|trans({}, 'settings') }}</a>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{% trans with {} from 'settings' %}Covers{% endtrans %}</legend>
+            <button onclick="settings.purge('{{ url('settings-purge-cover') }}', this)"
+                    class="pure-button app-button-warning">
+                <i class="fa-recycle fa"></i>
+                {% trans with {} from 'settings' %}Purge covers cache{% endtrans %}
+            </button>
+            <button onclick="settings.purge('{{ url('settings-delete-cover') }}', this)"
+                    class="pure-button app-button-danger">
+                <i class="fa-trash fa"></i>
+                {% trans with {} from 'settings' %}Delete downloaded covers{% endtrans %}
+            </button>
+        </fieldset>
+        <fieldset>
+            <legend>{% trans with {} from 'settings' %}Display settings{% endtrans %}</legend>
+            <a href="{{ url('settings-config') }}" class="pure-button">{{ 'Configure'|trans({}, 'settings') }}</a>
+        </fieldset>
+    </div>
+{% endblock %}
