@@ -5,7 +5,6 @@ services:
       context: ./docker/php
     networks:
       - livres-net
-    dns: 10.15.0.5
     container_name: livres-php
     volumes:
       - .:/srv/app
