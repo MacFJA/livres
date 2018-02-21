@@ -120,6 +120,7 @@ You can install and run the application locally.
 ### Requirements
 
  - [Docker](https://docs.docker.com/install/)
+ - [Docker compose](https://docs.docker.com/compose/install/)
  - [Yarn](https://yarnpkg.com/fr/docs/install)
  - [Node](https://nodejs.org/en/download/)
  - [Composer](https://getcomposer.org/download/)
@@ -134,12 +135,3 @@ And _voilà_, the application is running [HTTPS on localhost:8443](https://local
 (You can also find the IP of the NginX via the command
 `docker inspect livres-nginx | grep -E '\s{14}"IPAddress": "([0-9\.]+)"' | grep -oE "([0-9\.]+)"`
 and use the IP with https without the port `8443`)
-
-----
-
-If you prefer use Docker Compose you can:
-
- - Download (or clone) the source code from the GitHub repository.
- - Run `composer install`
- - Run `yarn install`
- - Run `docker-compose up`
