@@ -5,7 +5,7 @@ php:
   - '7.2'
 
 install:
-  - composer install --prefer-dist --no-interaction
+  - composer install --prefer-dist --no-interaction --no-scripts --no-plugins
 
 script:
   - composer ci -- --ansi
