@@ -1,0 +1,63 @@
+{% extends '@EasyAdmin/page/blank.html.twig' %}
+
+{% block content_title %}Search Engine{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <section class="content-header">
+            <div class="justify-content-between">
+                <div class="content-header-title"><h1 class="title">{{ block('content_title') }}</h1></div>
+            </div>
+        </section>
+        <section id="main" class="content-body">
+            <form>
+            <div class="form-group row">
+                <label class="col-form-label">Number of documents</label>
+                <div class="form-widget">
+                    <strong class="form-control-plaintext">{{ indexInfo.num_docs }}</strong>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label">Number of terms</label>
+                <div class="form-widget">
+                    <strong class="form-control-plaintext">{{ indexInfo.num_terms }}</strong>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label">Number of fields per document</label>
+                <div class="form-widget">
+                    <strong class="form-control-plaintext">{{ indexInfo.fields|length }}</strong>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label">Index size of the search engine</label>
+                <div class="form-widget">
+                    <strong class="form-control-plaintext">{{ "%.2F MB"|format(indexInfo.inverted_sz_mb) }}</strong>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group row">
+                <label class="col-form-label">Number of suggestions</label>
+                <div class="form-widget">
+                    <strong class="form-control-plaintext">{{ suggestions }}</strong>
+                </div>
+            </div>
+                <div class="form-group row">
+                    <label class="col-form-label">Dirty suggestions</label>
+                    <div class="form-widget">
+                        <strong class="form-control-plaintext">{{ isSuggestionDirty ? 'Yes' : 'No' }}</strong>
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            When you edit a book, suggestions are added but not removed. Overtime it can lead to suggestion that link to no book.
+                        </small>
+                    </div>
+                </div>
+            </form>
+            <section class="content-footer">
+                <div class="form-actions">
+                    <a href="{{ path('admin_search_engine_reindex') }}" class="btn btn-danger">Reindex search engine</a>
+                    <a href="{{ path('admin_search_engine_reindex_suggestion') }}" class="btn btn-danger">Reindex suggestion</a>
+                </div>
+            </section>
+        </section>
+    </div>
+{% endblock %}

@@ -1,129 +1,113 @@
 <?php
-/**
- * @author  MacFJA
- * @license MIT
+
+declare(strict_types=1);
+
+/*
+ * Copyright MacFJA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 namespace App\Entity;
 
-use App\Worker\Query\ProviderInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\ProviderConfigurationRepository")
  */
-class ProviderConfiguration extends Base
+class ProviderConfiguration
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\Column(type="string")
-     * @var string
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     *
+     * @var int
      */
-    protected $class = '';
+    private $configurationId;
+
     /**
-     * @ORM\Column(type="json_array")
-     * @var array
+     * @ORM\Column(type="string", length=50)
+     *
+     *@var string
      */
-    protected $arguments = [];
+    private $provider;
+
     /**
      * @ORM\Column(type="boolean")
+     *
      * @var bool
      */
-    protected $active = false;
+    private $active;
 
     /**
-     * @return string
+     * @var array<string,string>
+     * @Assert\Collection(allowMissingFields = true, allowExtraFields = true, fields = {})
+     * @Assert\Type(type="array")
+     * @ORM\Column(type="json")
      */
-    public function getClass()
+    private $parameters = [];
+
+    public function getConfigurationId(): ?int
     {
-        return $this->class;
+        return $this->configurationId;
     }
 
-    /**
-     * @return array
-     */
-    public function getArguments()
+    public function getProvider(): ?string
     {
-        return $this->arguments;
+        return $this->provider;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isActive()
+    public function setProvider(string $provider): self
+    {
+        $this->provider = $provider;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
     {
         return $this->active;
     }
 
-    public function __isset(string $name)
+    public function setActive(bool $active): self
     {
-        if (in_array($name, ['class', 'active'], true)) {
-            return true;
-        }
+        $this->active = $active;
 
-        return array_key_exists($name, $this->arguments);
-    }
-
-    public function __get(string $name)
-    {
-        switch ($name) {
-            case 'class':
-                return $this->class;
-            case 'active':
-                return $this->active;
-            case 'arguments':
-                return $this->arguments;
-            default:
-                if (!array_key_exists($name, $this->arguments)) {
-                    return null;
-                }
-                return $this->arguments[$name];
-        }
+        return $this;
     }
 
     /**
-     * @param string $name
-     * @param mixed  $value
-     * @return mixed
+     * @return null|array<string,string>
      */
-    public function __set(string $name, $value)
+    public function getParameters(): ?array
     {
-        switch ($name) {
-            case 'class':
-            case 'active':
-            case 'arguments':
-                return $this->{$name} = $value;
-            default:
-                return $this->arguments[$name] = $value;
+        if (false === $this->active) {
+            return null;
         }
+
+        return $this->parameters;
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     *
-     * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     *        which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @param array<string,string> $parameters
      */
-    public function jsonSerialize()
+    public function setParameters(array $parameters): self
     {
-        return ['class' => $this->class, 'arguments' => $this->arguments, 'active' => $this->active];
-    }
-    
-    public function getConfiguredProvider(): ProviderInterface
-    {
-        $reflection = new \ReflectionClass($this->class);
-        /** @var ProviderInterface $instance */
-        $instance = $reflection->newInstanceArgs($this->arguments);
-        return $instance;
-    }
+        $this->parameters = $parameters;
 
-    public function getProviderLabel(): string
-    {
-        $reflection = new \ReflectionClass($this->class);
-        $label = $reflection->getMethod('getLabel');
-
-        return $label->invoke(null);
+        return $this;
     }
 }

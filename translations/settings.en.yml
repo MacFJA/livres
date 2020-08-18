@@ -1,9 +1,0 @@
-Providers: Providers
-Configure: Configure
-Covers: Covers
-'Purge covers cache': 'Purge covers cache'
-'Delete downloaded covers': 'Delete downloaded covers'
-downloader_removed: 'All downloaded cover have been removed.<br>They will be re-download on the next display'
-'Cache purged!': 'Cache purged!'
-Validate: Validate
-'Display settings': 'Display settings'

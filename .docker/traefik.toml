@@ -1,0 +1,16 @@
+[providers.docker]
+  endpoint = "unix:///var/run/docker.sock"
+
+[api]
+  insecure = true
+  dashboard = true
+#  debug = true
+
+[log]
+#  level = "debug"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+  [entryPoints.secure]
+    address = ":443"

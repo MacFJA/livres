@@ -1,0 +1,155 @@
+button {
+    cursor: pointer;
+}
+
+button[disabled] {
+    cursor: auto;
+    filter: saturate(0);
+    opacity: 0.5;
+}
+
+button.big {
+    border: none;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    text-shadow: 0 2px 3px rgba(0%, 0%, 0%, 0.5);
+    background: linear-gradient(to top, #888, #ccc);
+    transition: box-shadow 0.5s;
+}
+
+button.big:active {
+    box-shadow: inset 0 0 1rem rgba(0%, 0%, 0%, 0.2);
+}
+
+button.big:not([disabled]):hover {
+    box-shadow: inset 0 0 1rem rgba(100%, 100%, 100%, 0.3);
+}
+
+button.big.danger {
+    background: linear-gradient(to top, #800, #c40);
+    color: white;
+}
+
+button.big.success {
+    background: linear-gradient(to top, #050, #080);
+    color: white;
+}
+
+button.big.warn {
+    background: orange;
+    color: black;
+}
+
+button.big.primary {
+    background: rgba(0%, 40%, 100%, 0.5);
+    color: inherit;
+}
+
+button.color {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5ex;
+    padding: 1ex 1.5ex calc(1ex - 1px);
+    border: none;
+    color: inherit;
+    box-shadow: inset 0 0.5ex 1ex rgba(100%, 100%, 100%, 0.2), 0 1px 1px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+button.color:not([disabled]):hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+button.color.danger {
+    background-color: rgba(100%, 25%, 0%, 0.5);
+}
+
+button.color.warn {
+    background-color: rgba(90%, 50%, 0%, 0.5);
+}
+
+button.color.primary {
+    background-color: rgba(0%, 40%, 100%, 0.5);
+}
+
+button.color.success {
+    background-color: rgba(0%, 75%, 0%, 0.5);
+}
+
+button.text {
+    font-size: inherit;
+    color: inherit;
+    padding: 0.25ex 0.5ex;
+    border-radius: 0.5ex;
+    margin: -0.25ex -0.5ex;
+    border: none;
+    background: none;
+}
+
+button.text.primary {
+    color: rgba(0%, 40%, 100%, 1);
+}
+
+button.text.danger {
+    color: rgba(100%, 25%, 0%, 1);
+}
+
+button.text.success {
+    color: rgba(0%, 75%, 0%, 1);
+}
+
+button.text:hover {
+    backdrop-filter: brightness(0.75);
+}
+
+button.color.small {
+    height: 1.6em;
+    line-height: 1.6em;
+    font-size: 0.7em;
+    padding: 0 1ex;
+}
+
+button.round-grey {
+    font-size: 1em;
+    border: none;
+    color: white;
+    background: rgb(50%, 50%, 50%);
+    border-radius: 1em;
+    padding: 0 0.5em;
+    align-self: center;
+    margin: 0;
+}
+
+button.round-grey:hover {
+    color: black;
+}
+
+button.translucent {
+    background: rgba(100%, 100%, 100%, 0.3);
+    backdrop-filter: blur(4px) brightness(2) saturate(2);
+    position: absolute;
+    bottom: 1.5ex;
+    right: 1.5ex;
+    text-align: center;
+    padding: 1ex 2em;
+    border: none;
+    color: black;
+    font-size: 0.7rem;
+    border-radius: calc(1em + 1.5ex);
+    cursor: pointer;
+    box-shadow: 0 0 0.5ex rgba(0%, 0%, 0%, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+    button.color {
+        background: rgba(100%, 100%, 100%, 0.2);
+    }
+
+    button.color:not([disabled]):hover {
+        background: rgba(100%, 100%, 100%, 0.3);
+    }
+
+    button.text:hover {
+        backdrop-filter: brightness(1.25);
+    }
+}

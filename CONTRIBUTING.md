@@ -30,15 +30,15 @@
 
 ## Coding conventions
 
-The application use PSR-2 code conventions, strong typing.
+The application use PSR-12 code conventions, strong typing.
 
-The source code must be, at least, compatible with **PHP 7.0**.
+The source code must be, at least, compatible with **PHP 7.2**.
 
-Check your code by running **Edgedesign/phpqa** (dev dependency in the `composer.json`) with the command:
+Check your code by running the command:
 ```sh
-composer qa
+make analyze
 ```
-The command will output a summary, and the detailed report can be found in the file `build/analysed/phpqa.html`
+The command will output any informations worth knowing. No error should be left.
 
 ----
 

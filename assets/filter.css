@@ -1,0 +1,65 @@
+label.filter {
+    background: #8cf;
+    border-radius: var(--borderRadius);
+    display: inline-flex;
+    height: var(--height);
+    margin: 0.5ex;
+
+    --height: 1.4rem;
+    --inputPadding: 0.7rem;
+    --padding: 0;
+    --borderRadius: 0.7rem;
+    --border: none;
+    --background: rgba(100%, 100%, 100%, 0.5);
+    --selectedItemPadding: 0;
+}
+
+label.filter.empty {
+    background: #ccc;
+}
+
+label.filter > * {
+    padding: 0 0.7rem;
+    box-sizing: border-box;
+    height: var(--height);
+    line-height: var(--height);
+    border-radius: var(--borderRadius);
+}
+
+label.filter > select {
+    background: rgba(0%, 0%, 0%, 0.25);
+    color: white;
+    display: inline-block;
+    font-size: inherit;
+    border: none;
+}
+
+label.filter > select:last-child {
+    background: var(--background);
+    color: black;
+}
+
+label.filter > div:last-child {
+    background: var(--background);
+    color: black;
+    display: inline-block;
+}
+
+label > input[type=number] {
+    background: var(--background);
+    color: black;
+    display: inline-block;
+    font-size: inherit;
+    width: 4rem;
+    border: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    label.filter {
+        background: #248;
+    }
+
+    label.filter.empty {
+        background: #222;
+    }
+}

@@ -1,0 +1,5 @@
+api_platform:
+    enable_swagger: false
+    enable_swagger_ui: false
+    enable_docs: false
+    enable_profiler: false

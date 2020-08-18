@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {{ source('svelte-inject.html')|replace({'<head>':'', '</head>': ''})|raw }}
+    <script>
+        window.coverPreview = '{{ path('liip_imagine_filter', {'filter': 'book_preview', 'path': 'placeholder.jpg'}) }}'
+        window.coverFull = '{{ path('liip_imagine_filter', {'filter': 'book_cover', 'path': 'placeholder.jpg'}) }}'
+
+        window.placeholderPreview = '{{ 'placeholder.jpg'|imagine_filter('book_preview') }}'
+        window.placeholderFull = '{{ 'placeholder.jpg'|imagine_filter('book_cover') }}'
+
+        function preloadImage(url) {
+            (new Image()).src = url
+        }
+        preloadImage(window.placeholderPreview)
+        preloadImage(window.placeholderFull)
+    </script>
+</head>
+<body>
+{% block body %}
+    <div id="app-root"></div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    window.app = {
+        pageSize: {{ pageSize }},
+        providers: {{ providers|json_encode|raw }},
+        roles: {
+            add: {{ is_granted('ROLE_CAN_ADD') ? 'true' : 'false' }},
+            edit: {{ is_granted('ROLE_CAN_EDIT') ? 'true' : 'false' }},
+            delete: {{ is_granted('ROLE_CAN_DELETE') ? 'true' : 'false' }},
+            view: {{ is_granted('ROLE_CAN_VIEW') ? 'true' : 'false' }},
+            connected: {{ is_granted('IS_AUTHENTICATED_FULLY') ? 'true' : 'false' }}
+        },
+        url: {
+            logout: '{{ logout_path() }}',
+            login: '{{ path('login') }}',
+            suggestions: '{{ path('suggestions') }}',
+            searchPreview: '{{ path('searchPreview') }}',
+            bookAdd: '{{ path('add_book') }}',
+            bookEdit: '{{ path('edit_book', {bookId: 0}) }}',
+            bookDelete: '{{ path('api_books_delete_item', {id: '__placeholder'}) }}',
+            searchIsbn: '{{ path('search_isbn', {code: '__placeholder', isbn: 0}) }}',
+            completions: '{{ path('completions') }}',
+            books: '{{ url('api_books_get_collection') }}',
+            book: '{{ path('api_books_get_item', {id: '__placeholder'}) }}',
+            bookIsBack: '{{ path('book_is_back', {id: '__placeholder'}) }}',
+            bookMovements: '{{ url('api_books_movements_get_subresource', {id: '__placeholder'}) }}',
+            movementUpdate: '{{ path('api_movements_patch_item', {id: '__placeholder'}) }}',
+            movementAdd: '{{ path('api_movements_post_collection') }}'
+        }
+    }
+</script>
+{% endblock %}
+</body>
+</html>

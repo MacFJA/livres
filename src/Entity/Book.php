@@ -1,469 +1,541 @@
 <?php
-/**
- * @author  MacFJA
- * @license MIT
+
+declare(strict_types=1);
+
+/*
+ * Copyright MacFJA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use function array_filter;
+use function array_values;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as Orm;
-use Ivory\Serializer\Mapping\Annotation as Serializer;
-use IntlDateFormatter;
-use Nicebooks\Isbn\Isbn;
-use Nicebooks\Isbn\IsbnTools;
+use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
- * Class Book
+ * @ApiResource(
+ *     attributes={
+ *          "pagination_enabled"=true,
+ *          "pagination_items_per_page"=10,
+ *          "maximum_items_per_page"=30,
+ *          "pagination_client_items_per_page"=true,
+ *          "pagination_client_enabled"=false
+ *     },
+ *     collectionOperations={
+ *         "get"={"security"="is_granted('ROLE_CAN_VIEW')"}
+ *     },
+ *     itemOperations={
+ *         "get"={"security"="is_granted('ROLE_CAN_VIEW')"},
+ *         "delete"={"security"="is_granted('ROLE_CAN_DELETE')"}
+ *     }
+ * )
+ * @ApiFilter(\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter::class, properties={"title":"partial","owner","series","keywords":"partial"})
+ * @ApiFilter(\App\ApiPlatform\SerializeArrayFilter::class, properties={"genres","authors","illustrators"})
+ * @ApiFilter(\App\ApiPlatform\RedisearchFilter::class, properties={"query"})
+ * @ApiFilter(\App\ApiPlatform\InMovementFilter::class, properties={"in_movement"})
+ * @ApiFilter(\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter::class, properties={"pages"})
+ * @ApiFilter(\App\ApiPlatform\AppOrderFilter::class)
  *
- * @Orm\Entity()
- * @SuppressWarnings(PHPMD.TooManyFields) -- Data holder
+ * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
-class Book extends Base
+class Book implements JsonSerializable
 {
-    const ARRAY_INJECT_OTHERS = 100;
-    const ARRAY_ADD_STATUS = 101;
-    /**
-     * @Orm\Id()
-     * @Orm\GeneratedValue(strategy="NONE")
-     * @Orm\Column(length=20, type="string", name="id")
-     * @Serializer\Readable(false)
-     * @var string
-     */
-    protected $computedId;
-    /**
-     * @Orm\Column(type="string", length=20)
-     * @var string
-     */
-    protected $isbn;
-    /**
-     * @Orm\Column(type="string")
-     * @var string
-     */
-    protected $title;
-    /**
-     * @Orm\Column(type="json_array")
-     * @var string[]
-     */
-    protected $author = [];
-    /**
-     * @Orm\Column(type="smallint", nullable=true)
-     * @var int|null
-     */
-    protected $pages;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $serie;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string
-     */
-    protected $sortTitle;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $publisher;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $owner;
-    /**
-     * @Orm\Column(type="json_array", nullable=true)
-     * @var string[]
-     */
-    protected $illustrator;
-    /**
-     * @Orm\Column(type="json_array", nullable=true)
-     * @var string[]
-     */
-    protected $translator;
-    /**
-     * @Orm\Column(type="json_array", nullable=true)
-     * @var string[]
-     */
-    protected $genre;
-    /**
-     * @Orm\Column(type="date", nullable=true)
-     * @var \DateTimeInterface
-     */
-    protected $publicationDate;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $edition;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $editor;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $format;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $dimension;
-    /**
-     * @Orm\Column(type="simple_array", nullable=true)
-     * @var string[]
-     */
-    protected $keywords;
-    /**
-     * @Orm\Column(type="date")
-     * @var \DateTimeInterface
-     */
-    protected $addedAt;
-    /**
-     * @Orm\Column(type="string", nullable=true)
-     * @var string|null
-     */
-    protected $cover;
-    /**
-     * @Orm\Column(type="json_array", nullable=true)
-     * @var mixed|null
-     */
-    protected $others = [];
+    public const DATA_TYPE_ARRAY = 'array';
+
+    public const DATA_TYPE_BARCODE = 'barcode';
+
+    public const DATA_TYPE_DATE = 'date';
+
+    public const DATA_TYPE_NUMBER = 'number';
+
+    public const DATA_TYPE_TEXT = 'text';
+
+    public const DATA_TYPE_IMAGE = 'image';
 
     /**
-     * @return string[]
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer", name="id")
+     *
+     * @var int
      */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
+    private $bookId = 0;
+
     /**
-     * @Orm\OneToMany(targetEntity="App\Entity\Movement", mappedBy="book")
-     * @Serializer\Accessor("getMovements")
-     * @var Movement[]|ArrayCollection
+     * @ORM\Column(type="string", length=20)
+     *
+     * @var string
      */
-    protected $movements = [];
+    private $isbn = '';
+
     /**
-     * @Orm\Column(type="string", length=40, nullable=true)
-     * @var string|null
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
-    protected $storage;
+    private $title = 'no-title';
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var array<string>
+     */
+    private $authors = [];
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var null|int
+     */
+    private $pages;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var null|string
+     */
+    private $series;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $sortTitle = '';
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $owner = 'nobody';
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var array<string>
+     */
+    private $illustrators = [];
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var string[]
+     */
+    private $genres = [];
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     *
+     * @var null|DateTimeInterface
+     */
+    private $publicationDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var null|string
+     */
+    private $format;
+
+    /** @ORM\Column(type="string", length=20, nullable=true)
+     * @var null|string
+     */
+    private $dimension;
+
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     *
+     * @var null|array<string>
+     */
+    private $keywords = [];
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
+     */
+    private $addedAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var null|string
+     */
+    private $cover;
+
+    /**
+     * @ORM\Column(type="json")
+     *
+     * @var array<array<mixed>>
+     */
+    private $additional = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var null|string
+     */
+    private $storage;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Movement", mappedBy="book", orphanRemoval=true)
+     * @ApiSubresource()
+     *
+     * @var Collection<int,Movement>
+     */
+    private $movements;
 
     public function __construct()
     {
         $this->movements = new ArrayCollection();
+        $this->addedAt = new DateTime();
     }
 
-    /**
-     * @param string             $isbn
-     * @param string             $title
-     * @param \DateTimeInterface $addedAt
-     * @param array              $author
-     * @param string             $storage
-     * @param string|null        $sortTitle
-     * @param int|null           $pages
-     * @param string|null        $serie
-     * @param string|null        $publisher
-     * @param string|null        $owner
-     * @param array              $illustrator
-     * @param array              $translator
-     * @param array              $genre
-     * @param \DateTimeInterface $publicationDate
-     * @param string|null        $edition
-     * @param string|null        $editor
-     * @param string|null        $format
-     * @param string|null        $dimension
-     * @param array              $keywords
-     * @param array|null         $others
-     * @return Book
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter) -- Used by compact function
-     */
-    public static function create(
-        string $isbn,
-        string $title,
-        \DateTimeInterface $addedAt,
-        array $author = [],
-        string $storage = null,
-        string $sortTitle = null,
-        int $pages = null,
-        string $serie = null,
-        string $publisher = null,
-        string $owner = null,
-        array $illustrator = [],
-        array $translator = [],
-        array $genre = [],
-        \DateTimeInterface $publicationDate = null,
-        string $edition = null,
-        string $editor = null,
-        string $format = null,
-        string $dimension = null,
-        array $keywords = [],
-        array $others = null
-    ) {
-        $parametersName = array_map(
-            function (\ReflectionParameter $item): string {
-                return $item->getName();
-            },
-            (new \ReflectionMethod(static::class, __FUNCTION__))->getParameters()
-        );
-
-        return static::createFromArray(compact(
-            $parametersName
-        ));
-    }
-
-    /**
-     * @param array $with
-     * @return Book
-     */
-    public static function createFromArray(array $with)
+    public function getSortTitle(): string
     {
-        /** @var Book $book */
-        $book = parent::createFromArray($with);
-        list(, $invalid) = self::filterCreationArray($with);
-        $book->others += $invalid;
-
-        $book->validateFieldData();
-
-        return $book;
+        return $this->sortTitle;
     }
 
-    /**
-     * @return void
-     */
-    public function validateFieldData()
+    public function getBookId(): ?int
     {
-        $this->convertStringToDate();
-        $this->computeId();
+        return $this->bookId;
     }
 
-    /**
-     * @return void
-     */
-    protected function computeId()
-    {
-        $this->computedId = $this->isbn;
-        if (!empty($this->sortTitle)) {
-            $this->computedId .= '-' . $this->sortTitle;
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSearchableFields(): array
-    {
-        $propertiesName = array_map(
-            function (\ReflectionProperty $item): string {
-                return $item->getName();
-            },
-            (new \ReflectionClass(static::class))->getProperties()
-        );
-
-        return array_filter($propertiesName, function (string $field): bool {
-            return !in_array($field, ['computedId', 'others', 'movements', 'cover'], true);
-        });
-    }
-
-    public static function generateFakeIsbn(): string
-    {
-        return 'G' . str_pad(substr((string) (random_int(0, time()) * time()), 0, 13), 13, '0', STR_PAD_LEFT);
-    }
-
-    public function inMovement(): bool
-    {
-        if (count($this->movements) === 0) {
-            return false;
-        }
-
-        $lends = array_filter($this->getMovements(), function (Movement $item): bool {
-            return $item->getType() == Movement::TYPE_LEND && $item->isCurrent();
-        });
-
-        return count($lends) > 0;
-    }
-
-    /**
-     * @param bool $onlyCurrent
-     * @return false|Movement
-     */
-    public function getLastMovement(bool $onlyCurrent = true)
-    {
-        $movements = $onlyCurrent ? $this->getCurrentMovements() : $this->getMovements();
-
-        usort($movements, function (Movement $itemA, Movement $itemB): int {
-            return $itemA->getStartAt()->getTimestamp() - $itemB->getStartAt()->getTimestamp();
-        });
-
-        return reset($movements);
-    }
-
-    /**
-     * @return Movement[]|null
-     */
-    public function getCurrentMovements()
-    {
-        if (count($this->movements) == 0) {
-            return null;
-        }
-
-        /** @var Movement[] $currents */
-        $currents = array_filter($this->getMovements(), function (Movement $item): bool {
-            return $item->isCurrent();
-        });
-
-        return $currents;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIsbn(bool $withSeparator = false): string
-    {
-        $isbnTool = new IsbnTools();
-        if (!$isbnTool->isValidIsbn($this->isbn)) {
-            return $this->isbn;
-        }
-
-        return $withSeparator ? Isbn::of($this->isbn)->format() : $this->isbn;
-    }
-
-    public function toArray(array $excludes = [], array $options = []): array
-    {
-        $injectOthers = $options[self::ARRAY_INJECT_OTHERS] ?? true;
-        $excludes[] = 'computedId';
-        $excludes[] = 'movements';
-        if ($injectOthers) {
-            $excludes[] = 'others';
-        }
-
-        $array = parent::toArray($excludes, $options);
-
-        if ($injectOthers) {
-            $array += $this->others;
-        }
-
-        if ($options[self::ARRAY_ADD_STATUS] ?? false) {
-            $array['status'] = 'At Home';
-            if ($this->inMovement()) {
-                /** @var Movement $lastMovement */
-                $lastMovement = $this->getLastMovement();
-                $array['status'] = ($lastMovement->getType() == Movement::TYPE_LEND ? 'Lend to: ' : 'Borrow from: ')
-                    . $lastMovement->getPerson();
-            }
-        }
-
-        $array['ean'] = $this->getEAN();
-
-        if ($options[self::ARRAY_FLATTEN_OPTION] ?? false) {
-            $array = $this->flattenArray($array);
-        }
-
-        return ($options[static::ARRAY_KEEP_EMPTY]??false) ? $array : array_filter($array);
-    }
-
-    public function getEAN(bool $withSeparator = false): string
-    {
-        return static::convertISBNToEAN($this->isbn, $withSeparator);
-    }
-
-    public static function convertISBNToEAN(string $isbn, bool $withSeparator = false): string
-    {
-        $isbnTool = new IsbnTools();
-        if (!$isbnTool->isValidIsbn($isbn)) {
-            return '';
-        }
-
-        $isbn = Isbn::of($isbn);
-
-        if ($isbn->is10()) {
-            $isbn = $isbn->to13();
-        }
-
-        return $withSeparator ? $isbn->format() : (string)$isbn;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getAddedAt()
+    public function getAddedAt(): DateTimeInterface
     {
         return $this->addedAt;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStorage()
+    public function getIsbn(): string
     {
-        return $this->storage;
+        return $this->isbn;
+    }
+
+    public function setIsbn(string $isbn): self
+    {
+        $this->isbn = $isbn;
+
+        return $this;
     }
 
     public function getTitle(): string
     {
-        return $this->title ?? 'No Title';
+        return $this->title;
     }
 
-    public function getCover(): string
+    public function setTitle(string $title): self
     {
-        return $this->cover ?? 'placeholder.png';
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
-     * @return Movement[]
-     */
-    public function getMovements()
-    {
-        return ($this->movements instanceof ArrayCollection || $this->movements instanceof Collection)
-            ? $this->movements->toArray()
-            : $this->movements;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSerie()
-    {
-        return $this->serie;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON
+     * @return string[]
      *
-     * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     *        which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @psalm-return array<array-key, string>
+     */
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param array<string> $authors
+     *
+     * @return $this
+     */
+    public function setAuthors(array $authors): self
+    {
+        $this->authors = $authors;
+
+        return $this;
+    }
+
+    public function getPages(): ?int
+    {
+        return $this->pages;
+    }
+
+    public function setPages(int $pages): self
+    {
+        $this->pages = $pages;
+
+        return $this;
+    }
+
+    public function getSeries(): ?string
+    {
+        return $this->series;
+    }
+
+    public function setSortTitle(string $sortTitle): self
+    {
+        $this->sortTitle = $sortTitle;
+
+        return $this;
+    }
+
+    public function getOwner(): string
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(string $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     *
+     * @psalm-return array<array-key, string>
+     */
+    public function getIllustrators(): array
+    {
+        return $this->illustrators;
+    }
+
+    /**
+     * @param array<string> $illustrators
+     *
+     * @return $this
+     */
+    public function setIllustrators(array $illustrators): self
+    {
+        $this->illustrators = $illustrators;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     *
+     * @psalm-return array<array-key, string>
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array<string> $genres
+     *
+     * @return $this
+     */
+    public function setGenres(array $genres): self
+    {
+        $this->genres = $genres;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?DateTimeInterface
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(DateTimeInterface $publicationDate): self
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    public function getFormat(): ?string
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?string $format): self
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    public function getDimension(): ?string
+    {
+        return $this->dimension;
+    }
+
+    public function setDimension(?string $dimension): self
+    {
+        $this->dimension = $dimension;
+
+        return $this;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getKeywords(): array
+    {
+        return $this->keywords ?? [];
+    }
+
+    /**
+     * @param array<string> $keywords
+     *
+     * @return $this
+     */
+    public function setKeywords(array $keywords): self
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    public function setAddedAt(DateTimeInterface $addedAt): self
+    {
+        $this->addedAt = $addedAt;
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?string $cover): self
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * @return array[]
+     *
+     * @psalm-return array<array-key, array>
+     */
+    public function getAdditional(): array
+    {
+        return $this->additional;
+    }
+
+    /**
+     * @param array<array<mixed>> $additional
+     *
+     * @return $this
+     */
+    public function setAdditional(array $additional): self
+    {
+        $this->additional = $additional;
+
+        return $this;
+    }
+
+    public function getStorage(): ?string
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(?string $storage): self
+    {
+        $this->storage = $storage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int,Movement>
+     */
+    public function getMovements(): Collection
+    {
+        return $this->movements;
+    }
+
+    public function inMovement(): bool
+    {
+        $inMovement = $this->movements->filter(function (Movement $movement) {
+            return !$movement->isEnded();
+        });
+
+        return $inMovement->count() > 0;
+    }
+
+    /**
+     * @return array<array<mixed>>
+     *
+     * @phan-return array<array{label: string, value:mixed, type:string}>
+     *
+     * @psalm-return list<array{label: array-key, value: mixed, type: string}>
+     */
+    public function getDetails(): array
+    {
+        $details = [
+            ['key' => 'title', 'label' => 'Title', 'value' => $this->getTitle(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'sortTitle', 'label' => 'Sort title', 'value' => $this->getSortTitle(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'series', 'label' => 'Series', 'value' => $this->getSeries(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'authors', 'label' => 'Authors', 'value' => $this->getAuthors(), 'type' => self::DATA_TYPE_ARRAY],
+            ['key' => 'illustrators', 'label' => 'Illustrators', 'value' => $this->getIllustrators(), 'type' => self::DATA_TYPE_ARRAY],
+            ['key' => 'owner', 'label' => 'Owner', 'value' => $this->getOwner(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'dimension', 'label' => 'Dimension', 'value' => $this->getDimension(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'format', 'label' => 'Format', 'value' => $this->getFormat(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'isbn', 'label' => 'Isbn', 'value' => $this->getIsbn(), 'type' => self::DATA_TYPE_BARCODE],
+            ['key' => 'genres', 'label' => 'Genres', 'value' => $this->getGenres(), 'type' => self::DATA_TYPE_ARRAY],
+            ['key' => 'keywords', 'label' => 'Keywords', 'value' => $this->getKeywords(), 'type' => self::DATA_TYPE_ARRAY],
+            ['key' => 'storage', 'label' => 'Storage', 'value' => $this->getStorage(), 'type' => self::DATA_TYPE_TEXT],
+            ['key' => 'pages', 'label' => 'Pages', 'value' => $this->getPages(), 'type' => self::DATA_TYPE_NUMBER],
+            ['key' => 'publicationDate', 'label' => 'Publication date', 'value' => $this->getPublicationDate(), 'type' => self::DATA_TYPE_DATE],
+        ];
+        foreach ($this->additional as $name => $value) {
+            $details[] = ['key' => $name, 'label' => $name, 'value' => $value, 'type' => self::DATA_TYPE_ARRAY];
+        }
+
+        return array_values(array_filter($details, function (array $row) {
+            return !empty($row['value']);
+        }));
+    }
+
+    /**
+     * @return array<mixed>
      */
     public function jsonSerialize()
     {
-        $json = $this->toArray([], [
-            self::ARRAY_INJECT_OTHERS  => false,
-            self::ARRAY_KEEP_EMPTY     => true,
-            self::ARRAY_DATE_FORMAT    => 'r',
-            self::ARRAY_FLATTEN_OPTION => false
-        ]);
-        $json['movements'] = $this->getMovements();
-
-        return $json;
-    }
-
-    public function getId() : string
-    {
-        return $this->computedId;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function serialize()
-    {
-        $data = $this->toArray();
-        $data['movements'] = $this->getMovements();
-
-        return serialize($data);
+        return [
+            'title' => $this->getTitle(),
+            'series' => $this->getSeries(),
+            'authors' => $this->getAuthors(),
+            'illustrators' => $this->getIllustrators(),
+            'owner' => $this->getOwner(),
+            'dimension' => $this->getDimension(),
+            'format' => $this->getFormat(),
+            'isbn' => $this->getIsbn(),
+            'genres' => $this->getGenres(),
+            'keywords' => $this->getKeywords(),
+            'storage' => $this->getStorage(),
+            'pages' => $this->getPages(),
+            'publicationDate' => $this->getPublicationDate(),
+            'additional' => $this->getAdditional(),
+        ];
     }
 }

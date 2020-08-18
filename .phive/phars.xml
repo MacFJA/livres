@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phive xmlns="https://phar.io/phive">
+  <phar name="phploc" version="^6.0" installed="6.0.2" location="./vendor/bin/phploc" copy="false"/>
+  <phar name="php-cs-fixer" version="^2.16" installed="2.16.4" location="./vendor/bin/php-cs-fixer" copy="false"/>
+  <phar name="composer-normalize" version="^2.5" installed="2.6.1" location="./vendor/bin/composer-normalize" copy="false"/>
+  <phar name="phpmd" version="^2.8" installed="2.8.2" location="./vendor/bin/phpmd" copy="false"/>
+  <phar name="phpstan" version="^0.12.25" installed="0.12.37" location="./vendor/bin/phpstan" copy="false"/>
+  <phar name="phpcpd" version="^5.0" installed="5.0.2" location="./vendor/bin/phpcpd" copy="false"/>
+  <phar name="psalm" version="^3.11" installed="3.13.1" location="./vendor/bin/psalm" copy="false"/>
+  <phar name="phan" version="^3.0" installed="3.1.1" location="./vendor/bin/phan" copy="false"/>
+</phive>

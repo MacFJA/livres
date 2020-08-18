@@ -1,0 +1,141 @@
+@import "button.css";
+@import "filter.css";
+
+:root {
+    --progress-color: rgba(0%, 40%, 100%, 0.5);
+    --progress-background: rgba(0%, 0%, 0%, 0.25);
+}
+
+@keyframes progress {
+    0%,
+    45% {
+        stroke: rgba(0%, 40%, 100%, 0.5);
+    }
+
+    50% {
+        stroke: rgba(30%, 70%, 100%, 0.75);
+    }
+}
+
+@keyframes rainbow {
+    0%,
+    100% {
+        border-color: #f36;
+        stroke: #f36;
+    }
+
+    10% {
+        border-color: #f63;
+        stroke: #f63;
+    }
+
+    20% {
+        border-color: #fc3;
+        stroke: #fc3;
+    }
+
+    30% {
+        border-color: #3f6;
+        stroke: #3f6;
+    }
+
+    40% {
+        border-color: #3fc;
+        stroke: #3fc;
+    }
+
+    50% {
+        border-color: #3cf;
+        stroke: #3cf;
+    }
+
+    60% {
+        border-color: #36f;
+        stroke: #36f;
+    }
+
+    70% {
+        border-color: #63f;
+        stroke: #63f;
+    }
+
+    80% {
+        border-color: #c3f;
+        stroke: #c3f;
+    }
+
+    90% {
+        border-color: #e3a;
+        stroke: #e3a;
+    }
+}
+
+.progress svg path + path {
+    animation-name: progress;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+}
+
+body {
+    font-family: sans-serif;
+    background: #f0f8ff;
+}
+
+input.big {
+    font-size: 1rem;
+    padding: 1rem;
+    border: none;
+    box-sizing: border-box;
+    background-color: rgba(0%, 0%, 0%, 0.2);
+    color: inherit;
+}
+
+a {
+    color: rgb(0%, 10%, 25%);
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a[target=_blank] {
+    vertical-align: middle;
+}
+
+a[target=_blank]::after {
+    content: "\a0";
+    height: 16px;
+    width: 16px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAhUlEQVQ4jcWSTQ5AQAyFP44lxM+KuJSruBoWnIKFCiYtEyJe0kXb917bzMDfCDx58wvtCRkwGYbUwCDNYzSOOLMMeiAyJqciTiVXDdQiEAMjUNxxteImziVvjCGqgSu+2lJttuw3PzLw4oQeokscDQbWuy0krE9tohKC+5G26IDyxbIfYQHPDSfboMac9QAAAABJRU5ErkJggg==);
+    display: inline-block;
+    opacity: 0.5;
+    margin-left: 0.5ex;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --progress-background: rgba(100%, 100%, 100%, 0.25);
+    }
+
+    body {
+        background: #171b1f;
+        color: #ccc;
+    }
+
+    input.big {
+        background-color: rgba(100%, 100%, 100%, 0.2);
+    }
+
+    a {
+        color: rgb(40%, 70%, 100%);
+    }
+
+    a[target=_blank]::after {
+        filter: invert(1);
+    }
+}

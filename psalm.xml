@@ -1,40 +1,23 @@
 <?xml version="1.0"?>
 <psalm
-    name="Example Psalm config with recommended defaults"
-    useDocblockTypes="true"
     totallyTyped="false"
+    errorLevel="5"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
-            <file name="src/Kernel.php"/>
+            <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <LessSpecificReturnType errorLevel="error" />
-
-        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
-        <DeprecatedMethod errorLevel="error" />
-
-        <MissingClosureReturnType errorLevel="error" />
-        <MissingReturnType errorLevel="error" />
-        <MissingPropertyType errorLevel="error" />
-        <InvalidDocblock errorLevel="error" />
-        <MisplacedRequiredParam errorLevel="error" />
-
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <MissingConstructor errorLevel="error" />
-        <MissingClosureParamType errorLevel="error" />
-        <MissingParamType errorLevel="error" />
-
-        <DocblockTypeContradiction errorLevel="info" />
-        <RedundantConditionGivenDocblockType errorLevel="info" />
-
-        <MissingConstructor>
-            <errorLevel type="suppress">
-                <directory name="src/Entity" /> <!-- Initialization of properties is handled by Doctrine -->
-            </errorLevel>
-        </MissingConstructor>
+        <PropertyNotSetInConstructor/>
+        <MissingParamType/>
+        <PossiblyNullArgument/>
+        <ImplicitToStringCast errorLevel="suppress" />
     </issueHandlers>
 </psalm>

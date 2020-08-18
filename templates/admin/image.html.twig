@@ -1,0 +1,35 @@
+{% extends '@EasyAdmin/page/blank.html.twig' %}
+
+{% block content_title %}Covers{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <section class="content-header">
+            <div class="justify-content-between">
+                <div class="content-header-title"><h1 class="title">{{ block('content_title') }}</h1></div>
+            </div>
+        </section>
+        <section id="main" class="content-body">
+            <form>
+                <div class="form-group row">
+                    <label class="col-form-label">Number of downloaded covers</label>
+                    <div class="form-widget">
+                        <strong class="form-control-plaintext">{{ count }}</strong>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label">Size of downloaded covers</label>
+                    <div class="form-widget">
+                        <strong class="form-control-plaintext">{{ size|format_size }}</strong>
+                    </div>
+                </div>
+            </form>
+            <section class="content-footer">
+                <div class="form-actions">
+                    <a href="{{ path('admin_image_cache_purge') }}" class="btn btn-danger">Purge cache</a>
+                    <a href="{{ path('admin_image_delete_cover') }}" class="btn btn-danger">Delete downloaded covers</a>
+                </div>
+            </section>
+        </section>
+    </div>
+{% endblock %}

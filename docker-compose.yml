@@ -1,26 +1,40 @@
 version: '3'
 services:
+  webserver:
+    image: nginx:1.17-alpine
+    volumes:
+      - .:/srv/app:ro
+      - ./.docker/nginx.conf:/etc/nginx/conf.d/site.conf:ro
+    ports:
+      - "8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php.rule=Host(`livres.docker`)"
+      - "traefik.http.routers.php.entrypoints=secure"
+      - "traefik.http.routers.php.tls=true"
+
+      - "traefik.http.routers.unsecure-php.rule=Host(`livres.docker`)"
+      - "traefik.http.routers.unsecure-php.entrypoints=web"
+      - "traefik.http.routers.unsecure-php.middlewares=force-https"
+      - "traefik.http.routers.unsecure-php.tls=false"
+
+      - "traefik.http.middlewares.force-https.redirectscheme.scheme=https"
+
   php:
     build:
-      context: ./docker/php
-    networks:
-      - livres-net
-    container_name: livres-php
-    volumes:
-      - .:/srv/app
-  https:
-    build:
-      context: ./docker/nginx
-    networks:
-      - livres-net
-    hostname: livresapp
+      context: ./.docker
+      dockerfile: php.Dockerfile
     ports:
-      - 8443:443
+      - 9000
     volumes:
-      - .:/srv/app
-      - ./docker/nginx/ssl.conf:/etc/nginx/conf.d/default.conf
-    container_name: livres-nginx
+      - .:/srv/app:delegated
+    working_dir: /srv/app
+    labels:
+      - "traefik.enable=false"
 
-networks:
-  livres-net:
-    driver: bridge
+  redisearch:
+    image: "redislabs/redisearch:1.6.13"
+    ports:
+      - 6379
+    labels:
+      - "traefik.enable=false"

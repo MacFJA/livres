@@ -1,0 +1,10 @@
+{% block _providerconfiguration_parameters_widget %}
+    {% for paramKey,paramValue in value %}
+        <div class="form-group row pt-0">
+            <label for="input-{{ paramKey|escape('html_attr') }}" class="col-form-label text-info">{{ paramKey }}</label>
+            <div class="form-widget">
+                <input type="text" class="form-control" id="input-{{ paramKey|escape('html_attr') }}" name="providerconfiguration[parameters][{{ paramKey|escape('html_attr') }}]" value="{{ paramValue|escape('html_attr') }}">
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

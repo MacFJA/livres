@@ -1,15 +1,33 @@
+/public/cover/
+!/public/cover/placeholder.jpg
+/public/images/
+/public/js/
+/node_modules/
+/templates/svelte-inject.html
+/build/
+
+/.php_cs.cache
+/.stylelintcache
+
+/composer.phar
 
 ###> symfony/framework-bundle ###
-.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> symfony/webpack-encore-pack ###
-/node_modules/
-/public/build/
-###< symfony/webpack-encore-pack ###
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
 
-/build/
-/composer.phar
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+

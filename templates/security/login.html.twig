@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {{ source('svelte-inject.html')|replace({'<head>':'', '</head>': ''})|raw }}
+    <style>
+        body {
+            padding: 0 2rem;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 5rem auto 0;
+            padding: 1em;
+            border: 1px solid #888;
+            background-color: rgba(100%,100%,100%,0.2);
+            box-sizing: border-box;
+            border-radius: 1em;
+        }
+
+        form h1 {
+            margin: 0;
+            padding: 0 0 1em;
+        }
+
+        form div {
+            display: flex;
+            margin-bottom: 0.5ex;
+            align-items: baseline;
+        }
+        form div label {
+            flex: 0;
+            font-size: 1.5rem;
+            padding-right: 1ch;
+        }
+        form div input {
+            flex: 1;
+            border-radius: 1ex;
+        }
+
+        form button[type=submit] {
+            width: 100%;
+            margin-top: 1em;
+        }
+
+        .alert {
+            max-width: 600px;
+            margin: 5rem auto -3rem;
+            padding: 1ex;
+            border: 1px solid #888;
+            background-color: rgba(100%, 20%, 20%, 0.2);
+            box-sizing: border-box;
+            border-radius: 1ex;
+        }
+    </style>
+</head>
+<body>
+
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form method="post">
+    <h1 class="">Please sign in</h1>
+    <div>
+    <label for="inputUsername">Username</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="big" required autofocus>
+    </div>
+    <div>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="big" required>
+    </div>
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+    <button class="big primary" type="submit">
+        Sign in
+    </button>
+</form>
+
+</body>
+</html>

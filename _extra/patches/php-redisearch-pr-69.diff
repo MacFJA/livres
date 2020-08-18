@@ -1,0 +1,26 @@
+diff --git a/src/Suggestion.php b/src/Suggestion.php
+index 7715bcf..228e168 100644
+--- a/src/Suggestion.php
++++ b/src/Suggestion.php
+@@ -60,9 +60,10 @@ public function length(): int
+      * @param bool $fuzzy
+      * @param bool $withPayloads
+      * @param int $max
++     * @param bool $withScores
+      * @return array
+      */
+-    public function get(string $prefix, bool $fuzzy = false, bool $withPayloads = false, int $max = -1): array
++    public function get(string $prefix, bool $fuzzy = false, bool $withPayloads = false, int $max = -1, bool $withScores = false): array
+     {
+         $args = [
+             $this->indexName,
+@@ -74,6 +75,9 @@ public function get(string $prefix, bool $fuzzy = false, bool $withPayloads = fa
+         if ($withPayloads) {
+             $args[] = 'WITHPAYLOADS';
+         }
++        if ($withScores) {
++            $args[] = 'WITHSCORES';
++        }
+         if ($max >= 0) {
+             $args[] = 'MAX';
+             $args[] = $max;

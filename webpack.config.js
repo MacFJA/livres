@@ -1,33 +1,109 @@
-var Encore = require('@symfony/webpack-encore');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlPlugin = require('script-ext-html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssets = require("optimize-css-assets-webpack-plugin");
 
-Encore
-    // the project directory where compiled assets will be stored
-    .setOutputPath('public/build/')
-    // the public path used by the web server to access the previous directory
-    .setPublicPath('/build')
-    .cleanupOutputBeforeBuild()
-    .enableSourceMaps(false)
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
-    // .enableVersioning(Encore.isProduction())
+const SOURCE_ROOT = path.join(__dirname, 'src/Svelte');
+const DISTRIBUTION_ROOT = path.join(__dirname, 'public/js');
 
-    // uncomment to define the assets of the project
-    .addEntry('js/book', './assets/js/book.js')
-    .addEntry('js/md-polyfill', 'md-gum-polyfill')
-    .addEntry('js/search', './assets/js/search.js')
-    .addEntry('js/completion', './assets/js/completion.js')
-    .addEntry('js/scanner', './assets/js/scanner.js')
-    .addEntry('js/settings', './assets/js/settings.js')
-    .addStyleEntry('css/book', './assets/css/book.scss')
-    .addStyleEntry('css/list', './assets/css/list.scss')
-    .addStyleEntry('css/search', './assets/css/search.scss')
-    .addStyleEntry('css/settings', './assets/css/settings.scss')
+const prod = process.env.BUILD_MODE === 'prod'
 
-    // uncomment if you use Sass/SCSS files
-    .enableSassLoader()
+module.exports = () => ({
+  mode: prod ? 'production' : 'development',
+  context: SOURCE_ROOT,
+  entry: './main.js',
+  output: {
+    path: DISTRIBUTION_ROOT,
+    filename: prod ? '[name].[hash].js' : '[name].js',
+    chunkFilename: prod ? '[id].[chunkhash].js' : '[name].js',
+    publicPath: '/js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.svelte$/,
+        loader: 'svelte-loader',
+        options: {
+          dev: !prod,
+          emitCss: true,
+          preprocess: require('svelte-preprocess')({
+            stylus: false,
+            typescript: false,
+            pug: false,
+            coffeescript: false,
+            less: false,
+            postcss: false
+          })
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+        ].filter(Boolean),
+      },
+    ].filter(Boolean),
+  },
+  resolve: {
+    extensions: ['.mjs', '.js', '.svelte'],
+    alias: {
+      '~': SOURCE_ROOT,
+    },
+  },
+  plugins: [
+    new HtmlPlugin({
+      templateContent: ' ',
+      minify: prod && {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+      },
+      inject: 'head',
+      chunksSortMode: prod ? 'manual' : 'auto',
+      filename: '../../templates/svelte-inject.html'
+    }),
+    new ScriptExtHtmlPlugin({
+      defaultAttribute: 'defer',
 
-    // uncomment for legacy applications that require $/jQuery as a global variable
-    // .autoProvidejQuery()
-;
-
-module.exports = Encore.getWebpackConfig();
-
+      sync: {
+        test: /\.css$/,
+      },
+      preload: {
+        test: /\.js$/,
+        chunks: 'initial',
+      },
+      prefetch: {
+        test: /\.js$/,
+        chunks: 'all',
+      },
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
+    prod && new OptimizeCSSAssets(),
+    prod && new webpack.optimize.AggressiveSplittingPlugin(),
+  ].filter(Boolean),
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
+  },
+  devtool: prod ? 'hidden-source-map' : 'cheap-module-eval-source-map',
+});

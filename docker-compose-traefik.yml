@@ -1,0 +1,11 @@
+version: '3'
+services:
+  traefik:
+    image: "traefik:chevrotin"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./.docker/traefik.toml:/etc/traefik/traefik.toml:ro"

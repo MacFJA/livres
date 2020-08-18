@@ -1,6 +1,0 @@
-parameters:
-    app.cover_dir: %kernel.project_dir%/public/cover
-    app.thumbnail_dir: %kernel.project_dir%/public/thumbnail
-    app.config_dir: %kernel.project_dir%/var/
-    app.web_root: %kernel.project_dir%/public
-    locale: 'fr'

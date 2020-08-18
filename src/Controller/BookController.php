@@ -1,225 +1,98 @@
 <?php
-/**
- * @author  MacFJA
- * @license MIT
+
+declare(strict_types=1);
+
+/*
+ * Copyright MacFJA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 namespace App\Controller;
 
+use App\Doctrine\BookInjectionListener;
 use App\Entity\Book;
-use App\Worker\Entity\BookData;
-use App\Worker\Entity\Person;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\Tools\Pagination\Paginator;
-use Flintstone\Flintstone;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Worker\BookCreator;
+use function array_column;
+use Doctrine\ORM\EntityManagerInterface;
+use function is_array;
+use function json_decode;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BookController extends Controller
+class BookController extends AbstractController
 {
-    const PAGE_SIZE = 500;
     /**
-     * @var BookData
+     * @IsGranted("ROLE_CAN_ADD")
+     * @Route ("/book/add", name="add_book", methods={"POST"})
      */
-    private $bookData;
-    /**
-     * @var Person
-     */
-    private $person;
-    /**
-     * @var Flintstone
-     */
-    private $configuration;
-
-    /**
-     * BookController constructor.
-     *
-     * @param BookData   $bookData
-     * @param Person     $person
-     * @param Flintstone $configuration
-     */
-    public function __construct(
-        BookData $bookData,
-        Person $person,
-        Flintstone $configuration
-    ) {
-        $this->bookData = $bookData;
-        $this->person = $person;
-        $this->configuration = $configuration;
+    public function addBook(Request $request, BookCreator $bookCreator, EntityManagerInterface $objectManager, CacheManager $cacheManager, BookInjectionListener $injectionListener, \Symfony\Component\Serializer\Normalizer\NormalizerInterface $normalizer): JsonResponse
+    {
+        return $this->saveBook(null, $request, $bookCreator, $objectManager, $cacheManager, $injectionListener, $normalizer);
     }
 
     /**
-     * @Route("/book/",  defaults={"page"=1}, name="book-list")
-     * @Route("/book/page/{page}", name="book-list-page")
-     * @param int $page
-     * @return Response
-     * @internal param Request $request
+     * @IsGranted("ROLE_CAN_EDIT")
+     * @Route ("/book/edit/{bookId<\d+>}", name="edit_book", methods={"POST"})
      */
-    public function listPage(int $page) : Response
+    public function editBook(int $bookId, Request $request, BookCreator $bookCreator, EntityManagerInterface $objectManager, CacheManager $cacheManager, BookInjectionListener $injectionListener, \Symfony\Component\Serializer\Normalizer\NormalizerInterface $normalizer): JsonResponse
     {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = $this->getDoctrine()->getManager();
+        return $this->saveBook($bookId, $request, $bookCreator, $objectManager, $cacheManager, $injectionListener, $normalizer);
+    }
 
-        return $this->displayList(
-            $entityManager->createQuery(sprintf(
-                'SELECT b FROM %s b ORDER BY b.serie ASC, b.sortTitle ASC, b.title ASC',
-                Book::class
-            )),
-            'book-list-page',
-            [],
-            $page
+    /**
+     * @IsGranted("ROLE_CAN_EDIT")
+     * @Route("/book/{id}/is-back", name="book_is_back", methods={"PUT"})
+     * @ParamConverter("book", class=Book::class)
+     */
+    public function isBack(Book $book, EntityManagerInterface $entityManager): Response
+    {
+        foreach ($book->getMovements() as $movement) {
+            if (!$movement->isEnded()) {
+                $movement->endNow();
+                $entityManager->persist($movement);
+            }
+        }
+        $entityManager->flush();
+
+        return new Response();
+    }
+
+    private function saveBook(?int $bookId, Request $request, BookCreator $bookCreator, EntityManagerInterface $objectManager, CacheManager $cacheManager, BookInjectionListener $injectionListener, \Symfony\Component\Serializer\Normalizer\NormalizerInterface $normalizer): JsonResponse
+    {
+        $metadata = $objectManager->getClassMetadata(Book::class);
+
+        $items = json_decode((string) $request->getContent(), true);
+        if (!is_array($items)) {
+            throw new BadRequestHttpException();
+        }
+        $items = array_column($items, 'value', 'key');
+
+        $book = $bookCreator->createBook($items, $bookId);
+
+        $injectionListener->handleCover($book, $metadata);
+
+        return new JsonResponse(
+            ((array) $normalizer->normalize($book, 'jsonld'))
+            + ['coverFull' => $cacheManager->getBrowserPath($book->getCover() ?? 'placeholder.jpg', 'book_cover')]
         );
-    }
-
-    private function paginateQuery(Query $query, int $currentPage = 1, int $pageSize = self::PAGE_SIZE) : Paginator
-    {
-        $query->setMaxResults($pageSize)->setFirstResult($pageSize * ($currentPage - 1));
-
-        return new Paginator($query);
-    }
-
-    protected function displayList(
-        Query $query,
-        string $routeName,
-        array $params = [],
-        int $page = 1,
-        int $pageSize = -1
-    ) : Response {
-        if ($pageSize == -1) {
-            $pageSize = $this->configuration->get('page_size') ?? static::PAGE_SIZE;
-        }
-        if ($pageSize < 1) {
-            $pageSize = static::PAGE_SIZE;
-        }
-
-        if ($page < 1) {
-            $page = 1;
-        }
-
-        $paginator = $this->paginateQuery($query, $page, $pageSize);
-
-        return $this->render('book/list.html.twig', [
-            'books'     => $paginator->getIterator(),
-            'bookdata'  => $this->bookData,
-            'count'     => $paginator->count(),
-            'pageCount' => ceil($paginator->count() / $pageSize),
-            'page'      => $page,
-            'pageUrl'   => ['name' => $routeName, 'params' => $params],
-            'filter'    => json_decode(base64_decode($params['criteria']??base64_encode('[]')), true),
-            'forms'     => Book::getSearchableFields()
-        ]);
-    }
-
-    /**
-     * @Route("/book/filter/{criteria}", defaults={"page"= 1}, name="book-filter")
-     * @Route("/book/filter/{criteria}/page/{page}", name="book-filter-page")
-     * @param string $criteria
-     * @param int    $page
-     * @return Response
-     */
-    public function filterPage(string $criteria, int $page)
-    {
-        /** @var array<string,string> $criteriaDecoded */
-        $criteriaDecoded = json_decode(base64_decode($criteria), true);
-        $dqlWhere = [];
-
-        foreach ($criteriaDecoded as $field => $value) {
-            if (!Book::isFieldValid($field)) {
-                throw new BadRequestHttpException(vsprintf('Field "%s" does not exists in %s', [$field, Book::class]));
-            }
-
-            $dqlWhere[] = sprintf('b.%s LIKE :search%1$s', $field);
-        }
-
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $entityManager = $this->getDoctrine()->getManager();
-        $books = $entityManager
-            ->createQuery(vsprintf('SELECT b FROM %s b WHERE %s', [Book::class, implode(' AND ', $dqlWhere)]));
-        foreach ($criteriaDecoded as $field => $value) {
-            $books->setParameter(':search' . $field, '%' . $value . '%');
-        }
-
-        return $this->displayList($books, 'book-filter-page', ['criteria' => $criteria], $page);
-    }
-
-    /**
-     * @Route("/book/view/{isbn}", name="book_view")
-     * @param string $isbn
-     * @return Response
-     */
-    public function viewPage(string $isbn)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $books = $entityManager->getRepository(Book::class)->findBy(['isbn' => $isbn]);
-        $people = array_values($this->person->getAllPersons());
-
-        if (count($books) == 1) {
-            return $this->render('book/view.html.twig', [
-                'book'       => reset($books),
-                'people'     => $people,
-                'searchable' => Book::getSearchableFields()
-            ]);
-        }
-
-        return $this->render('book/view_multiple.html.twig', [
-            'books'      => $books,
-            'people'     => $people,
-            'searchable' => Book::getSearchableFields()
-        ]);
-    }
-
-    /**
-     * @Route("/book/add/do", name="book-add")
-     * @return RedirectResponse
-     */
-    public function addBook(Request $request): RedirectResponse
-    {
-        $post = $request->request;
-        $data = json_decode($post->get('data'), true);
-        $data['addedAt'] = new \DateTimeImmutable();
-        $book = Book::createFromArray($data);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($book);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('book_view', ['isbn' => $book->getIsbn()]);
-    }
-
-    /**
-     * @Route("/book/update/do/{id}", name="book-update")
-     * @param Request $request
-     * @param string  $id
-     * @return RedirectResponse
-     */
-    public function updateBook(Request $request, string $id): RedirectResponse
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
-        $metaData = $entityManager->getClassMetadata(Book::class);
-
-        /** @var Book $book */
-        $book = $entityManager->find(Book::class, $id);
-        $post = $request->request;
-        $data = json_decode($post->get('data'), true);
-
-        $others = $metaData->getFieldValue($book, 'others');
-        foreach ($data as $field => $value) {
-            if (Book::isFieldValid($field)) {
-                $metaData->setFieldValue($book, $field, $value);
-                continue;
-            }
-            $others[$field] = $value;
-        }
-        $metaData->setFieldValue($book, 'others', $others);
-
-        $book->validateFieldData();
-
-        $entityManager->persist($book);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('book_view', ['isbn' => $book->getIsbn()]);
     }
 }

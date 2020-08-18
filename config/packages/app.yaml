@@ -1,0 +1,7 @@
+parameters:
+  app.cover_dir: "%kernel.project_dir%/public/cover"
+  app.config_dir: "%kernel.project_dir%/var/"
+  redisearch.url: "%env(resolve:REDISEARCH_URL)%"
+  redisearch.suggestion: 'autocomplete'
+  redisearch.index: 'book'
+  completions.type: ['storage', 'authors', 'owner']

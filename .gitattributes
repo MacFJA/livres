@@ -1,0 +1,48 @@
+*.js         text eol=lf
+*.php        text eol=lf diff=php
+*.svelte     text eol=lf diff=html
+*.html.twig  text eol=lf diff=html
+*.twig       text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.json       text eol=lf
+*.css        text eol=lf diff=css
+*.Dockerfile text eol=lf
+*.toml       text eol=lf
+*.conf       text eol=lf
+.env*        text eol=lf
+Makefile     text eol=lf
+*.mk         text eol=lf
+*.xml        text eol=lf
+*.xml.dist   text eol=lf
+.php-cs      text eol=lf diff=php
+
+*.lock -diff
+package-lock.json -diff
+
+*.png filter=lfs diff=lfs merge=lfs binary
+*.jpg filter=lfs diff=lfs merge=lfs binary
+
+*.patch -text
+*.diff  -text
+
+.gitattributes export-ignore
+.gitignore     export-ignore
+.gitkeep       export-ignore
+
+.docker/          export-ignore
+.env.dev          export-ignore
+.eslintrc.js      export-ignore
+.make/            export-ignore
+.phan/            export-ignore
+.phive/           export-ignore
+.php_cs           export-ignore
+.stylelintrc.json export-ignore
+.unused.php       export-ignore
+Makefile          export-ignore
+README.md         export-ignore
+doc/              export-ignore
+phpmd.xml         export-ignore
+phpunit.xml.dist  export-ignore
+psalm.xml         export-ignore
+tests/            export-ignore
