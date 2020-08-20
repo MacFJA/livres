@@ -6,7 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2020-08-16
+### Added
+
+- Add more files in the cleanup (`make clean`) process
+
+### Fixed
+
+- CircleCI configuration
+- Cleanup (`make clean`) not working if files aren't generated
+- Fix release date of version 1.0.0 being two days early
+- Allow application building (`make build`) to work on a fresh install
+- Warning of missing `docker-compose-traefik.yml` when building application (`make build`)
+- Fix a small typo in the README file
+
+## [1.0.0] - 2020-08-18
 
 Full rewrite of the application.
 

@@ -47,7 +47,7 @@ But to put it simply, it's just a matter of two commands, `make app`and `make ru
 
 Contributions are welcome. Please open up an issue or create PR if you would like to help out.
 
-Read me in the [Contributing file](CONTRIBUTING.md)
+Read more in the [Contributing file](CONTRIBUTING.md)
 
 ## License
 

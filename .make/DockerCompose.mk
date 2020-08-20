@@ -14,7 +14,7 @@ stop::
 
 clean::
 	@echo Remove all generated files
-	rm docker/docker-compose
+	rm -f docker/docker-compose
 
 # Target
 
@@ -38,7 +38,9 @@ ifneq (1,${NO_DOCKER})
   endif
 
   # Check if Traefik is already running
-  ifeq (,$(shell $(DKR_COMP) --file docker-compose-traefik.yml ps -q))
+  ifeq (,$(wildcard docker-compose-traefik.yml))
+    SELF_TRAEFIK=0
+  else ifeq (,$(shell $(DKR_COMP) --file docker-compose-traefik.yml ps -q))
     SELF_TRAEFIK=0
   else
     SELF_TRAEFIK=1

@@ -16,14 +16,16 @@ fix-code:: fix-code-php
 	@:
 clean::
 	@echo Remove all generated files
-	rm composer.phar
-	rm .php_cs.cache
+	rm -f composer.phar
+	rm -f .php_cs.cache
 	@echo Remove all generated directories
-	rm -r vendor
-	rm -r var/cache
-	rm -r var/log
-	rm -r build
-	rm -r public/bundles/*
+	rm -rf vendor
+	rm -rf var/cache
+	rm -rf var/log
+	rm -rf build
+	rm -rf public/bundles
+	rm -rf public/cover
+	rm -rf public/images
 
 # Target
 

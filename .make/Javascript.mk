@@ -23,8 +23,10 @@ fix-code:: fix-code-svelte fix-code-css
 	@:
 clean::
 	@echo Remove all generated directories
-	rm -r node_modules
-	rm -r public/js/*
+	rm -rf node_modules
+	rm -rf public/js/*
+	@echo Remove all generated files
+	rm -f .stylelintcache
 
 # Target
 
