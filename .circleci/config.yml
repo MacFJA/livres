@@ -5,12 +5,18 @@ jobs:
       - image: circleci/php:7.2
     steps:
       - checkout
+      - run:
+          name: Install PHP Extension
+          command: |
+            sudo docker-php-ext-install zip bcmath intl xsl gd
       - restore_cache:
           keys:
             - composer-v1-{{ checksum "composer.lock" }}
             - composer-v1-
 
-      - run: NO_DOCKER=1 make analyze-php
+      - run:
+          name: Run code quality analysis
+          command: NO_DOCKER=1 make analyze-php
 
       - save_cache:
           key: composer-v1-{{ checksum "composer.lock" }}
@@ -25,7 +31,9 @@ jobs:
           keys:
             - node-v1-{{ checksum "package-lock.json" }}
             - node-v1-
-      - run: NO_DOCKER=1 make analyze-svelte analyze-css
+      - run:
+          name: Run code quality analysis
+          command: NO_DOCKER=1 make analyze-svelte analyze-css
       - save_cache:
           key: node-v1-{{ checksum "package-lock.json" }}
           paths:

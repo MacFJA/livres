@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add more files in the cleanup (`make clean`) process
 
+### Changed
+
+- Downgrade ESLint to avoid unwanted `no-unused-vars` false-positive error
+
 ### Fixed
 
 - CircleCI configuration
@@ -18,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow application building (`make build`) to work on a fresh install
 - Warning of missing `docker-compose-traefik.yml` when building application (`make build`)
 - Fix a small typo in the README file
+- Missing dev dependencies (tools) on fresh install
 
 ## [1.0.0] - 2020-08-18
 
