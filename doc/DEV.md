@@ -93,6 +93,12 @@ make fix-code
 
 ## Tips
 
+### Create a demo content
+
+```shell script
+make demo
+```
+
 ### Useful commands
 
 #### Reindex the book search index

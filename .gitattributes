@@ -23,6 +23,8 @@ package-lock.json -diff
 *.png filter=lfs diff=lfs merge=lfs binary
 *.jpg filter=lfs diff=lfs merge=lfs binary
 
+tests/demo.db filter=lfs diff=lfs merge=lfs binary
+
 *.patch -text
 *.diff  -text
 

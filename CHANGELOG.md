@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add more files in the cleanup (`make clean`) process
+- Add a demo database (`make demo`)
 
 ### Changed
 
 - Downgrade ESLint to avoid unwanted `no-unused-vars` false-positive error
+- Change application page title from "Welcome!" to "Livres"
 
 ### Fixed
 

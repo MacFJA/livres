@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Livres{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     {{ source('svelte-inject.html')|replace({'<head>':'', '</head>': ''})|raw }}
     <script>
