@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher, onMount, onDestroy } from "svelte"
+    import { _ } from "svelte-intl"
     import { derived } from "svelte/store"
     import TinyEmitter from "tiny-emitter/instance"
     import tippy from "tippy.js"
@@ -39,15 +40,15 @@
      * @type {derived<Array<DataLine>>} - The list of missing book data
      * Depends on `data` value (through `watchedData`)
      */
-    let missing = derived([watchedData], ([$watchedData]) => {
-        let missingItems = defaultItems.filter((item) => {
+    let missing = derived([watchedData, _], ([$watchedData]) => {
+        let missingItems = defaultItems().filter((item) => {
             return $watchedData.map((row) => row.key).indexOf(item.key) === -1
         })
         missingItems.push({
             key: "new",
             fusion: "push",
             type: "dynamic",
-            label: "New",
+            label: $_("completer.field.new"),
             value: []
         })
         return missingItems
@@ -153,14 +154,10 @@
                 response["id"] = response["bookId"]
                 open(Book, response).then(() => dispatch("close"))
             })
-            .catch((reason) => {
+            .catch((message) => {
                 open(Error, {
-                    reason:
-                        "An error occurs while saving your book." +
-                        "\n" +
-                        "The error message is: " +
-                        reason,
-                    title: "Unable to save your book",
+                    reason: $_("completer.error.save.message", {message}),
+                    title: $_("completer.error.save.title")
                 })
             })
     }
@@ -203,14 +200,16 @@
                     return false
                 }
                 instance.setContent(
-                    "You must define: " +
-                        defaultItems
-                            .filter(
-                                (item) =>
-                                    $missingRequired.indexOf(item.key) !== -1
-                            )
-                            .map((item) => item.label)
-                            .join(", ")
+                    $_("completer.error.missing", {
+                        missing:
+                            defaultItems()
+                                .filter(
+                                    (item) =>
+                                        $missingRequired.indexOf(item.key) !== -1
+                                )
+                                .map((item) => item.label)
+                                .join(", ")
+                    })
                 )
             },
         })
@@ -285,13 +284,13 @@
 </div>
 
 <GenericResult data="{data}">
-    <span slot="header">Result</span>
+    <span slot="header">{$_("completer.book.title")}</span>
     <span slot="subheader">
         {#if $missing.length > 0}
-            <button class="color" use:initMissing>Add missing</button>
+            <button class="color" use:initMissing>{$_("completer.book.add_missing")}</button>
         {/if}
         {#if data.length > 0}
-            <button class="color danger" on:click="{clear}">Clear</button>
+            <button class="color danger" on:click="{clear}">{$_("completer.book.clear")}</button>
             <span use:requiredTooltip>
                 <button
                     disabled="{$missingRequired.length > 0}"
@@ -299,7 +298,7 @@
                     class="color primary"
                     on:click="{send}"
                 >
-                    {#if editBookId !== null}Save changes{:else}Add book{/if}
+                    {#if editBookId !== null}{$_("completer.book.do_update")}{:else}{$_("completer.book.do_add")}{/if}
                 </button>
             </span>
         {/if}
@@ -309,11 +308,11 @@
             class="color"
             on:click={() => editField(key, label, type, value)}
         >
-            Edit
+            {$_("completer.book.line.edit")}
         </button>
         <button class="color danger" on:click="{() => removeItem(key)}">
-            Remove
+            {$_("completer.book.line.remove")}
         </button>
     </span>
-    <div slot="empty">No data so far.</div>
+    <div slot="empty">{$_("completer.book.empty")}</div>
 </GenericResult>

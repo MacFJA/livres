@@ -1,5 +1,6 @@
 <script>
     import Quagga from "quagga"
+    import { _ } from "svelte-intl"
 
     import Completer from "~/Completer.svelte"
 
@@ -114,18 +115,18 @@
     <input type="file" on:change={scanFile}>
     {#if search}
         {#await search}
-            <i>Searching...</i>
+            <i>{$_("completer.state.searching")}</i>
         {:then result}
             {isbn}
         {:catch error}
-            <i>No result so far...</i>
+            <i>{$_("completer.state.emtpty")}</i>
         {/await}
     {/if}
 </div>
 
 <div class="buttons">
     {#if isbn !== undefined}
-        <button class="big" on:click={startCompletion}>Search</button>
+        <button class="big" on:click={startCompletion}>{$_("completer.search")}</button>
     {/if}
 </div>
 

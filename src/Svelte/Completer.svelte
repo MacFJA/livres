@@ -2,6 +2,7 @@
     import { parse } from "isbn3"
     import { Line } from "progressbar.js"
     import { createEventDispatcher } from "svelte"
+    import { _ } from "svelte-intl"
     import { derived, writable } from "svelte/store"
 
     import BookResult from "./Completer/BookResult.svelte"
@@ -203,7 +204,7 @@
             maxlength="17"
             pattern="[\d-]{(10, 17)}"
         />
-        <button class="big primary" on:click|preventDefault="{search}" disabled="{parse(isbn) === null}">Search</button>
+        <button class="big primary" on:click|preventDefault="{search}" disabled="{parse(isbn) === null}">{$_("completer.search")}</button>
     </form>
 {:else}
     <input type="search" name="isbn" readonly disabled value="{isbn}" />
@@ -224,18 +225,18 @@
                     />
                 </div>
             {:else}
-                <p class="no-provider-result">Book Not Found</p>
+                <p class="no-provider-result">{$_("completer.no_result")}</p>
             {/if}
             <div class="book-result">
                 <BookResult on:close={onBookClose} />
             </div>
         {:catch error}
-            <p>Something went wrong: {error.message}</p>
+            <p>{$_("completer.error", {message: error.message})}</p>
         {/await}
     </div>
 {/if}
 {#if nextable}
 <div class="buttons">
-    <button class="big warn" on:click={onBookClose}>Next</button>
+    <button class="big warn" on:click={onBookClose}>{$_("completer.next")}</button>
 </div>
 {/if}

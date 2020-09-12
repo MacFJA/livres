@@ -1,0 +1,91 @@
+app.error.login: Pour utiliser l'application vous devez être connecté # Message to indicate that logged user is require
+app.goto.add_image: Ajouter via une image # Menu item to go to book adding (by image reading)
+app.goto.add_isbn: Ajouter via un ISBN # Menu item to go to book adding (by isbn)
+app.goto.add_live: Ajouter en scannant # Menu item to go to book adding (by live scanning)
+app.goto.library: Bibliothèque # Menu item to show the library
+app.goto.logout: Se déconnecter # Menu item to logout
+app.login: Se connecter # Label of the button to go to the login page
+book.delete.button: Supprimer # Label of the button to remove the book
+book.delete.confirm: Êtes-vous sure de voulir supprimer ce livre ? # Confirmation message before deleting a book
+book.load.error: Impossible de charger le livre # Error message when an error occur while loading the book
+book.edit: Modifier # Label of the button to edit the book
+book.field.authors: Auteurs # Label of the authors data
+book.field.cover: Couverture # Label of the cover data
+book.field.title: Titre # Label of the title data
+book.field.sort_title: Titre de tri # Label of the sort title data
+book.field.isbn: ISBN # Label of the isbn data
+book.field.publication_date: Date de publication # Label of the publication date data
+book.field.pages: Pages # Label of the pages data
+book.field.series: Series # Label of the series data
+book.field.keywords: Mots-clés # Label of the keywords data
+book.field.genres: Genres # Label of the genres data
+book.field.format: Format # Label of the format data
+book.field.dimension: Dimension # Label of the dimension data
+book.field.illustrators: Illustrateurs # Label of the illustrators data
+book.field.owner: Propriétaire # Label of the owner data
+book.field.visit_webpage: Voir le site web # Label of the link to an external website
+book.loading.error: "Information sur le livre manquante" # Error message when missing data to load book
+book.movement.empty: Aucun mouvement # Message to indicate the book have never been borrowed
+book.movement.from_date: Depuis le # Title of the column of date when the book have been borrowed
+book.movement.new: Ajouter # Label of the button to add a new book movement
+book.movement.not_returned: Pas encore rendu # Cell text to indicate that the book is not returned yet
+book.movement.return: Est de retour # Label of the button to indicate the book have been returned
+book.movement.to_date: Jusqu'au # Title of the column of date when the book was returned
+book.movement.who: Qui # Title of the column of people that borrow a book
+book.show: Afficher # Label of button to display a book
+completer.book.add_missing: Ajouter les manquant # Label of the button to add all missing required book data
+completer.book.clear: Tout effacer # Label of the button to remove all data lines
+completer.book.do_add: Ajouter # Label of the button to create a new book
+completer.book.do_update: Enregister # Label of the button to update a book
+completer.book.empty: Pas de données. # Label when the book data are empty
+completer.book.line.edit: Modifier # Label of the button to edit a data line
+completer.book.line.remove: Supp. # Label of the button to remove a data line
+completer.book.title: Résultat # Title of the section that contains book data
+completer.error.missing: "Vous devez indiquer : {missing}" # Error message when trying to save a book with missing required data
+completer.error.save.message: | # Error message when an error occurs while saving the book
+  Une erreur s'est produite pendant la sauvegarde du livre.
+  Le message d'erreur : {message}
+completer.error.save.title: "Impossible de sauvegarder le livre" # Error title when an error occurs while saving the book
+completer.error: "Une erreur est survenu: {message}" # Error message when an error occurs while search book data
+completer.field.new: Nouveau # Label of the button to create a new book data
+completer.found.empty: Rien pour l'instant... # Indicate that not ISBN have been found
+completer.found.remove: Supprimer # Remove a found ISBN
+completer.found.title: ISBN trouvés # Label of the list of found ISBN
+completer.loading: Chargement # ISBN placeholder when the page is loading
+completer.next: Suivant # Label of the button to start the search of book data for the next ISBN
+completer.no_result: Aucun livres trouvé # Message when there are no search result for book data
+completer.result.add_missing: Ajouter les manquants # Add missing book data only
+completer.result.append: Ajouter # Append a search result to a book data
+completer.result.replace: Remplacer # Replace a book data value with a search value
+completer.result.title: Résultats # Section title of search result
+completer.search: Rechecher # Label of the button to search book data of found isbn
+completer.start: Démarrer # Label of the button to start the live scanning
+completer.state.emtpty: Pas de résultats pour l'instant... # Label to indicate that no result were found
+completer.state.searching: Rechecher... # Label indicating a search in progress
+completer.stop: Arrêter # Label of the button to stop the live scanning
+data.list.add: Ajouter # Add an item in a book data list
+data.list.remove: Supp. # Remove one item of a book data list
+data.reset: Remise a zéro # Revert field to its previous state
+display_mode.grid: Grille # Display mode selector
+display_mode.list: Liste # Display mode selector
+facet.remove: Supp. # Remove a search criteria
+filter.any: Tout # No Filter
+filter.gt: "Supérieur à" # Type of numeric filter
+filter.gte: "Supérieur ou égale à" # Type of numeric filter
+filter.lt: "Inférieur à" # Type of numeric filter
+filter.lte: "Inférieur ou égale à" # Type of numeric filter
+filter.no: Non # Filter to display only false boolean
+filter.reset: Tout afficher # Reset book filter
+filter.type.movement: "En mouvement" # Label of the movement filter
+filter.type.pages: "Pages" # Label of the pages filter
+filter.type.storage: Stockage # Label of the storage filter
+filter.yes: Oui # Filter to display only true boolean
+loading: Chargement... # Loading criteria
+modal.close: Fermer # Close button of the modal
+pagination.empty: Aucune données # Message when there are no data to display
+pagination.first: Début # Label of the button to go to the first page
+pagination.last: Fin # Label of the button to go to the last page
+pagination.next: Suivant # Label of the button to go to the next page
+pagination.previous: Précédent # Label of the button to go to the previous page
+search.clear: Effacer # Clear the search bar
+search.search: Chercher # Start the search

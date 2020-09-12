@@ -2,6 +2,7 @@
     import JsBarcode from "jsbarcode"
     import debounce from "just-debounce"
     import { createEventDispatcher } from "svelte"
+    import { _ } from "svelte-intl"
     import { derived, writable } from "svelte/store"
 
     import Book from "~/Book.svelte"
@@ -368,8 +369,8 @@
     <input bind:this={input} class:loading={requestInProgress>0} on:input|preventDefault|self={onInput} />
     {#if $searchQuery !== ""}
         <div class="buttons">
-            <button class="text danger" on:click={() => clearSearch()} on:click={focusInput}>Clear</button>
-            <button class="text primary" on:click={() => search()}>Search</button>
+            <button class="text danger" on:click={() => clearSearch()} on:click={focusInput}>{$_("search.clear")}</button>
+            <button class="text primary" on:click={() => search()}>{$_("search.search")}</button>
         </div>
     {/if}
     <div class="additional">
@@ -379,7 +380,7 @@
                     <div class="facet">
                         <header>{facet.payload.type}</header>
                         <span>{facet.payload.full || facet.value}</span>
-                        <button class="round-grey" on:click={() => removeFacet(facet)} on:click={focusInput}>Remove</button>
+                        <button class="round-grey" on:click={() => removeFacet(facet)} on:click={focusInput}>{$_("facet.remove")}</button>
                     </div>
                 {/each}
             </nav>
@@ -393,7 +394,7 @@
                                 <li class="suggestion">
                                     <header>{suggestion.payload.type}</header>
                                     <div on:click={() => addFacet(suggestion)} on:click={focusInput}>{suggestion.payload.full || suggestion.value}</div>
-                                    {#if suggestion.payload.bookId}<button class="color small" on:click={() => showBook(suggestion.payload.bookId)}>View</button>{/if}
+                                    {#if suggestion.payload.bookId}<button class="color small" on:click={() => showBook(suggestion.payload.bookId)}>{$_("book.show")}</button>{/if}
                                 </li>
                             {/each}
                         </ul>
@@ -408,7 +409,7 @@
                         <ul>
                             {#each results as result}
                                 <li class="book">
-                                    <button class="color small" on:click={() => showBook(result.bookId)}>View</button>
+                                    <button class="color small" on:click={() => showBook(result.bookId)}>{$_("book.show")}</button>
                                     <header>{#if result.series !== ""}<u>{result.series}</u>: {/if}{result.title}</header>
                                     <div>{result.author} &mdash; <svg class="type-barcode" use:barcode data-code="{result.isbn}"></svg></div>
                                 </li>

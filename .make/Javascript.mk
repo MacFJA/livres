@@ -47,6 +47,6 @@ fix-code-svelte: $(wildcard src/Svelte/*) .eslintrc.js package.json | node_modul
 node_modules: package.json
 	$(NPM) install --ignore-optional --prefer-offline
 
-public/js: $(wildcard src/Svelte/*) webpack.config.js package.json assets/* | node_modules
+public/js: $(wildcard src/Svelte/*) webpack.config.js package.json assets/* translations/* | node_modules
 	rm -rf public/js/*
 	$(NPX) webpack

@@ -27,8 +27,10 @@ use MacFJA\BookRetriever\ProviderConfigurationInterface;
 use MacFJA\BookRetriever\ProviderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class HomepageController.
@@ -63,5 +65,13 @@ class HomepageController extends AbstractController
             'providers' => $providersInfo,
             'pageSize' => $flintstone->get('per_page') ?: 10,
         ]);
+    }
+
+    /**
+     * @Route("/language/{name}/", name="translation")
+     */
+    public function translation(string $name, TranslatorInterface $translator): JsonResponse
+    {
+        return new JsonResponse($translator->getCatalogue($name)->all('front'));
     }
 }

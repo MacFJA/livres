@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte"
+    import { _ } from "svelte-intl"
 
     import Movement from "./Book/Movement.svelte"
     import FieldRender from "./FieldRender.svelte"
@@ -53,7 +54,7 @@
     })
 
     const deleteBook = () => {
-        confirm("Are you sure to delete this book?") && fetch(window.app.url.bookDelete.replace("__placeholder", id), {method: "DELETE"}).then(() => close())
+        confirm($_("book.delete.confirm")) && fetch(window.app.url.bookDelete.replace("__placeholder", id), {method: "DELETE"}).then(() => close())
     }
 </script>
 
@@ -157,14 +158,14 @@
                 <dd>
                     <FieldRender type="{type}" value="{value}" />
                 </dd>
-            {:else}Loading...{/each}
+            {:else}{$_("loading")}{/each}
             {#if window.app.roles.edit || window.app.roles.delete}
                 <dt class="action">
                     {#if window.app.roles.edit}
-                        <button class="color warn" on:click={() => location.hash = `#edit-book-${book.id}`}>Edit</button>
+                        <button class="color warn" on:click={() => location.hash = `#edit-book-${book.id}`}>{$_("book.edit")}</button>
                     {/if}
                     {#if window.app.roles.delete}
-                        <button class="color danger" on:click={() => deleteBook()}>Delete</button>
+                        <button class="color danger" on:click={() => deleteBook()}>{$_("book.delete.button")}</button>
                     {/if}
                 </dt>
             {/if}
@@ -177,5 +178,5 @@
         {/if}
     </article>
 {:catch reason}
-    <Error title="Unable to load the book" reason="{reason}" />
+    <Error title="{$_('book.load.error')}" reason="{reason}" />
 {/await}

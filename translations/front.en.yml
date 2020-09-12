@@ -1,0 +1,91 @@
+app.error.login: To use the application you must be connected # Message to indicate that logged user is require
+app.goto.add_image: Add by Image # Menu item to go to book adding (by image reading)
+app.goto.add_isbn: Add by ISBN # Menu item to go to book adding (by isbn)
+app.goto.add_live: Add by Scanning # Menu item to go to book adding (by live scanning)
+app.goto.library: Library # Menu item to show the library
+app.goto.logout: Logout # Menu item to logout
+app.login: Sign in # Label of the button to go to the login page
+book.delete.button: Delete # Label of the button to remove the book
+book.delete.confirm: Are you sure to delete this book? # Confirmation message before deleting a book
+book.load.error: Unable to load the book # Error message when an error occur while loading the book
+book.edit: Edit # Label of the button to edit the book
+book.field.authors: Authors # Label of the authors data
+book.field.cover: Cover # Label of the cover data
+book.field.title: Title # Label of the title data
+book.field.sort_title: Sort title # Label of the sort title data
+book.field.isbn: ISBN # Label of the isbn data
+book.field.publication_date: Publication date # Label of the publication date data
+book.field.pages: Pages # Label of the pages data
+book.field.series: Series # Label of the series data
+book.field.keywords: Keywords # Label of the keywords data
+book.field.genres: Genres # Label of the genres data
+book.field.format: Format # Label of the format data
+book.field.dimension: Dimension # Label of the dimension data
+book.field.illustrators: illustrators # Label of the illustrators data
+book.field.owner: Owner # Label of the owner data
+book.field.visit_webpage: Visit webpage # Label of the link to an external website
+book.loading.error: "Missing book information" # Error message when missing data to load book
+book.movement.empty: No movements # Message to indicate the book have never been borrowed
+book.movement.from_date: From # Title of the column of date when the book have been borrowed
+book.movement.new: Add # Label of the button to add a new book movement
+book.movement.not_returned: Not returned yet # Cell text to indicate that the book is not returned yet
+book.movement.return: Is back # Label of the button to indicate the book have been returned
+book.movement.to_date: To # Title of the column of date when the book was returned
+book.movement.who: Who # Title of the column of people that borrow a book
+book.show: Show # Label of button to display a book
+completer.book.add_missing: Add missing # Label of the button to add all missing required book data
+completer.book.clear: Clear # Label of the button to remove all data lines
+completer.book.do_add: Add book # Label of the button to create a new book
+completer.book.do_update: Save changes # Label of the button to update a book
+completer.book.empty: No data so far. # Label when the book data are empty
+completer.book.line.edit: Edit # Label of the button to edit a data line
+completer.book.line.remove: Remove # Label of the button to remove a data line
+completer.book.title: Result # Title of the section that contains book data
+completer.error.missing: "You must define: {missing}" # Error message when trying to save a book with missing required data
+completer.error.save.message: | # Error message when an error occurs while saving the book
+  An error occurs while saving your book.
+  The error message is: {message}
+completer.error.save.title: "Unable to save your book" # Error title when an error occurs while saving the book
+completer.error: "Something went wrong: {message}" # Error message when an error occurs while search book data
+completer.field.new: New # Label of the button to create a new book data
+completer.found.empty: Nothing yet... # Indicate that not ISBN have been found
+completer.found.remove: Remove # Remove a found ISBN
+completer.found.title: Found ISBN # Label of the list of found ISBN
+completer.loading: Loading # ISBN placeholder when the page is loading
+completer.next: Next # Label of the button to start the search of book data for the next ISBN
+completer.no_result: Book Not Found # Message when there are no search result for book data
+completer.result.add_missing: Add missing # Add missing book data only
+completer.result.append: Append # Append a search result to a book data
+completer.result.replace: Replace # Replace a book data value with a search value
+completer.result.title: Result # Section title of search result
+completer.search: Search # Label of the button to search book data of found isbn
+completer.start: Start # Label of the button to start the live scanning
+completer.state.emtpty: No result so far... # Label to indicate that no result were found
+completer.state.searching: Searching... # Label indicating a search in progress
+completer.stop: Stop # Label of the button to stop the live scanning
+data.list.add: Add # Add an item in a book data list
+data.list.remove: Remove # Remove one item of a book data list
+data.reset: Reset # Revert field to its previous state
+display_mode.grid: Grid # Display mode selector
+display_mode.list: List # Display mode selector
+facet.remove: Remove # Remove a search criteria
+filter.any: All # No Filter
+filter.gt: "Greater than" # Type of numeric filter
+filter.gte: "Greater or equals to" # Type of numeric filter
+filter.lt: "Less than" # Type of numeric filter
+filter.lte: "Less or equals to" # Type of numeric filter
+filter.no: No # Filter to display only false boolean
+filter.reset: Show all # Reset book filter
+filter.type.movement: "In movement" # Label of the movement filter
+filter.type.pages: "Pages" # Label of the pages filter
+filter.type.storage: Storage # Label of the storage filter
+filter.yes: Yes # Filter to display only true boolean
+loading: Loading... # Loading criteria
+modal.close: Close # Close button of the modal
+pagination.empty: No data # Message when there are no data to display
+pagination.first: First # Label of the button to go to the first page
+pagination.last: Last # Label of the button to go to the last page
+pagination.next: Next # Label of the button to go to the next page
+pagination.previous: Previous # Label of the button to go to the previous page
+search.clear: Clear # Clear the search bar
+search.search: Search # Start the search

@@ -27,6 +27,7 @@
 {% block javascripts %}
 <script>
     window.app = {
+        languages: ['en', 'fr'],
         pageSize: {{ pageSize }},
         providers: {{ providers|json_encode|raw }},
         roles: {
@@ -51,7 +52,8 @@
             bookIsBack: '{{ path('book_is_back', {id: '__placeholder'}) }}',
             bookMovements: '{{ url('api_books_movements_get_subresource', {id: '__placeholder'}) }}',
             movementUpdate: '{{ path('api_movements_patch_item', {id: '__placeholder'}) }}',
-            movementAdd: '{{ path('api_movements_post_collection') }}'
+            movementAdd: '{{ path('api_movements_post_collection') }}',
+            translations: '{{ path('translation', {name: '__placeholder'}) }}'
         }
     }
 </script>

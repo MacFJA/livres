@@ -1,4 +1,5 @@
 <script>
+    import { _ } from "svelte-intl"
     import TinyEmitter from "tiny-emitter/instance"
 
     import GenericResult from "./GenericResult.svelte"
@@ -57,19 +58,19 @@
     <span slot="header">{provider}</span>
     <span slot="subheader">
         <button class="color" on:click="{() => globalUpdateBook('append')}">
-            Append
+            {$_("completer.result.append")}
         </button>
         <button
             class="color danger"
             on:click="{() => globalUpdateBook('replace')}"
         >
-            Replace
+            {$_("completer.result.replace")}
         </button>
         <button
             class="color primary"
             on:click="{() => globalUpdateBook('missing')}"
         >
-            Add missing
+            {$_("completer.result.add_missing")}
         </button>
     </span>
     <span slot="buttons" let:fusion let:value let:label let:key let:type>
@@ -77,14 +78,14 @@
             class="color danger"
             on:click="{() => updateBook('replace', key, type, label, value)}"
         >
-            Replace
+            {$_("completer.result.replace")}
         </button>
         {#if fusion !== "replace"}
             <button
                 class="color"
                 on:click="{() => updateBook(fusion, key, type, label, value)}"
             >
-                Append
+                {$_("completer.result.append")}
             </button>
         {/if}
     </span>

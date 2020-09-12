@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte"
+    import { _ } from "svelte-intl"
     import { writable, derived } from "svelte/store"
 
     import Loader from "~/Loader.svelte"
@@ -92,10 +93,10 @@
     </slot>
 {:then items}
     <slot name="before"></slot>
-    {#each items as item (item['@id'])}
+    {#each items as item (item["@id"])}
         <slot name="item" item="{item}"></slot>
     {:else}
-        <slot name="empty">No data</slot>
+        <slot name="empty">{$_("pagination.empty")}</slot>
     {/each}
     <slot name="after"></slot>
 {/await}

@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte"
+    import { _ } from "svelte-intl"
     import { derived } from "svelte/store"
     import Pagination, { ITEM_TYPES } from "ultimate-pagination"
 
@@ -100,11 +101,11 @@
         {#each $pagination as { key, type, value, isActive } (key)}
             {#if type === ITEM_TYPES.FIRST_PAGE_LINK}
                 <button disabled="{isActive}" on:click="{() => toPage(value)}">
-                    First
+                    {$_("pagination.first")}
                 </button>
             {:else if type === ITEM_TYPES.PREVIOUS_PAGE_LINK}
                 <button disabled="{isActive}" on:click="{() => toPage(value)}">
-                    Previous
+                    {$_("pagination.previous")}
                 </button>
             {:else if type === ITEM_TYPES.PAGE}
                 <button
@@ -117,11 +118,11 @@
                 <span>&hellip;</span>
             {:else if type === ITEM_TYPES.NEXT_PAGE_LINK}
                 <button disabled="{isActive}" on:click="{() => toPage(value)}">
-                    Next
+                    {$_("pagination.next")}
                 </button>
             {:else if type === ITEM_TYPES.LAST_PAGE_LINK}
                 <button disabled="{isActive}" on:click="{() => toPage(value)}">
-                    Last
+                    {$_("pagination.last")}
                 </button>
             {/if}
         {/each}

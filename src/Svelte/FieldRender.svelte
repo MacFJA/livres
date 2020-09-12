@@ -1,6 +1,7 @@
 <script>
     import isbn from "isbn3"
     import moment from "moment"
+    import { _ } from "svelte-intl"
     import tippy from "tippy.js"
 
     import { barcode } from "~/utils/barcode"
@@ -112,7 +113,7 @@
     <svg class="type-barcode" use:barcode="{value}"></svg>
 {:else if type === "url" || (typeof value === "string" && value.substr(0, 4) === "http")}
     <a href="{value}" target="_blank" use:textTooltip="{value}">
-        Visit webpage
+        {$_("book.field.visit_webpage")}
     </a>
 {:else}
     {value}

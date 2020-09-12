@@ -1,6 +1,7 @@
 <script>
     import { parse } from "isbn3"
     import Quagga from "quagga"
+    import { _ } from "svelte-intl"
 
     import Completer from "~/Completer.svelte"
 
@@ -184,27 +185,27 @@
 <div class="streamContainer">
     <div id="streamFeedback"></div>
     <section>
-        <header>Found ISBN</header>
+        <header>{$_("completer.found.title")}</header>
         <ul>
             {#each founds as found}
                 <li>
                     <code>{found}</code>
-                    <button class="color danger" on:click={() => removeIsbn(found)}>Remove</button>
+                    <button class="color danger" on:click={() => removeIsbn(found)}>{$_("completer.found.remove")}</button>
                 </li>
             {:else}
-                <i>Nothing yet...</i>
+                <em>{$_("completer.found.empty")}</em>
             {/each}
         </ul>
     </section>
 </div>
 <div class="buttons">
     {#if scanning}
-        <button class="big danger" on:click={stopLiveScanning}>Stop</button>
+        <button class="big danger" on:click={stopLiveScanning}>{$_("completer.stop")}</button>
     {:else}
-        <button class="big success" id="startScanningButton" on:click={startLiveScanning}>Start</button>
+        <button class="big success" id="startScanningButton" on:click={startLiveScanning}>{$_("completer.start")}</button>
     {/if}
     {#if founds.length > 0}
-        <button class="big" on:click={startCompletion}>Search</button>
+        <button class="big" on:click={startCompletion}>{$_("completer.search")}</button>
     {/if}
 </div>
 

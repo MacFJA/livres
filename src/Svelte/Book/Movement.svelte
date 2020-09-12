@@ -1,5 +1,6 @@
 <script>
     import moment from "moment"
+    import { _ } from "svelte-intl"
 
     import Pagination from "~/Pagination.svelte"
     import Hydra from "~/Pagination/Hydra.svelte"
@@ -192,9 +193,9 @@ table {
     <Hydra bind:this={hydraPagination} baseUrl="{window.app.url.bookMovements.replace('__placeholder', bookId)}">
         <thead slot="before">
             <tr>
-                <th>Who</th>
-                <th>From</th>
-                <th>To</th>
+                <th>{$_("book.movement.who")}</th>
+                <th>{$_("book.movement.from_date")}</th>
+                <th>{$_("book.movement.to_date")}</th>
             </tr>
         </thead>
         <tr slot="item" let:item>
@@ -206,15 +207,15 @@ table {
                 {#if item.endAt != null}
                     {moment(item.endAt).format("LL")}
                 {:else if window.app.roles.edit}
-                    <button class="color small" on:click={() => isBack(item.movementId)}>Is back</button>
+                    <button class="color small" on:click={() => isBack(item.movementId)}>{$_("book.movement.return")}</button>
                 {:else}
-                    <em>Not returned yet</em>
+                    <em>{$_("book.movement.not_returned")}</em>
                 {/if}
             </td>
         </tr>
         <tbody slot="empty">
             <tr>
-                <td colspan="3">No movements</td>
+                <td colspan="3">{$_("book.movement.empty")}</td>
             </tr>
         </tbody>
         <tfoot slot="after">
@@ -223,7 +224,7 @@ table {
                     <td colspan="3">
                         <div>
                             <input bind:value={person}/>
-                            <button class="color primary" disabled={person === ""} on:click|preventDefault={newMovement}>Add</button>
+                            <button class="color primary" disabled={person === ""} on:click|preventDefault={newMovement}>{$_("book.movement.new")}</button>
                         </div>
                     </td>
                 </tr>

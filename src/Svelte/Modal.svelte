@@ -21,6 +21,7 @@
 </script>
 
 <script>
+    import { _ } from "svelte-intl"
     import { fade } from "svelte/transition"
 
     /** @type {mixin|null} - The component to display */
@@ -139,7 +140,7 @@
 {#if component !== null}
     <div class="modal" transition:fade>
         {#if !noClose}
-            <button on:click="{closeModal}">Close</button>
+            <button on:click="{closeModal}">{$_("modal.close")}</button>
         {/if}
         <div class="content">
             <svelte:component

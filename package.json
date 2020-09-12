@@ -3,6 +3,7 @@
   "description": "Keep track of your books",
   "license": "MIT",
   "dependencies": {
+    "format-message": "^6.2.3",
     "isbn3": "^1.1.1",
     "jsbarcode": "^3.11.0",
     "just-debounce": "^1.0.0",
@@ -11,6 +12,7 @@
     "progressbar.js": "^1.1.0",
     "quagga": "^0.12.1",
     "svelte": "^3.22.2",
+    "svelte-intl": "^1.1.2",
     "tiny-emitter": "^2.1.0",
     "tippy.js": "^6.2.3",
     "ultimate-pagination": "^1.0.0"

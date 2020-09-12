@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte"
+    import { _ } from "svelte-intl"
     import { writable, derived } from "svelte/store"
     import { slide, fly, scale } from "svelte/transition"
 
@@ -266,13 +267,13 @@
 <div class="display-mode">
     <label>
         <input type="radio" value="list" bind:group="{display}" />
-        List
+        {$_("display_mode.list")}
     </label>
     <label>
         <input type="radio" value="grid" bind:group="{display}" />
-        Grid
+        {$_("display_mode.grid")}
     </label>
-    {#if $filterString !== ""}<button transition:scale on:click={() => showAll()} class="color warn">Show all</button>{/if}
+    {#if $filterString !== ""}<button transition:scale on:click={() => showAll()} class="color warn">{$_("filter.reset")}</button>{/if}
 </div>
 
 <div class="display-{display}">
@@ -289,7 +290,7 @@
                 {#if item.series}<u>{item.series}</u>{/if}
                 {item.title}
             </h2>
-            <button class:color={display === "list"} on:click="{() => showBook(item)}">Show</button>
+            <button class:color={display === "list"} on:click="{() => showBook(item)}">{$_("book.show")}</button>
         </div>
         <aside slot="pagination" let:page let:size let:total let:onChange>
             <Pagination page={page} size={size} total={total} on:change-page={onChange} />

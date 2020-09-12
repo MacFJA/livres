@@ -1,5 +1,6 @@
 <script>
     import moment from "moment"
+    import { _ } from "svelte-intl"
     import { derived } from "svelte/store"
     import { slide } from "svelte/transition"
 
@@ -159,11 +160,11 @@
                     class="big danger remove"
                     on:click="{() => deleteItem(index)}"
                 >
-                    Remove
+                    {$_("data.list.remove")}
                 </button>
             </div>
         {/each}
-        <button class="big success add" on:click="{addItem}">Add</button>
+        <button class="big success add" on:click="{addItem}">{$_("data.list.add")}</button>
     {:else if type === "number"}
         <input
             class="big"
@@ -201,5 +202,5 @@
     {/if}
 </div>
 <footer>
-    <button class="big warn" on:click="{resetValue}">Reset</button>
+    <button class="big warn" on:click="{resetValue}">{$_("data.reset")}</button>
 </footer>

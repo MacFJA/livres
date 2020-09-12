@@ -1,3 +1,6 @@
+import { _ } from "svelte-intl"
+import { get } from "svelte/store"
+
 import {headerRawCover} from "~/utils/headers"
 
 /**
@@ -82,7 +85,7 @@ export const loadBookFrom = (id, title, cover, isbn, details, iri) => {
     } else if (id !== null) {
         return loadBookFromId(id)
     } else {
-        return Promise.reject("Missing book information")
+        return Promise.reject(get(_)("book.loading.error"))
     }
 }
 

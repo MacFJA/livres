@@ -1,7 +1,8 @@
 <script>
     import { Line } from "progressbar.js"
-    import {createEventDispatcher} from "svelte"
-    import {derived, writable} from "svelte/store"
+    import { createEventDispatcher } from "svelte"
+    import { _ } from "svelte-intl"
+    import { derived, writable } from "svelte/store"
 
     import BookResult from "../Completer/BookResult.svelte"
     import ProviderResult from "../Completer/ProviderResult.svelte"
@@ -130,12 +131,12 @@
 
     const getBookData = (book) => {
         return book.details.map(item => getDataLine(item.key, item.label, item.value))
-            .concat(getDataLine("cover", "Cover", book.cover))
+            .concat(getDataLine("cover", $_("book.field.cover"), book.cover))
             .filter(item => item.value !== null)
     }
 
     const launchSearch = () => {
-        isbn = "Loading"
+        isbn = $_("completer.loading")
         providersResults = new Promise(() => {})
         $received = 0
         loadBookFromId(bookId, true).then(book => {
@@ -216,12 +217,12 @@
                 />
             </div>
         {:else}
-            <p class="no-provider-result">Book Not Found</p>
+            <p class="no-provider-result">{$_("completer.no_result")}</p>
         {/if}
         <div class="book-result">
             <BookResult on:close={onBookClose} data="{bookData}" editBookId="{bookId}" />
         </div>
     {:catch error}
-        <p>Something went wrong: {error.message}</p>
+        <p>{$_("completer.error", {message : error.message})}</p>
     {/await}
 </div>

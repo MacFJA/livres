@@ -1,3 +1,6 @@
+import { _ } from "svelte-intl"
+import { get } from "svelte/store"
+
 /**
  * @typedef {Object} DataLine
  * @property {string} key - The data identifier
@@ -10,116 +13,109 @@
 /**
  * @type {Array<DataLine>}
  */
-export const defaultItems = [
+export const defaultItems = () => [
     {
         key: "title",
         fusion: "replace",
         type: "text",
-        label: "Title",
+        label: get(_)("book.field.title"),
         value: "",
     },
     {
         key: "sortTitle",
         fusion: "replace",
         type: "text",
-        label: "Sort title",
+        label: get(_)("book.field.sort_title"),
         value: "",
     },
     {
         key: "isbn",
         fusion: "replace",
         type: "barcode",
-        label: "Isbn",
+        label: get(_)("book.field.isbn"),
         value: "",
     },
     {
         key: "publicationDate",
         fusion: "replace",
         type: "date",
-        label: "Publication date",
+        label: get(_)("book.field.publication_date"),
         value: new Date(),
     },
     {
         key: "pages",
         fusion: "replace",
         type: "number",
-        label: "Pages",
+        label: get(_)("book.field.pages"),
         value: 0,
     },
     {
         key: "series",
         fusion: "concat",
         type: "text",
-        label: "Series",
+        label: get(_)("book.field.series"),
         value: "",
     },
     {
         key: "keywords",
         fusion: "push",
         type: "array",
-        label: "Keywords",
+        label: get(_)("book.field.keywords"),
         value: [],
     },
     {
         key: "genres",
         fusion: "push",
         type: "array",
-        label: "Genres",
+        label: get(_)("book.field.genres"),
         value: [],
     },
     {
         key: "format",
         fusion: "concat",
         type: "text",
-        label: "Format",
+        label: get(_)("book.field.format"),
         value: "",
     },
     {
         key: "dimension",
         fusion: "concat",
         type: "text",
-        label: "Dimension",
+        label: get(_)("book.field.dimension"),
         value: "",
     },
     {
-        key: "illustrator",
+        key: "illustrators",
         fusion: "push",
         type: "array",
-        label: "Illustrator",
+        label: get(_)("book.field.illustrators"),
         value: [],
     },
     {
         key: "authors",
         fusion: "push",
         type: "array",
-        label: "Authors",
-        value: [],
-    },
-    {
-        key: "translators",
-        fusion: "push",
-        type: "array",
-        label: "Translators",
+        label: get(_)("book.field.authors"),
         value: [],
     },
     {
         key: "cover",
         fusion: "replace",
         type: "image",
-        label: "Cover",
+        label: get(_)("book.field.cover"),
         value: "",
     },
     {
         key: "owner",
         fusion: "replace",
         type: "text",
-        label: "Owner",
+        label: get(_)("book.field.owner"),
         value: ""
     }
 ]
 
 export const getDataLine = (key, label, value) => {
-    let matches = defaultItems.filter(item => {
+    let matches = defaultItems().filter(item => {
         return item.key === key || item.label === label
     })
     if (matches.length === 0) {

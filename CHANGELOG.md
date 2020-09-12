@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add more files in the cleanup (`make clean`) process
 - Add a demo database (`make demo`)
+- Translate the application (EN + FR)
 
 ### Changed
 

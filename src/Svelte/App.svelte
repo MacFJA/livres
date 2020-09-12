@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte"
+    import { _ } from "svelte-intl"
 
     import Edit from "./Book/Edit.svelte"
     import BookList from "./BookList.svelte"
@@ -86,15 +87,15 @@
 
 <nav>
     {#if window.app.roles.view}
-        <button class="color" on:click={() => changeSection("library")} class:primary={section === "library"}>Library</button>
+        <button class="color" on:click={() => changeSection("library")} class:primary={section === "library"}>{$_("app.goto.library")}</button>
     {/if}
     {#if window.app.roles.add}
-        <button class="color" on:click={() => changeSection("add-isbn")} class:primary={section === "add-isbn"}>Add by ISBN</button>
-        <button class="color" on:click={() => changeSection("add-live")} class:primary={section === "add-live"}>Add by Scanning</button>
-        <button class="color" on:click={() => changeSection("add-photo")} class:primary={section === "add-photo"}>Add by Image</button>
+        <button class="color" on:click={() => changeSection("add-isbn")} class:primary={section === "add-isbn"}>{$_("app.goto.add_isbn")}</button>
+        <button class="color" on:click={() => changeSection("add-live")} class:primary={section === "add-live"}>{$_("app.goto.add_live")}</button>
+        <button class="color" on:click={() => changeSection("add-photo")} class:primary={section === "add-photo"}>{$_("app.goto.add_image")}</button>
     {/if}
     {#if window.app.roles.connected}
-        <button on:click="{() => window.location = window.app.url.logout}" class="color danger">Logout</button>
+        <button on:click="{() => window.location = window.app.url.logout}" class="color danger">{$_("app.goto.logout")}</button>
     {/if}
 </nav>
 
@@ -110,6 +111,6 @@
 {:else if section !== undefined && window.app.roles.view}
     <BookList size="{window.app.pageSize}" />
 {:else}
-    <p class="lead">To use the application you must be connected</p>
-    <button class="big primary" on:click={() => location.href = window.app.url.login}>Sign in</button>
+    <p class="lead">{$_("app.error.login")}</p>
+    <button class="big primary" on:click={() => location.href = window.app.url.login}>{$_("app.login")}</button>
 {/if}

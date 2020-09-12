@@ -1,4 +1,6 @@
 <script>
+    import { _ } from "svelte-intl"
+
     import BooleanCriterion from "./BooleanCriterion.svelte"
     import ListCriterion from "./ListCriterion.svelte"
     import NumericCriterion from "./NumericCriterion.svelte"
@@ -55,11 +57,11 @@
         Loading...
     {:then completions}
         <NumericCriterion
-            field="Page"
+            field="{$_('filter.type.pages')}"
             bind:value="{page}"
             bind:operator="{pageOperator}"
         />
-        <ListCriterion field="Storage" bind:value={storage} completions="{completions['storage']}" />
-        <BooleanCriterion field="In movement" bind:value={inMovement} />
+        <ListCriterion field="{$_('filter.type.storage')}" bind:value={storage} completions="{completions['storage']}" />
+        <BooleanCriterion field="{$_('filter.type.movement')}" bind:value={inMovement} />
     {/await}
 </div>

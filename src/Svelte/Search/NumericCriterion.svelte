@@ -1,4 +1,6 @@
 <script>
+    import { _ } from "svelte-intl"
+
     /**
      * @type {string} - Display name of the filter
      * @prop
@@ -23,10 +25,10 @@
 <label class="filter" class:empty="{value <= 0}">
     <span>{field}</span>
     <select bind:value="{operator}">
-        <option value="lt">Less than</option>
-        <option value="lte">Less or equals to</option>
-        <option value="gt">Greater than</option>
-        <option value="gte">Greater or equals to</option>
+        <option value="lt">{$_("filter.lt")}</option>
+        <option value="lte">{$_("filter.lte")}</option>
+        <option value="gt">{$_("filter.gt")}</option>
+        <option value="gte">{$_("filter.gte")}</option>
     </select>
     <input type="number" bind:value />
 </label>
