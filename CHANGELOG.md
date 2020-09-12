@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Downgrade ESLint to avoid unwanted `no-unused-vars` false-positive error
 - Change application page title from "Welcome!" to "Livres"
+- Upgrade Symfony dependencies
 
 ### Fixed
 
