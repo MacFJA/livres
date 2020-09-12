@@ -30,6 +30,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -72,6 +73,10 @@ class HomepageController extends AbstractController
      */
     public function translation(string $name, TranslatorInterface $translator): JsonResponse
     {
+        if (!($translator instanceof TranslatorBagInterface)) {
+            return new JsonResponse([]);
+        }
+
         return new JsonResponse($translator->getCatalogue($name)->all('front'));
     }
 }
