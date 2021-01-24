@@ -63,23 +63,31 @@ class Movement
      */
     private $movementId;
 
-    /** @ORM\Column(type="integer")
-     *@var int
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $type = self::TYPE_LEND;
 
-    /** @ORM\Column(type="datetime")
+    /**
+     * @ORM\Column(type="datetime")
+     *
      * @var null|DateTimeInterface
      */
     private $startAt;
 
-    /** @ORM\Column(type="datetime", nullable=true)
-     *@var null|DateTimeInterface
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var null|DateTimeInterface
      */
     private $endAt;
 
-    /** @ORM\Column(type="string", length=255)
-     *@var string
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $person;
 
