@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- New lines are preserved in teh Book details view
+- Superfluous space when displaying a Book with a series
+
+### Added
+
+- Add Opcache extension in dev
+- New RediSearch client lib
+- New SecurityChecker
+- Display a button to launch a search when there are more than 5 results in search preview
+
+### Changed
+
+- Upgrade Symfony version from `5.1` to `5.2`
+- Update Flex recipes
+- Upgrade to Composer v2 (remove unsupported composer plugin)
+- Minimum PHP changed from `7.2.5` to `7.3`
+- TLD in dev environment changed from `.docker` to `.localhost`
+- Upgrade version of RediSearch server to `2.0.x`
+
+### Removed
+
+- Remove composer plugin not compatible with Composer v2
+- Remove deprecated SensioLabs SecurityChecker
+- Remove abandoned RediSearch PHP client
+
 ## [1.1.1] - 2020-09-12
 
 ### Fixed

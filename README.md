@@ -15,7 +15,7 @@ To add a book to the application you have 3 ways:
 
 After that, the application will search for additional information about the book from its ISBN.
 
-Currently the application search additional information into [20 differents providers](https://github.com/MacFJA/BookRetriever/blob/master/Providers.md)
+Currently, the application search additional information into [20 different providers](https://github.com/MacFJA/BookRetriever/blob/master/Providers.md)
 
 ## Screenshots
 
