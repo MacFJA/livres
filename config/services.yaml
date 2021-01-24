@@ -11,8 +11,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
-            $suggestionIndexName: '%redisearch.suggestion%'
-            $searchIndexName: '%redisearch.index%'
             array $completionsType: '%completions.type%'
             $providers: !tagged_iterator app.provider
             string $coverDir: '%app.cover_dir%'
@@ -50,17 +48,15 @@ services:
 
     Isbn\Isbn: ~
 
-    Ehann\RedisRaw\RedisRawClientInterface:
-        factory: ['App\Worker\Search\Factory', 'createRedisClient']
+    Predis\Client:
+        factory: ['App\Worker\Search\ObjectFactory', 'createRedisClient']
         arguments:
             $dsn: '%redisearch.url%'
 
-    Ehann\RediSearch\Suggestion:
-        arguments:
-            $indexName: '%redisearch.suggestion%'
-    Ehann\RediSearch\Index:
-        arguments:
-            $indexName: '%redisearch.index%'
+    MacFJA\RediSearch\Integration\ObjectManager: ~
+    MacFJA\RediSearch\Integration\CompositeProvider: ~
+    MacFJA\RediSearch\Integration\IndexObjectFactory: '@App\Worker\Search\ObjectFactory'
+    MacFJA\RediSearch\Integration\MappedClassProvider: '@MacFJA\RediSearch\Integration\CompositeProvider'
 
     App\Doctrine\BookInjectionListener:
         tags:

@@ -22,17 +22,23 @@ declare(strict_types=1);
 namespace App\Doctrine;
 
 use App\Entity\Book;
-use App\Worker\BookSearch;
+use App\EventSubscriber\RemoveDocumentSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Flintstone\Flintstone;
+use MacFJA\RediSearch\Integration\ObjectManager;
 
 class BookSearchIndexListener
 {
-    /** @var BookSearch */
-    private $bookSearch;
+    /** @var ObjectManager */
+    private $objectManager;
 
-    public function __construct(BookSearch $bookSearch)
+    /** @var Flintstone */
+    private $flintstone;
+
+    public function __construct(ObjectManager $objectManager, Flintstone $flintstone)
     {
-        $this->bookSearch = $bookSearch;
+        $this->objectManager = $objectManager;
+        $this->flintstone = $flintstone;
     }
 
     /**
@@ -41,7 +47,7 @@ class BookSearchIndexListener
      */
     public function postRemove(Book $book, LifecycleEventArgs $lifecycleEvent): void
     {
-        $this->bookSearch->removeBookFromIndex($book);
+        $this->objectManager->removeObjectFromSearch($book);
     }
 
     /**
@@ -50,8 +56,8 @@ class BookSearchIndexListener
      */
     public function postUpdate(Book $book, LifecycleEventArgs $lifecycleEvent): void
     {
-        $this->bookSearch->removeBookFromIndex($book);
-        $this->bookSearch->addIndexAndSuggestion($book);
+        $this->objectManager->addObject($book);
+        $this->flintstone->set(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY, 'yes');
     }
 
     /**
@@ -60,6 +66,6 @@ class BookSearchIndexListener
      */
     public function postPersist(Book $book, LifecycleEventArgs $lifecycleEvent): void
     {
-        $this->bookSearch->addIndexAndSuggestion($book);
+        $this->objectManager->addObject($book);
     }
 }

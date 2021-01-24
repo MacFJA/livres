@@ -2,7 +2,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-iconv": "*",
@@ -12,8 +12,6 @@
         "doctrine/annotations": "^1.10",
         "easycorp/easyadmin-bundle": "^2.3",
         "enqueue/dsn": "^0.10.1",
-        "ethanhann/redis-raw": "^0.3.1",
-        "ethanhann/redisearch-php": "^1.9",
         "fale/isbn": "^3.1",
         "fire015/flintstone": "^2.2",
         "gabrielelana/byte-units": "^0.5.0",
@@ -23,7 +21,7 @@
         "liip/imagine-bundle": "^2.3",
         "luchaninov/csv-file-loader": "^1.7",
         "macfja/book-retriever": "^1.0.0",
-        "mlocati/composer-patcher": "^1.2",
+        "macfja/redisearch-integration": "^1.0",
         "nyholm/psr7": "^1.3",
         "pcrov/jsonreader": "^1.0",
         "php-http/curl-client": "^2.1",
@@ -84,12 +82,6 @@
         "sort-packages": true
     },
     "extra": {
-        "allow-subpatches": false,
-        "patches": {
-            "ethanhann/redisearch-php": {
-                "Add WITHSCORES parameter in suggestions": "_extra/patches/php-redisearch-pr-69.diff"
-            }
-        },
         "symfony": {
             "allow-contrib": false,
             "require": "5.2.*"

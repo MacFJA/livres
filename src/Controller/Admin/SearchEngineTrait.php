@@ -21,18 +21,19 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Entity\Book;
+use App\EventSubscriber\RemoveDocumentSubscriber;
 use App\Repository\BookRepository;
-use App\Worker\BookSearch;
-use App\Worker\Search\Index\BookDocument;
-use App\Worker\Search\Suggestion\BatchIndexer;
-use function array_chunk;
-use function array_column;
+use App\Worker\Search\ObjectFactory;
+use function assert;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
-use Ehann\RediSearch\Exceptions\UnknownIndexNameException;
-use Ehann\RediSearch\Index;
-use Ehann\RediSearch\Suggestion;
-use Ehann\RedisRaw\RedisRawClientInterface;
 use Flintstone\Flintstone;
+use function is_string;
+use function is_subclass_of;
+use MacFJA\RediSearch\Integration\MappedClass;
+use MacFJA\RediSearch\Integration\MappedClassProvider;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use Predis\Client;
 use RuntimeException;
 use function sprintf;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,7 +46,7 @@ trait SearchEngineTrait
     /**
      * @Route ("/search-engine", methods={"GET"}, name="admin_search_engine")
      */
-    public function searchEngine(Request $request, Flintstone $flintstone, Suggestion $suggestion, Index $index): Response
+    public function searchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, Request $request, Flintstone $flintstone): Response
     {
         if (!($this instanceof EasyAdminController)) {
             throw new RuntimeException(sprintf(
@@ -58,15 +59,28 @@ trait SearchEngineTrait
 
         $this->initialize($request);
 
+        /** @var class-string<MappedClass>|null $mapped */
+        $mapped = $provider->getStaticMappedClass(Book::class);
+        if (null === $mapped || !is_subclass_of($mapped, MappedClass::class)) {
+            throw new RuntimeException(sprintf(
+                'The entity %s is not mapped into RediSearch',
+                Book::class
+            ));
+        }
+
+        $suggestionCount = 0;
+        foreach ($mapped::getRSSuggestionGroups() as $group) {
+            $suggestionCount += $objectFactory->getSuggestion($group)->length();
+        }
+        $index = $objectFactory->getIndex($mapped::getRSIndexName());
+
         if (null === $request->query->get('entity')) {
-            $engineStats = $index->info();
-            $engineStats = array_chunk($engineStats, 2, false);
-            $engineStats = array_column($engineStats, 1, 0);
+            $engineStats = $index->getStats();
 
             return $this->render('admin/search-engine.html.twig', [
                 'indexInfo' => $engineStats,
-                'suggestions' => $suggestion->length(),
-                'isSuggestionDirty' => $flintstone->get(\App\Worker\Search\Suggestion::IS_DIRTY_CONFIG_NAME),
+                'suggestions' => $suggestionCount,
+                'isSuggestionDirty' => 'yes' === $flintstone->get(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY),
             ]);
         }
 
@@ -78,7 +92,7 @@ trait SearchEngineTrait
      *
      * @return RedirectResponse
      */
-    public function reindexSearchEngine(Index $index, BookSearch $bookSearch, BookRepository $repository)
+    public function reindexSearchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, BookRepository $repository, ObjectManager $objectManager)
     {
         if (!($this instanceof EasyAdminController)) {
             throw new RuntimeException(sprintf(
@@ -89,15 +103,15 @@ trait SearchEngineTrait
             ));
         }
 
-        try {
-            $index->drop();
-        } catch (UnknownIndexNameException $exception) {// @phan-suppress-current-line PhanUnusedVariableCaughtException
-            // Do nothing
-        }
-        BookDocument::createIndexDefinition($index);
+        /** @var class-string<MappedClass>|null $mapped */
+        $mapped = $provider->getStaticMappedClass(Book::class);
+        assert(is_string($mapped));
+        $objectFactory->getIndex($mapped::getRSIndexName())
+            ->delete(true);
+        $objectManager->createIndex(Book::class);
 
         foreach ($repository->findAll() as $book) {
-            $bookSearch->addBookToIndex($book);
+            $objectManager->addObject($book);
         }
 
         $this->addFlash('success', 'Search Engine Index rebuild.');
@@ -108,9 +122,12 @@ trait SearchEngineTrait
     /**
      * @Route("/search-engine/reindex-suggestion", methods={"GET"}, name="admin_search_engine_reindex_suggestion")
      *
+     * @phpstan-param Client<Client> $redisClient
+     * @psalm-param Client $redisClient
+     *
      * @return RedirectResponse
      */
-    public function reindexSuggestion(BookRepository $repository, RedisRawClientInterface $redisClient, BatchIndexer $indexer, string $suggestionIndexName)
+    public function reindexSuggestion(Flintstone $flintstone, MappedClassProvider $provider, ObjectManager $objectManager, BookRepository $repository, Client $redisClient)
     {
         if (!($this instanceof EasyAdminController)) {
             throw new RuntimeException(sprintf(
@@ -121,13 +138,22 @@ trait SearchEngineTrait
             ));
         }
 
-        $redisClient->rawCommand('DEL', [$suggestionIndexName]);
-        $indexer->setPurged(true);
+        /** @var class-string<MappedClass>|null $mapped */
+        $mapped = $provider->getStaticMappedClass(Book::class);
+        if (null === $mapped || !is_subclass_of($mapped, MappedClass::class)) {
+            throw new RuntimeException(sprintf(
+                'The entity %s is not mapped into RediSearch',
+                Book::class
+            ));
+        }
+        foreach ($mapped::getRSSuggestionGroups() as $group) {
+            $redisClient->del($group);
+        }
+        $flintstone->set(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY, 'no');
 
         foreach ($repository->findAll() as $book) {
-            $indexer->addToIndex($book);
+            $objectManager->addObjectInSuggestion($book);
         }
-        $indexer->saveBatch();
 
         $this->addFlash('success', 'Search Engine Suggestion rebuild.');
 

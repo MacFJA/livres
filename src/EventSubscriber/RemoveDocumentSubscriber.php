@@ -19,45 +19,38 @@ declare(strict_types=1);
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace App\Worker\Search\Suggestion;
+namespace App\EventSubscriber;
 
-use App\Worker\Search\Suggestion as ApppSuggestion;
-use Ehann\RediSearch\Suggestion;
 use Flintstone\Flintstone;
+use MacFJA\RediSearch\Integration\Event\After\RemovingDocumentFromSearchEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class IndividualIndexer implements SuggestionIndexer
+class RemoveDocumentSubscriber implements EventSubscriberInterface
 {
-    use BookSuggestionIndexer;
-
-    /** @var Suggestion */
-    private $suggestion;
+    public const SUGGESTIONS_DIRTY = 'suggestions_dirty';
 
     /** @var Flintstone */
     private $flintstone;
 
-    public function __construct(Suggestion $suggestion, Flintstone $flintstone)
+    public function __construct(Flintstone $flintstone)
     {
-        $this->suggestion = $suggestion;
         $this->flintstone = $flintstone;
     }
 
-    public function getExistingSuggestion(string $data): ?ApppSuggestion
+    public function onRemoving(RemovingDocumentFromSearchEvent $event): void
     {
-        return $this->getSuggestionFromRedis($this->suggestion, $data);
+        if (true === $event->isSucceed()) {
+            $this->flintstone->set(self::SUGGESTIONS_DIRTY, 'yes');
+        }
     }
 
-    public function saveSuggestion(ApppSuggestion $suggestion): void
+    /**
+     * @return array<string, array<int|string>>
+     */
+    public static function getSubscribedEvents()
     {
-        /**
-         * @psalm-suppress InvalidArgument
-         */
-        $this->suggestion->add(
-            $suggestion->getValue(),
-            $suggestion->getScore(),
-            false,
-            // @phpstan-ignore-next-line
-            $suggestion->getPayload()// @phan-suppress-current-line PhanTypeMismatchArgumentProbablyReal
-        );
-        $this->flintstone->set(ApppSuggestion::IS_DIRTY_CONFIG_NAME, true);
+        return [
+            RemovingDocumentFromSearchEvent::class => ['onRemoving'],
+        ];
     }
 }

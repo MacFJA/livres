@@ -21,39 +21,38 @@ declare(strict_types=1);
 
 namespace App\Console\Book\Search;
 
-use App\Worker\BookSearch;
-use App\Worker\Search\Suggestion;
-use function array_key_exists;
+use App\Entity\Book;
 use function array_keys;
 use function array_map;
-use function array_reduce;
 use function array_values;
 use function assert;
 use function implode;
+use function is_array;
 use function is_string;
+use function json_decode;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use MacFJA\RediSearch\Suggestion\Result;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use function ucfirst;
 
 class QuerySuggestion extends Command
 {
-    /** @var BookSearch */
-    private $bookSearch;
+    /** @var ObjectManager */
+    private $objectManager;
 
-    public function __construct(BookSearch $bookSearch)
+    public function __construct(ObjectManager $objectManager)
     {
         parent::__construct();
-        $this->bookSearch = $bookSearch;
+        $this->objectManager = $objectManager;
     }
 
     protected function configure(): void
     {
         $this->setName('book:search:suggestion')
             ->addArgument('query')
-            ->addOption('group', 'g', InputOption::VALUE_NONE)
             ->setDescription('Run a search query');
     }
 
@@ -64,40 +63,26 @@ class QuerySuggestion extends Command
         $query = $input->getArgument('query');
         assert(is_string($query));
 
-        $suggestions = $this->bookSearch->getSuggestions($query);
+        $suggestions = $this->objectManager->getSuggestions(Book::class, $query);
 
-        if (true === $input->getOption('group')) {
-            $grouped = array_reduce($suggestions, function (array $groups, Suggestion $suggestion) {
-                $payload = $suggestion->getArrayPayload();
-                $type = $payload['type'] ?? 'unknown';
-                if (!array_key_exists($type, $groups)) {
-                    $groups[$type] = [];
-                }
-                $groups[$type][] = $suggestion;
-
-                return $groups;
-            }, []);
-
-            foreach ($grouped as $type => $groupedSuggestions) {
-                $style->section(ucfirst((string) $type));
-                $this->displaySuggestion($style, $groupedSuggestions);
-            }
-
-            return 0;
+        foreach ($suggestions as $group => $suggestionList) {
+            $style->section(ucfirst((string) $group));
+            $this->displaySuggestion($style, $suggestionList);
         }
-
-        $this->displaySuggestion($style, $suggestions);
 
         return 0;
     }
 
     /**
-     * @param array<Suggestion> $suggestions
+     * @param array<Result> $suggestions
      */
     private function displaySuggestion(SymfonyStyle $style, array $suggestions): void
     {
-        $displayable = array_map(function (Suggestion $suggestion) {
-            $payload = $suggestion->getArrayPayload();
+        $displayable = array_map(function (Result $suggestion) {
+            $payload = json_decode($suggestion->getPayload() ?? '[]', true, 512, \JSON_THROW_ON_ERROR);
+            if (!is_array($payload)) {
+                return [$suggestion->getValue(), []];
+            }
             $payload = implode(', ', array_map(function (string $payloadValue, $payloadKey) {
                 return ucfirst((string) $payloadKey).': '.$payloadValue;
             }, array_values($payload), array_keys($payload)));

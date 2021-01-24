@@ -23,30 +23,50 @@ namespace App\Console\Book\Search;
 
 use App\Console\Book\OnBooksCommand;
 use App\Entity\Book;
+use App\EventSubscriber\RemoveDocumentSubscriber;
 use App\Repository\BookRepository;
-use App\Worker\Search\Suggestion\BatchIndexer;
-use Ehann\RedisRaw\RedisRawClientInterface;
+use Flintstone\Flintstone;
+use function is_subclass_of;
+use MacFJA\RediSearch\Integration\MappedClass;
+use MacFJA\RediSearch\Integration\MappedClassProvider;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use Predis\Client;
+use RuntimeException;
+use function sprintf;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateSuggestion extends OnBooksCommand
 {
-    /** @var RedisRawClientInterface */
+    /**
+     * @phpstan-var Client<Client>
+     * @psalm-var Client
+     *
+     * @var Client
+     */
     private $redisClient;
 
-    /** @var string */
-    private $suggestionIndexName;
+    /** @var ObjectManager */
+    private $objectManager;
 
-    /** @var BatchIndexer */
-    private $indexer;
+    /** @var Flintstone */
+    private $flintstone;
 
-    public function __construct(BookRepository $bookRepository, RedisRawClientInterface $redisClient, BatchIndexer $indexer, string $suggestionIndexName)
+    /** @var MappedClassProvider */
+    private $provider;
+
+    /**
+     * @phpstan-param Client<Client> $redisClient
+     * @psalm-param Client $redisClient
+     */
+    public function __construct(Flintstone $flintstone, MappedClassProvider $provider, ObjectManager $objectManager, BookRepository $bookRepository, Client $redisClient)
     {
         parent::__construct($bookRepository);
         $this->redisClient = $redisClient;
-        $this->suggestionIndexName = $suggestionIndexName;
-        $this->indexer = $indexer;
+        $this->objectManager = $objectManager;
+        $this->flintstone = $flintstone;
+        $this->provider = $provider;
     }
 
     protected function configure(): void
@@ -62,8 +82,19 @@ class UpdateSuggestion extends OnBooksCommand
     protected function beforeExecute(InputInterface $input, OutputInterface $output, SymfonyStyle $style, int $bookCount): void
     {
         $style->section('Clear suggestion index');
-        $this->redisClient->rawCommand('DEL', [$this->suggestionIndexName]);
-        $this->indexer->setPurged(true);
+        /** @var class-string<MappedClass>|null $mapped */
+        $mapped = $this->provider->getStaticMappedClass(Book::class);
+        if (null === $mapped || !is_subclass_of($mapped, MappedClass::class)) {
+            throw new RuntimeException(sprintf(
+                'The entity %s is not mapped into RediSearch',
+                Book::class
+            ));
+        }
+
+        foreach ($mapped::getRSSuggestionGroups() as $group) {
+            $this->redisClient->del($group);
+        }
+        $this->flintstone->set(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY, 'no');
         $style->success('Clear done');
 
         $style->section('Parse all books');
@@ -74,7 +105,7 @@ class UpdateSuggestion extends OnBooksCommand
      */
     protected function executeOnBook(InputInterface $input, OutputInterface $output, SymfonyStyle $style, Book $book): void
     {
-        $this->indexer->addToIndex($book);
+        $this->objectManager->addObjectInSuggestion($book);
     }
 
     /**
@@ -83,12 +114,6 @@ class UpdateSuggestion extends OnBooksCommand
      */
     protected function afterExecute(InputInterface $input, OutputInterface $output, SymfonyStyle $style): void
     {
-        $style->section('Add all suggestions');
-        $style->progressStart($this->indexer->getBatchSize());
-        $this->indexer->saveBatch(null, function () use ($style) {
-            $style->progressAdvance();
-        });
-        $style->progressFinish();
         $style->success('Insertion done');
         parent::afterExecute($input, $output, $style);
     }

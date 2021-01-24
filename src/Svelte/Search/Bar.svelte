@@ -42,7 +42,7 @@
                 let facetQuery = "@" + facet.payload.type
                 facetQuery += ":"
                 if (isTag) {
-                    facetQuery += "{" + rawValue + "}"
+                    facetQuery += "{" + rawValue.replaceAll(/([.,;-])/g, "\\$1") + "}"
                 } else if (rawValue.indexOf(" ") > -1) {
                     facetQuery += "\"" + rawValue + "\""
                 } else {
@@ -143,7 +143,10 @@
      */
     const addFacet = suggestion => {
         $facets.push(suggestion)
+        input.value = ""
+        $query = ""
         $facets = $facets
+        focusInput()
     }
     /**
      * @type {function} - Remove a facet
@@ -329,7 +332,7 @@
         }
 
         &:hover .additional,
-        input:focus + .additional {
+        input:focus + .buttons + .additional {
             opacity: 1;
             pointer-events: all;
         }
@@ -386,16 +389,18 @@
             </nav>
         {/if}
         {#await $suggestion then suggestions}
-            {#if suggestions.length > 0}
+            {#if Object.keys(suggestions).length > 0}
                 <aside class="suggestions">
                     <nav>
                         <ul>
-                            {#each suggestions as suggestion}
-                                <li class="suggestion">
-                                    <header>{suggestion.payload.type}</header>
-                                    <div on:click={() => addFacet(suggestion)} on:click={focusInput}>{suggestion.payload.full || suggestion.value}</div>
-                                    {#if suggestion.payload.bookId}<button class="color small" on:click={() => showBook(suggestion.payload.bookId)}>{$_("book.show")}</button>{/if}
-                                </li>
+                            {#each Object.entries(suggestions) as [group, groupSuggestions]}
+                                {#each groupSuggestions as suggestion}
+                                    <li class="suggestion">
+                                        <header>{group}</header>
+                                        <div on:click={() => addFacet(suggestion)} on:click={focusInput}>{suggestion.payload.full || suggestion.value}</div>
+                                        {#if suggestion.payload.bookId}<button class="color small" on:click={() => showBook(suggestion.payload.bookId)}>{$_("book.show")}</button>{/if}
+                                    </li>
+                                {/each}
                             {/each}
                         </ul>
                     </nav>
@@ -403,15 +408,26 @@
             {/if}
         {/await}
         {#await $searchPreview then results}
-            {#if results.length > 0}
+            {#if results === false}
+                <aside class="preview">
+                    <nav>
+                        <ul>
+                            <li class="book">
+                                <button class="color small" on:click={() => search()}>{$_("search.launch_search")}</button>
+                                <header>{$_("search.many_results")}</header>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+            {:else if results.length > 0}
                 <aside class="preview">
                     <nav>
                         <ul>
                             {#each results as result}
                                 <li class="book">
                                     <button class="color small" on:click={() => showBook(result.bookId)}>{$_("book.show")}</button>
-                                    <header>{#if result.series !== ""}<u>{result.series}</u>: {/if}{result.title}</header>
-                                    <div>{result.author} &mdash; <svg class="type-barcode" use:barcode data-code="{result.isbn}"></svg></div>
+                                    <header>{#if result.series && result.series !== ""}<u>{result.series}</u>: {/if}{result.title}</header>
+                                    <div>{result.authors.split("|").join(", ")} &mdash; <svg class="type-barcode" use:barcode data-code="{result.isbn}"></svg></div>
                                 </li>
                             {/each}
                         </ul>

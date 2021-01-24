@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4804fe49383fb0082b37aac245a5cea8",
+    "content-hash": "e18e9e6c2cffe9aa1a4bbf1f8d802ce9",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -1866,109 +1866,6 @@
             "time": "2020-07-30T18:38:01+00:00"
         },
         {
-            "name": "ethanhann/redis-raw",
-            "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ethanhann/redis-raw-php.git",
-                "reference": "f0173cd5cf938bf5a9f48f37a1792ca746f30f6f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ethanhann/redis-raw-php/zipball/f0173cd5cf938bf5a9f48f37a1792ca746f30f6f",
-                "reference": "f0173cd5cf938bf5a9f48f37a1792ca746f30f6f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7",
-                "psr/log": "^1.0"
-            },
-            "require-dev": {
-                "cheprasov/php-redis-client": "^1.8",
-                "consolidation/robo": "^1.0",
-                "friendsofphp/php-cs-fixer": "^2.2",
-                "mockery/mockery": "^0.9.9",
-                "monolog/monolog": "^1.23",
-                "phpunit/phpunit": "^6.0",
-                "predis/predis": "^1.1",
-                "ukko/phpredis-phpdoc": "^2.2@dev"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ehann\\RedisRaw\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ethan Hann",
-                    "email": "ethanhann@gmail.com"
-                }
-            ],
-            "description": "Redis/PHP connectors.",
-            "support": {
-                "issues": "https://github.com/ethanhann/redis-raw-php/issues",
-                "source": "https://github.com/ethanhann/redis-raw-php/tree/master"
-            },
-            "time": "2018-12-09T21:12:54+00:00"
-        },
-        {
-            "name": "ethanhann/redisearch-php",
-            "version": "1.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ethanhann/redisearch-php.git",
-                "reference": "01490a47ba09e2883f07f87ee4cc00a09886e8d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ethanhann/redisearch-php/zipball/01490a47ba09e2883f07f87ee4cc00a09886e8d4",
-                "reference": "01490a47ba09e2883f07f87ee4cc00a09886e8d4",
-                "shasum": ""
-            },
-            "require": {
-                "ethanhann/redis-raw": "^0.3",
-                "php": ">=7",
-                "psr/log": "^1.0"
-            },
-            "require-dev": {
-                "cheprasov/php-redis-client": "^1.8",
-                "consolidation/robo": "^1.0",
-                "friendsofphp/php-cs-fixer": "^2.2",
-                "mockery/mockery": "^0.9.9",
-                "monolog/monolog": "^1.23",
-                "phpunit/phpunit": "^6.0",
-                "predis/predis": "^1.1",
-                "ukko/phpredis-phpdoc": "^5.0@beta"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ehann\\RediSearch\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ethan Hann",
-                    "email": "ethanhann@gmail.com"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/ethanhann/redisearch-php/issues",
-                "source": "https://github.com/ethanhann/redisearch-php/tree/1.9.0"
-            },
-            "abandoned": true,
-            "time": "2019-11-02T10:21:18+00:00"
-        },
-        {
             "name": "fale/isbn",
             "version": "3.1.0",
             "source": {
@@ -3003,6 +2900,141 @@
             "time": "2020-07-26T15:32:01+00:00"
         },
         {
+            "name": "macfja/redisearch",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacFJA/php-redisearch.git",
+                "reference": "f3d8647d5331dccafa6bc51596029ca135ebeeee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacFJA/php-redisearch/zipball/f3d8647d5331dccafa6bc51596029ca135ebeeee",
+                "reference": "f3d8647d5331dccafa6bc51596029ca135ebeeee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.1",
+                "predis/predis": "^1.1",
+                "sgh/comparable": "^1.1"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.13",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "insolita/unused-scanner": "^2.2",
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "phan/phan": "^3.2",
+                "phpmd/phpmd": "^2.9",
+                "phpstan/phpstan": "^0.12.57",
+                "phpunit/phpunit": "^9.5",
+                "rskuipers/php-assumptions": "^0.8.0",
+                "sebastian/phpcpd": "^6.0",
+                "sensiolabs/security-checker": "^6.0",
+                "vimeo/psalm": "^4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MacFJA\\RediSearch\\": "src/",
+                    "MacFJA\\RedisSearch\\": "alias/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MacFJA"
+                }
+            ],
+            "description": "PHP Client for RediSearch",
+            "keywords": [
+                "redis",
+                "redisearch",
+                "search engine",
+                "suggestion"
+            ],
+            "support": {
+                "issues": "https://github.com/MacFJA/php-redisearch/issues",
+                "source": "https://github.com/MacFJA/php-redisearch"
+            },
+            "time": "2021-01-20T23:53:45+00:00"
+        },
+        {
+            "name": "macfja/redisearch-integration",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacFJA/php-redisearch-integration.git",
+                "reference": "b6d6d659a1a625441c7819e8757f9bef78366395"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacFJA/php-redisearch-integration/zipball/b6d6d659a1a625441c7819e8757f9bef78366395",
+                "reference": "b6d6d659a1a625441c7819e8757f9bef78366395",
+                "shasum": ""
+            },
+            "require": {
+                "macfja/redisearch": "^1.1",
+                "php": "^7.3 || ^8.0",
+                "predis/predis": "^1.1",
+                "psr/event-dispatcher": "^1.0",
+                "sgh/comparable": "^1.1"
+            },
+            "require-dev": {
+                "api-platform/core": "^2.5",
+                "doctrine/annotations": "^1.11",
+                "doctrine/orm": "^2.8",
+                "ergebnis/composer-normalize": "^2.11",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "insolita/unused-scanner": "^2.2",
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "phan/phan": "^3.2",
+                "phpmd/phpmd": "^2.9",
+                "phpstan/phpstan": "^0.12.62",
+                "phpunit/phpunit": "^9.5",
+                "rskuipers/php-assumptions": "^0.8.0",
+                "sebastian/phpcpd": "^6.0",
+                "sensiolabs/security-checker": "^6.0",
+                "symfony/polyfill-mbstring": "< 1.22.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "suggest": {
+                "doctrine/annotations": "To use annotation on class",
+                "ext-json": "To load RediSearch definition from JSON files",
+                "ext-simplexml": "To load RediSearch definition from XML files"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MacFJA\\RediSearch\\Integration\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MacFJA"
+                }
+            ],
+            "description": "Helper tools to integrate RediSearch in PHP project",
+            "homepage": "https://github.com/MacFJA/php-redisearch-integration",
+            "keywords": [
+                "redis",
+                "redisearch",
+                "search engine",
+                "suggestion"
+            ],
+            "support": {
+                "issues": "https://github.com/MacFJA/php-redisearch-integration/issues",
+                "source": "https://github.com/MacFJA/php-redisearch-integration"
+            },
+            "time": "2021-01-24T16:22:45+00:00"
+        },
+        {
             "name": "masterminds/html5",
             "version": "2.7.4",
             "source": {
@@ -3070,77 +3102,6 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.7.4"
             },
             "time": "2020-10-01T13:52:52+00:00"
-        },
-        {
-            "name": "mlocati/composer-patcher",
-            "version": "1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mlocati/composer-patcher.git",
-                "reference": "38db5a938b33dfba6ccba5f0eb11a2fba8205b52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mlocati/composer-patcher/zipball/38db5a938b33dfba6ccba5f0eb11a2fba8205b52",
-                "reference": "38db5a938b33dfba6ccba5f0eb11a2fba8205b52",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1 || ^2",
-                "php": ">= 5.3.2"
-            },
-            "conflict": {
-                "cweagans/composer-patches": "*"
-            },
-            "require-dev": {
-                "composer/composer": "^1.1 || ^2",
-                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.4 || ^9.4"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ComposerPatcher\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerPatcher\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michele Locati",
-                    "email": "michele@locati.it",
-                    "homepage": "https://mlocati.github.io",
-                    "role": "author"
-                }
-            ],
-            "description": "A Composer plugin to patch Composer packages.",
-            "homepage": "https://github.com/mlocati/composer-patcher",
-            "keywords": [
-                "composer",
-                "patch",
-                "patcher",
-                "patches",
-                "plugin"
-            ],
-            "support": {
-                "issues": "https://github.com/mlocati/composer-patcher/issues",
-                "source": "https://github.com/mlocati/composer-patcher/tree/1.2.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/mlocati",
-                    "type": "github"
-                },
-                {
-                    "url": "https://paypal.me/mlocati",
-                    "type": "other"
-                }
-            ],
-            "time": "2020-10-30T11:26:06+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4841,6 +4802,56 @@
                 "source": "https://github.com/sensiolabs/SensioFrameworkExtraBundle/tree/v5.6.1"
             },
             "time": "2020-08-25T19:10:18+00:00"
+        },
+        {
+            "name": "sgh/comparable",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmengler/Comparator-Tools.git",
+                "reference": "0eba8cfb82e057e8e2acee0d0576c0d86876573f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmengler/Comparator-Tools/zipball/0eba8cfb82e057e8e2acee0d0576c0d86876573f",
+                "reference": "0eba8cfb82e057e8e2acee0d0576c0d86876573f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SGH\\Comparable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Schmengler",
+                    "email": "fschmengler@sgh-it.eu",
+                    "homepage": "http://www.schmengler-se.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides Comparable and Comparator interfaces and methods to sort and compare objects based on these.",
+            "homepage": "https://github.com/schmengler/Comparator-Tools",
+            "keywords": [
+                "comparable",
+                "comparator"
+            ],
+            "support": {
+                "issues": "https://github.com/schmengler/Comparator-Tools/issues",
+                "source": "https://github.com/schmengler/Comparator-Tools/tree/development"
+            },
+            "time": "2015-04-06T10:41:12+00:00"
         },
         {
             "name": "symfony/asset",
@@ -13448,7 +13459,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-iconv": "*",

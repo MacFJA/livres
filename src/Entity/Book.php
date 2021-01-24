@@ -31,7 +31,9 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function json_encode;
 use JsonSerializable;
+use MacFJA\RediSearch\Integration\Annotation as RediSearch;
 
 /**
  * @ApiResource(
@@ -59,6 +61,8 @@ use JsonSerializable;
  *
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  *
+ * @RediSearch\Index(name="book")
+ *
  * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Book implements JsonSerializable
@@ -79,6 +83,7 @@ class Book implements JsonSerializable
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", name="id")
+     * @RediSearch\NumericField(noIndex=true)
      *
      * @var int
      */
@@ -86,6 +91,7 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @RediSearch\TextField(noStem=true)
      *
      * @var string
      */
@@ -93,6 +99,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @RediSearch\TextField(sortable=true)
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_WORD, group="title", payload="{""kind"":""text"",""type"":""title""}")
      *
      * @var string
      */
@@ -100,6 +108,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="array")
+     * @RediSearch\TagField(separator="|")
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="name", payload="{""kind"":""tag"",""type"":""authors""}")
      *
      * @var array<string>
      */
@@ -107,6 +117,7 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @RediSearch\NumericField()
      *
      * @var null|int
      */
@@ -114,6 +125,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @RediSearch\TextField()
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="series", payload="{""kind"":""text"",""type"":""series""}")
      *
      * @var null|string
      */
@@ -128,6 +141,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @RediSearch\TextField
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="name", payload="{""kind"":""text"",""type"":""owner""}")
      *
      * @var string
      */
@@ -135,6 +150,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="array")
+     * @RediSearch\TagField(separator="|")
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="name", payload="{""kind"":""tag"",""type"":""illustrators""}")
      *
      * @var array<string>
      */
@@ -142,6 +159,8 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="array")
+     * @RediSearch\TagField(separator="|")
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="genres", payload="{""kind"":""tag"",""type"":""genres""}")
      *
      * @var string[]
      */
@@ -149,6 +168,7 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @RediSearch\TextField
      *
      * @var null|DateTimeInterface
      */
@@ -156,18 +176,24 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @RediSearch\TextField()
      *
      * @var null|string
      */
     private $format;
 
-    /** @ORM\Column(type="string", length=20, nullable=true)
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @RediSearch\TextField()
+     *
      * @var null|string
      */
     private $dimension;
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
+     * @RediSearch\TagField()
+     * @RediSearch\Suggestion(type=RediSearch\Suggestion::TYPE_FULL, group="keywords", payload="{""kind"":""tag"",""type"":""keywords""}")
      *
      * @var null|array<string>
      */
@@ -196,6 +222,7 @@ class Book implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @RediSearch\TextField()
      *
      * @var null|string
      */
@@ -223,6 +250,14 @@ class Book implements JsonSerializable
     public function getBookId(): ?int
     {
         return $this->bookId;
+    }
+
+    /**
+     * @RediSearch\DocumentId
+     */
+    public function getDocumentId(): string
+    {
+        return 'book-'.$this->getBookId();
     }
 
     public function getAddedAt(): DateTimeInterface
@@ -439,6 +474,14 @@ class Book implements JsonSerializable
     public function getAdditional(): array
     {
         return $this->additional;
+    }
+
+    /**
+     * @RediSearch\TextField(name="additional", noStem=true)
+     */
+    public function getSerializedAdditional(): string
+    {
+        return json_encode($this->additional) ?: '{}';
     }
 
     /**

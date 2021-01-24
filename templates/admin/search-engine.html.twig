@@ -14,13 +14,13 @@
             <div class="form-group row">
                 <label class="col-form-label">Number of documents</label>
                 <div class="form-widget">
-                    <strong class="form-control-plaintext">{{ indexInfo.num_docs }}</strong>
+                    <strong class="form-control-plaintext">{{ indexInfo.documentCount }}</strong>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label">Number of terms</label>
                 <div class="form-widget">
-                    <strong class="form-control-plaintext">{{ indexInfo.num_terms }}</strong>
+                    <strong class="form-control-plaintext">{{ indexInfo.termsCount }}</strong>
                 </div>
             </div>
             <div class="form-group row">
@@ -32,7 +32,7 @@
             <div class="form-group row">
                 <label class="col-form-label">Index size of the search engine</label>
                 <div class="form-widget">
-                    <strong class="form-control-plaintext">{{ "%.2F MB"|format(indexInfo.inverted_sz_mb) }}</strong>
+                    <strong class="form-control-plaintext">{{ "%.2F MB"|format(indexInfo.indexSize) }}</strong>
                 </div>
             </div>
             <hr />

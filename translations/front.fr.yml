@@ -89,3 +89,5 @@ pagination.next: Suivant # Label of the button to go to the next page
 pagination.previous: Précédent # Label of the button to go to the previous page
 search.clear: Effacer # Clear the search bar
 search.search: Chercher # Start the search
+search.launch_search: Lancer la recherche # Start the search (long label)
+search.many_results: Beaucoup de résultats # Too many result to display the search preview

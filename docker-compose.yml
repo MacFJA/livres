@@ -33,7 +33,7 @@ services:
       - "traefik.enable=false"
 
   redisearch:
-    image: "redislabs/redisearch:1.6.13"
+    image: "redislabs/redisearch:2.0.5"
     ports:
       - 6379
     labels:

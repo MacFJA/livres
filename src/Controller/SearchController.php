@@ -21,8 +21,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Repository\BookRepository;
-use App\Worker\BookSearch;
 use function array_column;
 use function array_combine;
 use function array_filter;
@@ -31,9 +31,10 @@ use function array_merge;
 use function array_reduce;
 use function array_unique;
 use function array_values;
-use function count;
-use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use function is_array;
+use function json_decode;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use MacFJA\RediSearch\Suggestion\Result;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,9 +42,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DebugController.
- *
- * @IgnoreAnnotation("suppress")
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class SearchController extends AbstractController
@@ -68,9 +66,9 @@ class SearchController extends AbstractController
 
     /**
      * @IsGranted("ROLE_CAN_VIEW")
-     * @Route ("/suggestions", name="suggestions", methods={"GET"})
+     * @Route("/suggestions", name="suggestions", methods={"GET"})
      */
-    public function suggestAndSearch(Request $request, BookSearch $bookSearch): JsonResponse
+    public function suggestions(Request $request, ObjectManager $objectManager): JsonResponse
     {
         $query = $request->query->get('q');
 
@@ -78,14 +76,25 @@ class SearchController extends AbstractController
             return new JsonResponse([]);
         }
 
-        return new JsonResponse($bookSearch->getSuggestions($query));
+        $results = $objectManager->getSuggestions(Book::class, $query);
+        foreach ($results as &$grouped) {
+            $grouped = array_map(function (Result $suggestion) {
+                return [
+                    'value' => $suggestion->getValue(),
+                    'score' => $suggestion->getScore(),
+                    'payload' => json_decode($suggestion->getPayload() ?? '[]', true, 512, \JSON_THROW_ON_ERROR),
+                ];
+            }, $grouped);
+        }
+
+        return new JsonResponse($results);
     }
 
     /**
      * @IsGranted("ROLE_CAN_VIEW")
-     * @Route ("/searchPreview", name="searchPreview", methods={"GET"})
+     * @Route("/searchPreview", name="searchPreview", methods={"GET"})
      */
-    public function searchPreview(Request $request, BookSearch $bookSearch): JsonResponse
+    public function searchPreview(Request $request, ObjectManager $objectManager): JsonResponse
     {
         $query = $request->query->get('q');
 
@@ -93,13 +102,22 @@ class SearchController extends AbstractController
             return new JsonResponse([]);
         }
 
-        $result = $bookSearch->getPartialSearch($query);
+        $result = $objectManager->getSearchBuilder(Book::class)
+            ->withQuery($query)
+            ->withResultOffset(0)
+            ->withResultLimit(5)
+            ->execute();
 
-        if (count($result) > 5) {
-            return new JsonResponse([]);
+        if ($result->getTotalCount() > 5) {
+            return new JsonResponse(false);
         }
 
-        return new JsonResponse($result);
+        return new JsonResponse(array_map(
+            function (\MacFJA\RediSearch\Search\Result $result) {
+                return $result->getFields();
+            },
+            $result->getItems()
+        ));
     }
 
     /**

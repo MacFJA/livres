@@ -24,29 +24,34 @@ namespace App\Console\Book\Search;
 use App\Console\Book\OnBooksCommand;
 use App\Entity\Book;
 use App\Repository\BookRepository;
-use App\Worker\BookSearch;
-use App\Worker\Search\Index\BookDocument;
-use Ehann\RediSearch\Exceptions\FieldNotInSchemaException;
-use Ehann\RediSearch\Exceptions\NoFieldsInIndexException;
-use Ehann\RediSearch\Exceptions\UnknownIndexNameException;
-use Ehann\RediSearch\Index;
+use App\Worker\Search\ObjectFactory;
+use function assert;
+use function is_string;
+use function is_subclass_of;
+use MacFJA\RediSearch\Integration\MappedClass;
+use MacFJA\RediSearch\Integration\MappedClassProvider;
+use MacFJA\RediSearch\Integration\ObjectManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateIndex extends OnBooksCommand
 {
-    /** @var Index */
-    private $index;
+    /** @var ObjectManager */
+    private $objectManager;
 
-    /** @var BookSearch */
-    private $bookSearch;
+    /** @var ObjectFactory */
+    private $objectFactory;
 
-    public function __construct(BookRepository $bookRepository, Index $index, BookSearch $bookSearch)
+    /** @var MappedClassProvider */
+    private $provider;
+
+    public function __construct(ObjectFactory $objectFactory, MappedClassProvider $provider, BookRepository $bookRepository, ObjectManager $objectManager)
     {
         parent::__construct($bookRepository);
-        $this->index = $index;
-        $this->bookSearch = $bookSearch;
+        $this->objectManager = $objectManager;
+        $this->objectFactory = $objectFactory;
+        $this->provider = $provider;
     }
 
     protected function configure(): void
@@ -66,12 +71,11 @@ class UpdateIndex extends OnBooksCommand
     }
 
     /**
-     * @throws FieldNotInSchemaException
      * @phan-suppress PhanUnusedProtectedMethodParameter
      */
     protected function executeOnBook(InputInterface $input, OutputInterface $output, SymfonyStyle $style, Book $book): void
     {
-        $this->bookSearch->addBookToIndex($book);
+        $this->objectManager->addObjectInSearch($book);
     }
 
     protected function afterExecute(InputInterface $input, OutputInterface $output, SymfonyStyle $style): void
@@ -81,17 +85,15 @@ class UpdateIndex extends OnBooksCommand
     }
 
     /**
-     * @throws NoFieldsInIndexException
      * @phan-suppress PhanUnusedVariableCaughtException
      */
     private function recreateIndex(): void
     {
-        try {
-            $this->index->drop();
-        } catch (UnknownIndexNameException $exception) {
-            // Do nothing
-        }
-
-        BookDocument::createIndexDefinition($this->index);
+        /** @var class-string<MappedClass>|null $mapped */
+        $mapped = $this->provider->getStaticMappedClass(Book::class);
+        assert(is_string($mapped) && is_subclass_of($mapped, MappedClass::class));
+        $this->objectFactory->getIndex($mapped::getRSIndexName())
+            ->delete(true);
+        $this->objectManager->createIndex(Book::class);
     }
 }

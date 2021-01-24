@@ -23,11 +23,14 @@ namespace App\ApiPlatform;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use App\Worker\BookSearch;
+use App\Entity\Book;
+use function array_map;
 use function array_values;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use MacFJA\RediSearch\Search\Result;
 use Psr\Log\LoggerInterface;
 use function sprintf;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -36,18 +39,18 @@ use function trim;
 
 class RedisearchFilter extends AbstractFilter
 {
-    /** @var BookSearch */
-    private $bookSearch;
+    /** @var ObjectManager */
+    private $objectManager;
 
     /**
      * @param null|array<string,mixed> $properties
      * @phan-suppress PhanUnusedPublicMethodParameter
      * @phan-suppress PhanUndeclaredTypeParameter
      */
-    public function __construct(BookSearch $bookSearch, ManagerRegistry $managerRegistry, ?RequestStack $requestStack = null, ?LoggerInterface $logger = null, ?array $properties = null, ?NameConverterInterface $nameConverter = null)
+    public function __construct(ObjectManager $objectManager, ManagerRegistry $managerRegistry, ?RequestStack $requestStack = null, ?LoggerInterface $logger = null, ?array $properties = null, ?NameConverterInterface $nameConverter = null)
     {
         parent::__construct($managerRegistry, $requestStack, $logger, $properties, $nameConverter);
-        $this->bookSearch = $bookSearch;
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -83,7 +86,16 @@ class RedisearchFilter extends AbstractFilter
             return;
         }
 
-        $bookIds = $this->bookSearch->getSearch($value, null, true);
+        $query = $this->objectManager->getSearchBuilder(Book::class)
+            ->withQuery($value)
+            ->withReturns(['bookId']);
+
+        /** @var array<Result> $result */
+        $result = $this->objectManager::getAllResults($query)->getItems();
+        $bookIds = array_map(function (Result $item) {
+            return $item->getFields()['bookId'];
+        }, $result);
+
         $valueParameter = $queryNameGenerator->generateParameterName($property);
         $queryBuilder
             ->andWhere(sprintf('%s.%s IN (:%s)', $queryBuilder->getRootAliases()[0], 'bookId', $valueParameter))
