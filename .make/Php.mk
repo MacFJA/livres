@@ -31,7 +31,7 @@ clean::
 
 fix-code-php: | vendor
 	$(COMPOSER) install --optimize-autoloader --no-suggest --prefer-dist
-	$(COMPOSER) exec -v composer-normalize
+	$(COMPOSER) normalize
 	$(COMPOSER) exec -v php-cs-fixer -- fix
 	@#$(COMPOSER) exec -v psalm -- --alter --issues=all src
 
