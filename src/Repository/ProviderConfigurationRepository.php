@@ -23,7 +23,7 @@ namespace App\Repository;
 
 use App\Entity\ProviderConfiguration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use MacFJA\BookRetriever\ProviderConfigurationInterface;
 use MacFJA\BookRetriever\ProviderInterface;
 

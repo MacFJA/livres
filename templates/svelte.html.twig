@@ -44,14 +44,14 @@
             searchPreview: '{{ path('searchPreview') }}',
             bookAdd: '{{ path('add_book') }}',
             bookEdit: '{{ path('edit_book', {bookId: 0}) }}',
-            bookDelete: '{{ path('api_books_delete_item', {id: '__placeholder'}) }}',
+            bookDelete: '{{ path('api_books_delete_item', {bookId: '__placeholder'}) }}',
             searchIsbn: '{{ path('search_isbn', {code: '__placeholder', isbn: 0}) }}',
             completions: '{{ path('completions') }}',
             books: '{{ url('api_books_get_collection') }}',
-            book: '{{ path('api_books_get_item', {id: '__placeholder'}) }}',
+            book: '{{ path('api_books_get_item', {bookId: '__placeholder'}) }}',
             bookIsBack: '{{ path('book_is_back', {id: '__placeholder'}) }}',
-            bookMovements: '{{ url('api_books_movements_get_subresource', {id: '__placeholder'}) }}',
-            movementUpdate: '{{ path('api_movements_patch_item', {id: '__placeholder'}) }}',
+            bookMovements: '{{ url('api_books_movements_get_subresource', {bookId: '__placeholder'}) }}',
+            movementUpdate: '{{ path('api_movements_patch_item', {movementId: '__placeholder'}) }}',
             movementAdd: '{{ path('api_movements_post_collection') }}',
             translations: '{{ path('translation', {name: '__placeholder'}) }}'
         }

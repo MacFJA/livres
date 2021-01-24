@@ -49,7 +49,7 @@ analyze-php: docker-compose.yml | vendor
 	$(COMPOSER) exec -v phpcpd -- --fuzzy --progress src
 	$(COMPOSER) exec -v phpmd -- src ansi phpmd.xml
 	$(COMPOSER) exec -v phpa -- src
-	$(COMPOSER) exec -v phpstan -- analyse --level=8 src
+	$(COMPOSER) exec -v phpstan -- analyse --level=8 --memory-limit=256M src
 	$(COMPOSER) exec -v psalm -- --show-info=true src
 	$(COMPOSER) exec -v phan -- --allow-polyfill-parser --color --color-scheme=light --output-mode=text
 

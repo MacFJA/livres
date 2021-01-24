@@ -62,7 +62,7 @@ class HomepageController extends AbstractController
             }
         }
 
-        return  $this->render('svelte.html.twig', [
+        return $this->render('svelte.html.twig', [
             'providers' => $providersInfo,
             'pageSize' => $flintstone->get('per_page') ?: 10,
         ]);

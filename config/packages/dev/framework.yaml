@@ -1,0 +1,4 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-proto']

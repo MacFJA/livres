@@ -21,17 +21,19 @@ declare(strict_types=1);
 
 namespace App\ApiPlatform;
 
+use ApiPlatform\Core\Bridge\Doctrine\Common\Filter\OrderFilterInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractContextAwareFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use function array_key_exists;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Flintstone\Flintstone;
 use Psr\Log\LoggerInterface;
 use function sprintf;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
-class AppOrderFilter extends \ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractContextAwareFilter implements \ApiPlatform\Core\Bridge\Doctrine\Common\Filter\OrderFilterInterface
+class AppOrderFilter extends AbstractContextAwareFilter implements OrderFilterInterface
 {
     /** @var Flintstone */
     private $flintstone;

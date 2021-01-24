@@ -51,11 +51,11 @@ class IndividualIndexer implements SuggestionIndexer
         /**
          * @psalm-suppress InvalidArgument
          */
-        // @phpstan-ignore-next-line
         $this->suggestion->add(
             $suggestion->getValue(),
             $suggestion->getScore(),
             false,
+            // @phpstan-ignore-next-line
             $suggestion->getPayload()// @phan-suppress-current-line PhanTypeMismatchArgumentProbablyReal
         );
         $this->flintstone->set(ApppSuggestion::IS_DIRTY_CONFIG_NAME, true);
