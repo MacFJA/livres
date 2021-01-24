@@ -154,7 +154,7 @@
         </aside>
         <dl>
             {#each book.details as { label, value, type }, index}
-                <dt>{label}</dt>
+                <dt>{$_(label)}</dt>
                 <dd>
                     <FieldRender type="{type}" value="{value}" />
                 </dd>

@@ -239,6 +239,10 @@
             flex: 1;
             font-size: 1.2rem;
             font-family: cursive;
+
+            u {
+                padding-left: 0;
+            }
         }
     }
 

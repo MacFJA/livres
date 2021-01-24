@@ -77,6 +77,7 @@
         margin: 0 0.5ex;
         background: rgba(0%, 60%, 60%, 0.2);
         border-radius: 0.5ex;
+        white-space: pre-line;
     }
 
     .image {
