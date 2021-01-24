@@ -8,6 +8,7 @@ RUN apk add --update --no-cache \
         freetype \
         libpng \
         libjpeg-turbo \
+        php7-opcache \
         yaml && \
 # -------------------- Install build dependancies \
     apk add --update --no-cache --virtual .docker-php-global-dependancies \
@@ -32,7 +33,7 @@ RUN apk add --update --no-cache \
     docker-php-ext-install bcmath intl xsl gd && \
     # Build dependancy for YAML \
     pecl install yaml && \
-    docker-php-ext-enable yaml && \
+    docker-php-ext-enable yaml opcache && \
 # -------------------- Clean up \
     apk del .docker-php-global-dependancies && \
         rm -rf /var/cache/apk/* && \
