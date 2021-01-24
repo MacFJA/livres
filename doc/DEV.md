@@ -25,7 +25,7 @@ To start the application and the server, run the following command
 make run
 ```
 
-If correctly configured, the application will be available at the address https://livres.docker
+If correctly configured, the application will be available at the address https://livres.localhost
 
 ## Stack
 

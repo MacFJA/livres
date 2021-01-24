@@ -9,11 +9,11 @@ services:
       - "8000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.php.rule=Host(`livres.docker`)"
+      - "traefik.http.routers.php.rule=Host(`livres.localhost`)"
       - "traefik.http.routers.php.entrypoints=secure"
       - "traefik.http.routers.php.tls=true"
 
-      - "traefik.http.routers.unsecure-php.rule=Host(`livres.docker`)"
+      - "traefik.http.routers.unsecure-php.rule=Host(`livres.localhost`)"
       - "traefik.http.routers.unsecure-php.entrypoints=web"
       - "traefik.http.routers.unsecure-php.middlewares=force-https"
       - "traefik.http.routers.unsecure-php.tls=false"
