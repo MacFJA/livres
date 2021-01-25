@@ -361,6 +361,9 @@
     "phpstan/phpstan": {
         "version": "0.12.69"
     },
+    "phpunit/php-file-iterator": {
+        "version": "3.0.5"
+    },
     "phpunit/php-timer": {
         "version": "3.1.4"
     },
@@ -402,6 +405,9 @@
     },
     "scriptotek/google-books": {
         "version": "v0.2.5"
+    },
+    "sebastian/cli-parser": {
+        "version": "1.0.1"
     },
     "sebastian/diff": {
         "version": "4.0.4"

@@ -46,7 +46,7 @@ analyze-php: docker-compose.yml | vendor
 	$(COMPOSER) exec -v php-cs-fixer -- fix --dry-run
 	$(COMPOSER) exec -v unused_scanner -- .unused.php
 	$(COMPOSER) exec -v security-checker -- security:check
-	$(COMPOSER) exec -v phpcpd -- --fuzzy --progress src
+	$(COMPOSER) exec -v phpcpd -- --fuzzy src
 	$(COMPOSER) exec -v phpmd -- src ansi phpmd.xml
 	$(COMPOSER) exec -v phpa -- src
 	$(COMPOSER) exec -v phpstan -- analyse --level=8 --memory-limit=256M src
