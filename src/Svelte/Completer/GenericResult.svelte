@@ -114,8 +114,8 @@
     <section>
         {#each data as { fusion, type, label, value, key }, index (uniqueKey(key, type, value))}
             <div transition:slide>
-                <label>
-                    <slot name="label" label="label">{label}</slot>
+                <label for="{uniqueKey(key, type, value)}">
+                    <slot id="{uniqueKey(key, type, value)}" name="label" label="label">{label}</slot>
                 </label>
                 <div class="data">
                     <slot name="data" value="value" type="type">
