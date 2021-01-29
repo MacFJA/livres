@@ -44,7 +44,7 @@ class HomepageController extends AbstractController
      * @IsGranted("ROLE_CAN_VIEW")
      *
      * @param iterable<ProviderInterface> $providers
-     * @Route("/")
+     * @Route("/", name="homepage")
      * @suppress PhanAbstractStaticMethodCall
      */
     public function base(iterable $providers, ProviderConfigurationInterface $providerConfig, Flintstone $flintstone): Response

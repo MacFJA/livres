@@ -21,7 +21,9 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use function count;
 use Doctrine\ORM\Mapping as ORM;
+use function is_array;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -99,6 +101,11 @@ class ProviderConfiguration
         }
 
         return $this->parameters;
+    }
+
+    public function haveParameters(): bool
+    {
+        return is_array($this->parameters) && count($this->parameters) > 0;
     }
 
     /**

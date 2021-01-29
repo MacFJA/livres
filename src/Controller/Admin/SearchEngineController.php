@@ -26,7 +26,7 @@ use App\EventSubscriber\RemoveDocumentSubscriber;
 use App\Repository\BookRepository;
 use App\Worker\Search\ObjectFactory;
 use function assert;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Flintstone\Flintstone;
 use function is_string;
 use function is_subclass_of;
@@ -36,29 +36,21 @@ use MacFJA\RediSearch\Integration\ObjectManager;
 use Predis\Client;
 use RuntimeException;
 use function sprintf;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-trait SearchEngineTrait
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class SearchEngineController extends AbstractController
 {
     /**
      * @Route ("/search-engine", methods={"GET"}, name="admin_search_engine")
      */
-    public function searchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, Request $request, Flintstone $flintstone): Response
+    public function searchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, Flintstone $flintstone): Response
     {
-        if (!($this instanceof EasyAdminController)) {
-            throw new RuntimeException(sprintf(
-                'Trait %s can only be used with an instance of %s (currently used with %s)',
-                SearchEngineTrait::class,
-                EasyAdminController::class,
-                self::class
-            ));
-        }
-
-        $this->initialize($request);
-
         /** @var class-string<MappedClass>|null $mapped */
         $mapped = $provider->getStaticMappedClass(Book::class);
         if (null === $mapped || !is_subclass_of($mapped, MappedClass::class)) {
@@ -74,17 +66,13 @@ trait SearchEngineTrait
         }
         $index = $objectFactory->getIndex($mapped::getRSIndexName());
 
-        if (null === $request->query->get('entity')) {
-            $engineStats = $index->getStats();
+        $engineStats = $index->getStats();
 
-            return $this->render('admin/search-engine.html.twig', [
-                'indexInfo' => $engineStats,
-                'suggestions' => $suggestionCount,
-                'isSuggestionDirty' => 'yes' === $flintstone->get(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY),
-            ]);
-        }
-
-        return $this->indexAction($request);
+        return $this->render('admin/search-engine.html.twig', [
+            'indexInfo' => $engineStats,
+            'suggestions' => $suggestionCount,
+            'isSuggestionDirty' => 'yes' === $flintstone->get(RemoveDocumentSubscriber::SUGGESTIONS_DIRTY),
+        ]);
     }
 
     /**
@@ -92,17 +80,8 @@ trait SearchEngineTrait
      *
      * @return RedirectResponse
      */
-    public function reindexSearchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, BookRepository $repository, ObjectManager $objectManager)
+    public function reindexSearchEngine(MappedClassProvider $provider, ObjectFactory $objectFactory, BookRepository $repository, ObjectManager $objectManager, AdminUrlGenerator $urlGenerator)
     {
-        if (!($this instanceof EasyAdminController)) {
-            throw new RuntimeException(sprintf(
-                'Trait %s can only be used with an instance of %s (currently used with %s)',
-                SearchEngineTrait::class,
-                EasyAdminController::class,
-                self::class
-            ));
-        }
-
         /** @var class-string<MappedClass>|null $mapped */
         $mapped = $provider->getStaticMappedClass(Book::class);
         assert(is_string($mapped));
@@ -116,7 +95,9 @@ trait SearchEngineTrait
 
         $this->addFlash('success', 'Search Engine Index rebuild.');
 
-        return $this->redirectToRoute('admin_search_engine');
+        return $this->redirect(
+            $urlGenerator->setRoute('admin_search_engine')->generateUrl()
+        );
     }
 
     /**
@@ -127,17 +108,8 @@ trait SearchEngineTrait
      *
      * @return RedirectResponse
      */
-    public function reindexSuggestion(Flintstone $flintstone, MappedClassProvider $provider, ObjectManager $objectManager, BookRepository $repository, Client $redisClient)
+    public function reindexSuggestion(Flintstone $flintstone, MappedClassProvider $provider, ObjectManager $objectManager, BookRepository $repository, Client $redisClient, AdminUrlGenerator $urlGenerator)
     {
-        if (!($this instanceof EasyAdminController)) {
-            throw new RuntimeException(sprintf(
-                'Trait %s can only be used with an instance of %s (currently used with %s)',
-                SearchEngineTrait::class,
-                EasyAdminController::class,
-                self::class
-            ));
-        }
-
         /** @var class-string<MappedClass>|null $mapped */
         $mapped = $provider->getStaticMappedClass(Book::class);
         if (null === $mapped || !is_subclass_of($mapped, MappedClass::class)) {
@@ -157,6 +129,8 @@ trait SearchEngineTrait
 
         $this->addFlash('success', 'Search Engine Suggestion rebuild.');
 
-        return $this->redirectToRoute('admin_search_engine');
+        return $this->redirect(
+            $urlGenerator->setRoute('admin_search_engine')->generateUrl()
+        );
     }
 }

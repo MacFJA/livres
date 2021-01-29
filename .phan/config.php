@@ -367,6 +367,9 @@ return [
         'vendor/symfony/console',
         'vendor/symfony/translation',
         'vendor/symfony/filesystem',
+        'vendor/symfony/form',
+        // From symfony/form (1)
+        'vendor/symfony/options-resolver',
         'vendor/symfony/finder',
         'vendor/symfony/framework-bundle',
         'vendor/symfony/event-dispatcher',

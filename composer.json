@@ -10,7 +10,7 @@
         "ext-simplexml": "*",
         "api-platform/api-pack": "^1.2",
         "doctrine/annotations": "^1.10",
-        "easycorp/easyadmin-bundle": "^2.3",
+        "easycorp/easyadmin-bundle": "^3.0",
         "enqueue/dsn": "^0.10.1",
         "fale/isbn": "^3.1",
         "fire015/flintstone": "^2.2",
@@ -39,7 +39,8 @@
         "symfony/serializer-pack": "*",
         "symfony/twig-pack": "*",
         "symfony/validator": "5.2.*",
-        "symfony/yaml": "5.2.*"
+        "symfony/yaml": "5.2.*",
+        "twig/intl-extra": "^3.2"
     },
     "replace": {
         "paragonie/random_compat": "2.*",
