@@ -22,8 +22,16 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\ApiPlatform\Filter\AppOrderFilter;
+use App\ApiPlatform\Filter\InMovementFilter;
+use App\ApiPlatform\Filter\RedisearchFilter;
+use App\ApiPlatform\Filter\SerializeArrayFilter;
+use App\Model\Input\CreateBook;
 use function array_filter;
 use function array_values;
 use DateTime;
@@ -47,19 +55,41 @@ use MacFJA\RediSearch\Integration\Annotation as RediSearch;
  *          "pagination_client_enabled"=false
  *     },
  *     collectionOperations={
- *         "get"={"security"="is_granted('ROLE_CAN_VIEW')"}
+ *         "get"={"security"="is_granted('ROLE_CAN_VIEW')"},
+ *         "post"={"security"="is_granted('ROLE_CAN_ADD')"},
+ *         "post_lite"={
+ *             "security"="is_granted('ROLE_CAN_ADD')",
+ *             "path"="books/lite",
+ *             "input"=CreateBook::class,
+ *             "method"="post"
+ *         },
  *     },
  *     itemOperations={
  *         "get"={"security"="is_granted('ROLE_CAN_VIEW')"},
- *         "delete"={"security"="is_granted('ROLE_CAN_DELETE')"}
+ *         "put"={"security"="is_granted('ROLE_CAN_EDIT')"},
+ *         "put_lite"={
+ *             "security"="is_granted('ROLE_CAN_EDIT')",
+ *             "path"="books/{bookId}/lite",
+ *             "input"=CreateBook::class,
+ *             "method"="put"
+ *         },
+ *         "delete"={"security"="is_granted('ROLE_CAN_DELETE')"},
+ *         "is_back"={
+ *             "controller"=\App\Controller\Api\BookIsBackController::class,
+ *             "method"="patch",
+ *             "path"="books/{bookId}/is-back",
+ *             "security"="is_granted('ROLE_CAN_EDIT')",
+ *             "output"=false,
+ *             "input"=false,
+ *         }
  *     }
  * )
- * @ApiFilter(\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter::class, properties={"title":"partial","owner","series","keywords":"partial"})
- * @ApiFilter(\App\ApiPlatform\SerializeArrayFilter::class, properties={"genres","authors","illustrators"})
- * @ApiFilter(\App\ApiPlatform\RedisearchFilter::class, properties={"query"})
- * @ApiFilter(\App\ApiPlatform\InMovementFilter::class, properties={"in_movement"})
- * @ApiFilter(\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter::class, properties={"pages"})
- * @ApiFilter(\App\ApiPlatform\AppOrderFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={"title":"partial","owner","series","keywords":"partial"})
+ * @ApiFilter(SerializeArrayFilter::class, properties={"genres","authors","illustrators"})
+ * @ApiFilter(RedisearchFilter::class, properties={"query"})
+ * @ApiFilter(InMovementFilter::class, properties={"in_movement"})
+ * @ApiFilter(RangeFilter::class, properties={"pages"})
+ * @ApiFilter(AppOrderFilter::class)
  *
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  *
@@ -268,6 +298,7 @@ class Book implements JsonSerializable
 
     /**
      * @RediSearch\DocumentId
+     * @ApiProperty(readable=false)
      */
     public function getDocumentId(): string
     {
@@ -492,6 +523,7 @@ class Book implements JsonSerializable
 
     /**
      * @RediSearch\TextField(name="additional", noStem=true)
+     * @ApiProperty(readable=false)
      */
     public function getSerializedAdditional(): string
     {
