@@ -56,7 +56,7 @@ class HomepageController extends AbstractController
                 $info = [
                     'name' => $provider::getLabel(),
                     'code' => $provider->getCode(),
-                    'url' => $this->generateUrl('search_isbn', ['code' => $provider->getCode(), 'isbn' => 0]),
+                    'url' => $this->generateUrl('api_search_previews_get_collection', ['code' => $provider->getCode(), 'isbn' => 0]),
                 ];
                 $providersInfo[] = $info;
             }
