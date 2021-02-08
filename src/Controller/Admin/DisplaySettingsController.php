@@ -19,27 +19,19 @@ declare(strict_types=1);
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
-use App\Controller\Admin\ImageTrait;
-use App\Controller\Admin\SearchEngineTrait;
-use App\Doctrine\BookInjectionListener;
 use function array_key_exists;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Flintstone\Flintstone;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @psalm-suppress PropertyNotSetInConstructor
- */
-class AdminController extends EasyAdminController
+class DisplaySettingsController extends AbstractController
 {
-    use SearchEngineTrait;
-    use ImageTrait;
-
     public const AVAILABLE_SORT = [
         'newest' => 'Last added first',
         'oldest' => 'Oldest first',
@@ -50,32 +42,21 @@ class AdminController extends EasyAdminController
         'series-sortTitle' => 'Series, then Sort title',
     ];
 
-    public function __construct(BookInjectionListener $injectionListener)
-    {
-        $injectionListener->setDisableInjection(true);
-    }
-
     /**
      * @Route("/display-settings", methods={"GET"}, name="admin_display_settings")
      */
-    public function displaySettings(Request $request, Flintstone $flintstone): Response
+    public function displaySettings(Flintstone $flintstone): Response
     {
-        $this->initialize($request);
-
-        if (null === $request->query->get('entity')) {
-            return $this->render('admin/display-settings.html.twig', [
-                'per_page' => $flintstone->get('per_page') ?: '10',
-                'default_sort' => $flintstone->get('default_sort') ?: 'newest',
-            ]);
-        }
-
-        return parent::indexAction($request);
+        return $this->render('admin/display-settings.html.twig', [
+            'per_page' => $flintstone->get('per_page') ?: '10',
+            'default_sort' => $flintstone->get('default_sort') ?: 'newest',
+        ]);
     }
 
     /**
      * @Route ("/display-settings", methods={"POST"}, name="admin_display_settings_post")
      */
-    public function displaySettingsPost(Request $request, Flintstone $flintstone): RedirectResponse
+    public function displaySettingsPost(Request $request, Flintstone $flintstone, AdminUrlGenerator $urlGenerator): RedirectResponse
     {
         $perPage = (int) $request->request->get('per_page', '10');
         $flintstone->set('per_page', $perPage);
@@ -88,6 +69,8 @@ class AdminController extends EasyAdminController
 
         $this->addFlash('success', 'Configurations saved');
 
-        return $this->redirectToRoute('admin_display_settings');
+        $url = $urlGenerator->setRoute('admin_display_settings')->generateUrl();
+
+        return $this->redirect($url);
     }
 }

@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace App;
 
 use function dirname;
+use Doctrine\Common\Annotations\AnnotationReader;
 use function is_file;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -47,6 +48,8 @@ class Kernel extends BaseKernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
+        AnnotationReader::addGlobalIgnoredName('suppress');
+
         $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
         $routes->import('../config/{routes}/*.yaml');
 

@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minimum PHP changed from `7.2.5` to `7.3`
 - TLD in dev environment changed from `.docker` to `.localhost`
 - Upgrade version of RediSearch server to `2.0.x`
+- Upgrade EasyAdmin from `^2.3` to `^3.0`
 
 ### Removed
 

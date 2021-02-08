@@ -1,0 +1,73 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block page_content %}
+    <h2>Statistics</h2>
+    <dl class="row">
+        <dt class="col-sm-3">Books</dt>
+        <dd class="col-sm-9">{{ bookCount }}</dd>
+
+        <dt class="col-sm-3">Books in movement</dt>
+        <dd class="col-sm-9">{{ movementCount }}</dd>
+
+        <dt class="col-sm-3">Active providers</dt>
+        <dd class="col-sm-9">{{ activeProviderCount }}</dd>
+    </dl>
+    <h2>Last Changes</h2>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-sm-4">
+                        <img src="{{ lastBook.cover|imagine_filter('book_preview') }}" class="card-img" alt="...">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span class="badge badge-success">New book</span>
+                                <div>{{ lastBook.title }}</div>
+                            </h5>
+                            <p class="card-text">{{ lastBook.authors | join(', ') }}</p>
+                            <p class="card-text">{{ lastBook.isbn }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <span class="badge badge-primary">Last return</span>
+                                <div>{{ lastReturn.book.title }}</div>
+                            </h5>
+                            <p class="card-text">{{ lastReturn.person }}</p>
+                            <p class="card-text"><small class="text-muted">{{ lastReturn.endAt | format_date }}</small></p>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span class="badge badge-secondary">Last leaving</span>
+                            <div>{{ lastLeaving.book.title }}</div>
+                        </h5>
+                        <p class="card-text">{{ lastLeaving.person }}</p>
+                        <p class="card-text"><small class="text-muted">{{ lastLeaving.startAt | format_date }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ path('homepage') }}" class="btn btn-primary">
+        <span class="btn-label">Go to the website</span>
+    </a>
+{% endblock %}

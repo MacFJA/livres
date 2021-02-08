@@ -25,8 +25,8 @@ return [
      **/
     'skipPackages' => [
         'symfony/flex',// Composer plugin
-        'mlocati/composer-patcher',// Composer plugin
         'symfony/security-bundle',
+        'twig/intl-extra',// Templating
         'symfony/yaml',
         'nyholm/psr7',// Service provider
         'php-http/curl-client',// Service provider

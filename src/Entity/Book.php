@@ -31,6 +31,8 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function implode;
+use function is_string;
 use function json_encode;
 use JsonSerializable;
 use MacFJA\RediSearch\Integration\Annotation as RediSearch;
@@ -240,6 +242,18 @@ class Book implements JsonSerializable
     {
         $this->movements = new ArrayCollection();
         $this->addedAt = new DateTime();
+    }
+
+    public function __toString()
+    {
+        $name = '';
+        if (is_string($this->series)) {
+            $name = $this->series.': ';
+        }
+        $name .= $this->title;
+        $name .= ' by '.implode(', ', $this->authors);
+
+        return $name;
     }
 
     public function getSortTitle(): string
