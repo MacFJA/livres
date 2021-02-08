@@ -85,7 +85,10 @@
      * @return {Promise<Response>}
      */
     const bookIsBackPromise = () => {
-        return fetch(window.app.url.bookIsBack.replace("__placeholder", bookId), {method: "PUT"})
+        return fetch(window.app.url.bookIsBack.replace("__placeholder", bookId), {
+            method: "PATCH",
+            headers: typePatchJson()
+        })
     }
 </script>
 

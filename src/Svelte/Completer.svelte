@@ -88,23 +88,16 @@
      * @return {Promise<Array<Result>>}
      */
     const searchWithProvider = (providerData, isbn) => {
-        return fetch(providerData.url.replace("0", isbn))
-            .then((response) => response.json())
-            .then((response) => {
-                $received = $received+1
-                return Promise.resolve(response)
-            })
-            .then((response) =>
-                response.map((item) => {
-                    return {
-                        provider: providerData.name,
-                        code: providerData.code,
-                        result: item,
-                    }
+        return fetch(window.app.url.searchIsbn.replace("__code", providerData.code).replace("0", isbn))
+            .then((response) => { $received++; return response.json()})
+            .then((response) => response.results.map(
+                item => ({
+                    provider: providerData.name,
+                    code: providerData.code,
+                    result: item.data
                 })
-            )
+            ))
             .catch(() => {
-                $received = $received+1
                 return null
             })
     }

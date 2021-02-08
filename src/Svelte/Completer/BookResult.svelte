@@ -146,7 +146,7 @@
         fetch(url, {
             headers: typeJson(),
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify({fields: data.map(item => ({key: item.key, value: item.value}))}),
         })
             .then((response) => response.json())
             .then((response) => {
