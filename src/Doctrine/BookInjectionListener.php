@@ -35,6 +35,7 @@ use const PATHINFO_EXTENSION;
 use const PHP_URL_PATH;
 use function strpos;
 use Symfony\Component\Finder\Finder;
+use function uniqid;
 
 class BookInjectionListener
 {
@@ -85,7 +86,7 @@ class BookInjectionListener
             return;
         }
 
-        $filename = 'book.cover.'.$book->getBookId().'.'.$this->getExtension($cover);
+        $filename = 'book.cover.'.uniqid('', true).'.'.$this->getExtension($cover);
         if (!$this->find($filename)) {
             $client = new Client();
 
