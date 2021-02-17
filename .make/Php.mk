@@ -41,7 +41,6 @@ install-fixture: docker-compose.yml .env.dev | vendor
 	$(DKR_COMP) exec php php /srv/app/bin/console doctrine:fixtures:load
 
 analyze-php: docker-compose.yml | vendor
-	$(COMPOSER) install --optimize-autoloader --no-suggest --prefer-dist --no-scripts
 	$(COMPOSER) exec -v parallel-lint -- src
 	$(COMPOSER) exec -v php-cs-fixer -- fix --dry-run
 	$(COMPOSER) exec -v unused_scanner -- .unused.php

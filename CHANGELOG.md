@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New lines are preserved in teh Book details view
 - Superfluous space when displaying a Book with a series
+- Cover cache not update on book edition
 
 ### Added
 
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New RediSearch client lib
 - New SecurityChecker
 - Display a button to launch a search when there are more than 5 results in search preview
+- API endpoint for all data manipulation
 
 ### Changed
 
@@ -27,12 +29,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TLD in dev environment changed from `.docker` to `.localhost`
 - Upgrade version of RediSearch server to `2.0.x`
 - Upgrade EasyAdmin from `^2.3` to `^3.0`
+- Update front to use API
 
 ### Removed
 
 - Remove composer plugin not compatible with Composer v2
 - Remove deprecated SensioLabs SecurityChecker
 - Remove abandoned RediSearch PHP client
+- Unused controllers
 
 ## [1.1.1] - 2020-09-12
 

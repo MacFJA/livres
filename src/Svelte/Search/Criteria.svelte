@@ -37,9 +37,11 @@
     /**
      * @type {Promise<Array>}
      */
-    let completionsPromise = fetch(window.app.url.completions).then((response) =>
-        response.json()
-    )
+    let storageCompletionsPromise = fetch(window.app.url.completions.replace("__placeholder", "storage"))
+        .then(response => response.json())
+        .then(response => response.values)
+
+
 </script>
 
 <style>
@@ -53,7 +55,7 @@
 </style>
 
 <div class="container">
-    {#await completionsPromise}
+    {#await storageCompletionsPromise}
         Loading...
     {:then completions}
         <NumericCriterion
@@ -61,7 +63,7 @@
             bind:value="{page}"
             bind:operator="{pageOperator}"
         />
-        <ListCriterion field="{$_('filter.type.storage')}" bind:value={storage} completions="{completions['storage']}" />
+        <ListCriterion field="{$_('filter.type.storage')}" bind:value={storage} completions="{completions}" />
         <BooleanCriterion field="{$_('filter.type.movement')}" bind:value={inMovement} />
     {/await}
 </div>

@@ -18,9 +18,7 @@
      * Facet payload datatype
      * @typedef {Object} FacetPayload
      * @property {String} type
-     * @property {String} [full]
      * @property {String} [kind]
-     * @property {Number} [bookId]
      */
     /**
      * @type {writable<Array<Facet>>} - The list of validated search facets
@@ -38,7 +36,7 @@
         ($facets
             .map(facet => {
                 const isTag = facet.payload.kind === "tag"
-                const rawValue = (facet.payload.full || facet.value)
+                const rawValue = facet.value
                 let facetQuery = "@" + facet.payload.type
                 facetQuery += ":"
                 if (isTag) {
@@ -68,8 +66,19 @@
             return Promise.resolve([])
         }
         requestInProgress++
-        return fetch(window.app.url.searchPreview + "?q="+($searchQuery))
-            .then(response => {requestInProgress--; return response.json()})
+        return fetch(window.app.url.searchPreview + "?query="+escape($searchQuery))
+            .then(response => {requestInProgress--; return response})
+            .then(response => {
+                if (response.status === 422) {
+                    return false
+                }
+                if (response.ok) {
+                    return response.json()
+                }
+                return []
+            })
+            .then(response => (typeof response === "object" && !Array.isArray(response)) ? response["hydra:member"].map(book => book.fields) : response)
+            .catch(() => [])
     }
     /**
      * @type {function} - Start an asynchronous suggestion query
@@ -80,8 +89,9 @@
             return Promise.resolve([])
         }
         requestInProgress++
-        return fetch(window.app.url.suggestions + "?q="+($query.trim()))
+        return fetch(window.app.url.suggestions + "?query="+escape($query.trim()))
             .then(response => {requestInProgress--; return response.json()})
+            .then(response => response["hydra:member"] || [])
     }
 
     /**
@@ -142,6 +152,7 @@
      * @param {Facet} suggestion
      */
     const addFacet = suggestion => {
+        suggestion.payload = JSON.parse(suggestion.payload)
         $facets.push(suggestion)
         input.value = ""
         $query = ""
@@ -388,17 +399,16 @@
                 {/each}
             </nav>
         {/if}
-        {#await $suggestion then suggestions}
-            {#if Object.keys(suggestions).length > 0}
+        {#await $suggestion then suggestionsResult}
+            {#if suggestionsResult.length > 0}
                 <aside class="suggestions">
                     <nav>
                         <ul>
-                            {#each Object.entries(suggestions) as [group, groupSuggestions]}
-                                {#each groupSuggestions as suggestion}
+                            {#each suggestionsResult as {group, suggestions}}
+                                {#each suggestions as suggestion}
                                     <li class="suggestion">
                                         <header>{group}</header>
-                                        <div on:click={() => addFacet(suggestion)} on:click={focusInput}>{suggestion.payload.full || suggestion.value}</div>
-                                        {#if suggestion.payload.bookId}<button class="color small" on:click={() => showBook(suggestion.payload.bookId)}>{$_("book.show")}</button>{/if}
+                                        <div on:click={() => addFacet(suggestion)} on:click={focusInput}>{suggestion.value}</div>
                                     </li>
                                 {/each}
                             {/each}

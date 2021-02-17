@@ -19,56 +19,53 @@ declare(strict_types=1);
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace App\ApiPlatform;
+namespace App\ApiPlatform\Filter;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use App\Repository\MovementRepository;
-use function array_key_exists;
-use function array_keys;
-use Doctrine\ORM\Query\Expr\Join;
+use App\Entity\Book;
+use function array_map;
+use function array_values;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use MacFJA\RediSearch\Integration\ObjectManager;
+use MacFJA\RediSearch\Search\Result;
 use Psr\Log\LoggerInterface;
 use function sprintf;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use function trim;
 
-class InMovementFilter extends AbstractFilter
+class RedisearchFilter extends AbstractFilter
 {
-    /** @var MovementRepository */
-    private $movementRepository;
+    /** @var ObjectManager */
+    private $objectManager;
 
     /**
      * @param null|array<string,mixed> $properties
      * @phan-suppress PhanUnusedPublicMethodParameter
      * @phan-suppress PhanUndeclaredTypeParameter
      */
-    public function __construct(MovementRepository $movementRepository, ManagerRegistry $managerRegistry, ?RequestStack $requestStack = null, ?LoggerInterface $logger = null, ?array $properties = null, ?NameConverterInterface $nameConverter = null)
+    public function __construct(ObjectManager $objectManager, ManagerRegistry $managerRegistry, ?RequestStack $requestStack = null, ?LoggerInterface $logger = null, ?array $properties = null, ?NameConverterInterface $nameConverter = null)
     {
         parent::__construct($managerRegistry, $requestStack, $logger, $properties, $nameConverter);
-        $this->movementRepository = $movementRepository;
+        $this->objectManager = $objectManager;
     }
 
     /**
      * {@inheritdoc}
      *
      * @return array<array<mixed>>
-     * @suppress PhanUnusedPublicMethodParameter
+     * @phan-suppress PhanUnusedPublicMethodParameter
      */
     public function getDescription(string $resourceClass): array
     {
-        $result = [];
-        $properties = $this->getProperties() ?? [];
-        foreach (array_keys($properties) as $property) {
-            $result[$property] = [
-                'property' => $property,
-                'type' => 'bool',
-                'required' => false,
-            ];
-        }
-
-        return $result;
+        return ['query' => [
+            'property' => 'query',
+            'type' => 'string',
+            'required' => false,
+        ]];
     }
 
     /**
@@ -77,24 +74,31 @@ class InMovementFilter extends AbstractFilter
      * @param null|mixed $value
      *
      * @return void
-     * @suppress PhanUnusedProtectedMethodParameter
+     * @phan-suppress PhanUnusedProtectedMethodParameter
      */
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?string $operationName = null)
     {
-        if (!array_key_exists($property, $this->getProperties() ?? [])) {
+        if (!('query' === $property)) {
             return;
         }
-        $mainAlias = $queryBuilder->getRootAliases()[0];
-        if ('true' === $value) {
-            $queryBuilder
-                ->innerJoin(sprintf('%s.movements', $mainAlias), 'm', Join::WITH, sprintf('m.book= %s', $mainAlias))
-                ->andWhere('m.endAt IS NULL');
-        } elseif ('false' === $value) {
-            $subQuery = $this->movementRepository->createQueryBuilder('m');
-            $subQuery->select('IDENTITY(m.book)')
-                ->andWhere('m.endAt IS NULL');
-            $queryBuilder
-                ->andWhere(sprintf('%s NOT IN (%s)', $mainAlias, $subQuery->getDQL()));
+
+        if (null === $value || empty(trim($value))) {
+            return;
         }
+
+        $query = $this->objectManager->getSearchBuilder(Book::class)
+            ->withQuery($value)
+            ->withReturns(['bookId']);
+
+        /** @var array<Result> $result */
+        $result = $this->objectManager::getAllResults($query)->getItems();
+        $bookIds = array_map(function (Result $item) {
+            return $item->getFields()['bookId'];
+        }, $result);
+
+        $valueParameter = $queryNameGenerator->generateParameterName($property);
+        $queryBuilder
+            ->andWhere(sprintf('%s.%s IN (:%s)', $queryBuilder->getRootAliases()[0], 'bookId', $valueParameter))
+            ->setParameter($valueParameter, array_values($bookIds), Connection::PARAM_INT_ARRAY);
     }
 }
