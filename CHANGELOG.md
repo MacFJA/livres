@@ -6,9 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2021-02-28
+
 ### Fixed
 
-- New lines are preserved in teh Book details view
+- New lines are preserved in the Book details view
 - Superfluous space when displaying a Book with a series
 - Cover cache not update on book edition
 
@@ -37,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove deprecated SensioLabs SecurityChecker
 - Remove abandoned RediSearch PHP client
 - Unused controllers
+- Remove check on system ability to handle `.docker` TLD
 
 ## [1.1.1] - 2020-09-12
 
@@ -83,7 +86,8 @@ Full rewrite of the application.
 
 First version
 
-[Unreleased]: https://github.com/MacFJA/livres/compare/1.1.1...HEAD
+[Unreleased]: https://github.com/MacFJA/livres/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/MacFJA/livres/releases/tag/1.2.0
 [1.1.1]: https://github.com/MacFJA/livres/releases/tag/1.1.1
 [1.1.0]: https://github.com/MacFJA/livres/releases/tag/1.1.0
 [1.0.0]: https://github.com/MacFJA/livres/releases/tag/1.0.0

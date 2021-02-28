@@ -50,36 +50,4 @@ ifneq (1,${NO_DOCKER})
   else
     DKR_COMP_OPTIONS=--file docker-compose.yml --file docker-compose-traefik.yml
   endif
-
-  # Check TLD
-  ifeq ($(shell which getent > /dev/null 2>&1; echo $$?), 0)
-    ifneq ($(shell getent livres.docker > /dev/null 2>&1; echo $$?), 0)
-      $(info Hostname with TLD .docker must be mapped on 127.0.0.1)
-      $(info You can add '127.0.0.1 livres.docker' in 'etc/hosts')
-      $(info Or you can install 'dnsmasq' and add the following lines in the 'dnsmasq' configuration:)
-      $(info address=/.docker/127.0.0.1)
-      $(info listen-address=0.0.0.0)
-      $(error Hostname with TLD .docker does not respond correctly)
-    endif
-  else ifeq ($(shell which ping > /dev/null 2>&1; echo $$?), 0)
-    ifneq ($(shell ping -c 1 livres.docker > /dev/null 2>&1; echo $$?), 0)
-      $(info Hostname with TLD .docker must be mapped on 127.0.0.1)
-      $(info You can add '127.0.0.1 livres.docker' in 'etc/hosts')
-      $(info Or you can install 'dnsmasq' and add the following lines in the 'dnsmasq' configuration:)
-      $(info address=/.docker/127.0.0.1)
-      $(info listen-address=0.0.0.0)
-      $(error Hostname with TLD .docker does not respond correctly)
-    endif
-  else ifeq ($(shell which curl > /dev/null 2>&1; echo $$?), 0)
-    ifneq ($(shell --head --silent --fail-early livres.docker > /dev/null 2>&1; echo $$?), 0)
-      $(info Hostname with TLD .docker must be mapped on 127.0.0.1)
-      $(info You can add '127.0.0.1 livres.docker' in 'etc/hosts')
-      $(info Or you can install 'dnsmasq' and add the following lines in the 'dnsmasq' configuration:)
-      $(info address=/.docker/127.0.0.1)
-      $(info listen-address=0.0.0.0)
-      $(error Hostname with TLD .docker does not respond correctly)
-    endif
-  else
-    $(error System not handled)
-  endif
 endif
